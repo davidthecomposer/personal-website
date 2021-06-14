@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 // import { DesktopContext, TabletContext } from "App";
 import styled from "styled-components";
 import media from "styles/media";
 import colors from "styles/Colors";
-// import gsap from "gsap";
+import gsap from "gsap";
 import { Heading1 } from "styles/text";
 // import { ReactComponent as LogoDarkSVG } from "assets/svg/musicLogoDark.svg";
 // import { ReactComponent as LogoLightSVG } from "assets/svg/musicLogoLight.svg";
@@ -16,6 +16,9 @@ const Header: React.FC<{}> = () => {
   const history = useHistory().location;
   const [role, setRole] = useState("");
   const [display, setDisplay] = useState(true);
+  const name = useRef(null);
+  const line = useRef(null);
+  const myRole = useRef(null);
 
   useEffect(() => {
     const pathname = history.pathname;
@@ -31,20 +34,40 @@ const Header: React.FC<{}> = () => {
     }
   }, [history]);
 
+  useEffect(() => {
+    const tl = gsap.timeline();
+
+    tl.to(line.current, { scale: 1, duration: 0.6, ease: "power1.inOut" }, 0)
+      .to(name.current, { left: 0, duration: 1.3, ease: "power1.inOut" }, 0.3)
+      .to(
+        myRole.current,
+        { left: "1.3vw", duration: 0.8, ease: "power1.inOut" },
+        0.7
+      )
+      .to(
+        ".header__link",
+        { opacity: 1, stagger: 0.2, duration: 0.4, ease: "power1.inOut" },
+        1
+      );
+  }, []);
+
   return (
     <Wrapper willDisplay={display}>
       <TitleWrapper>
-        {/* <Logo /> */}
-        <Title>
-          David Campbell | <Role>{role}</Role>{" "}
-        </Title>
+        <TitleContainer>
+          <Title ref={name}>David Campbell</Title>
+        </TitleContainer>
+        <Line ref={line} />
+        <RoleContainer>
+          <Role ref={myRole}>{role}</Role>
+        </RoleContainer>
       </TitleWrapper>
       <NavLinks>
-        <Link>Home</Link>
-        <Link>Music</Link>
-        <Link>News</Link>
-        <Link>About</Link>
-        <Link>Connect</Link>
+        <Link className="header__link">Home</Link>
+        <Link className="header__link">Music</Link>
+        <Link className="header__link">News</Link>
+        <Link className="header__link">About</Link>
+        <Link className="header__link">Connect</Link>
       </NavLinks>
     </Wrapper>
   );
@@ -64,6 +87,11 @@ const Wrapper = styled.nav<{ willDisplay: boolean }>`
 
 const TitleWrapper = styled.div`
   display: flex;
+  ${Heading1};
+  color: ${colors.brightPurple};
+  align-items: center;
+  width: 58vw;
+  height: 5vw;
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -76,20 +104,63 @@ const TitleWrapper = styled.div`
 //   width: 5vw;
 //   height: 5vw;
 // `;
+const Line = styled.div`
+  height: 4.3vw;
+  border-left: 0.2vw solid ${colors.brightPurple};
+
+  transform: scaleY(0);
+  transform-origin: "50% 50%";
+  margin-top: 0.8vw;
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+  }
+  ${media.fullWidth} {
+  }
+`;
+
+const TitleContainer = styled.div`
+  position: relative;
+  overflow: hidden;
+  padding-right: 1.3vw;
+  width: 38vw;
+  height: 4.3vw;
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+  }
+  ${media.fullWidth} {
+  }
+`;
 
 const Title = styled.h1`
-  ${Heading1}
-  position: relative;
-  margin-left: 3.1vw;
+  position: absolute;
+  width: 100%;
   letter-spacing: -0.05em;
   color: ${colors.brightPurple};
+  left: 100%;
+`;
+
+const RoleContainer = styled.div`
+  position: relative;
+  overflow: hidden;
+  height: 2vw;
+  padding-left: 1.3vw;
+  width: 11vw;
+  margin-top: 0.8vw;
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+  }
+  ${media.fullWidth} {
+  }
 `;
 
 const Role = styled.span`
   font-size: 2vw;
-  bottom: 0.7vw;
-  position: relative;
+  position: absolute;
   letter-spacing: 0;
+  left: -100%;
 `;
 const Link = styled.a`
   ${Heading1}
@@ -98,7 +169,7 @@ const Link = styled.a`
   margin-right: 1.3vw;
   cursor: pointer;
   transition: 0.3s;
-
+  opacity: 0;
   ${media.tablet} {
   }
   ${media.mobile} {
