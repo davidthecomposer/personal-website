@@ -11,7 +11,7 @@ import Home from "pages/Home";
 import Header from "components/Header";
 // import Footer from "components/Footer";
 import styled from "styled-components";
-import colors from "styles/Colors";
+// import colors from "styles/Colors";
 
 const MusicPage = lazy(() => import("pages/MusicPage"));
 
@@ -78,5 +78,5 @@ const Fallback: React.FC = () => {
 const Container = styled.div`
   height: 300vh;
   width: 100%;
-  background-color: ${colors.deepPurple};
+  background-color: #000000;
 `;

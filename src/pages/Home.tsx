@@ -12,7 +12,7 @@ const IndexPage: React.FC = () => {
 };
 
 const Wrapper = styled.main`
-  background: ${colors.deepPurple};
+  background: #000000;
   color: ${colors.coolPurple};
 `;
 
