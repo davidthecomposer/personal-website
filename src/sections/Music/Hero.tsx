@@ -22,9 +22,9 @@ const Hero: React.FC<{}> = () => {
   return (
     <Wrapper id="music-hero">
       <TopHaze />
-      {/* <Card>
+      <Card>
         <BG2 />
-      </Card> */}
+      </Card>
       <Card className="hero_slideshow-1">
         <img src={filmTeaser} alt={"david conducting"} />
       </Card>
@@ -76,6 +76,7 @@ const BG2 = styled(BG2SVG)`
   left: 0;
   width: 100%;
   height: 100%;
+  z-index: -1;
   ${media.tablet} {
   }
   ${media.mobile} {
