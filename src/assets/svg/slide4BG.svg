@@ -1,0 +1,36 @@
+<svg width="1600" height="818" viewBox="0 0 1600 818" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_sl4-bg)">
+<rect width="1600" height="818" fill="#17161B"/>
+<g filter="url(#filter0_f_sl4-bg)">
+<path d="M280.363 118.029L-44 475.555L57.1971 872.104L860.915 928L1442 843.628V346.888L1191.14 -138.251L720.305 -172L280.363 118.029Z" fill="url(#paint0_radial_sl4-bg)"/>
+<path d="M280.363 118.029L-44 475.555L57.1971 872.104L860.915 928L1442 843.628V346.888L1191.14 -138.251L720.305 -172L280.363 118.029Z" stroke="black"/>
+</g>
+<g filter="url(#filter1_f_sl4-bg)">
+<path d="M372.348 240.728L41 472.145L144.376 728.82L965.402 765L1559 710.388V388.862L1302.74 74.8447L821.763 53L372.348 240.728Z" fill="url(#paint1_radial_sl4-bg)"/>
+<path d="M372.348 240.728L41 472.145L144.376 728.82L965.402 765L1559 710.388V388.862L1302.74 74.8447L821.763 53L372.348 240.728Z" stroke="black"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_f_sl4-bg" x="-194.551" y="-322.511" width="1787.05" height="1401.01" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="75" result="effect1_foregroundBlur"/>
+</filter>
+<filter id="filter1_f_sl4-bg" x="-109.612" y="-97.5046" width="1819.11" height="1013.01" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="75" result="effect1_foregroundBlur"/>
+</filter>
+<radialGradient id="paint0_radial_sl4-bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(699 378) rotate(90) scale(550 743)">
+<stop stop-color="#4905DA"/>
+<stop offset="1" stop-color="#080510" stop-opacity="0"/>
+</radialGradient>
+<radialGradient id="paint1_radial_sl4-bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(800 409) rotate(90) scale(356 759)">
+<stop stop-color="#BB702C"/>
+<stop offset="1" stop-color="#DAB885" stop-opacity="0"/>
+</radialGradient>
+<clipPath id="clip0_sl4-bg">
+<rect width="1600" height="818" fill="white"/>
+</clipPath>
+</defs>
+</svg>

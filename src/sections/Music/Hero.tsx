@@ -12,16 +12,14 @@ const Hero: React.FC<{}> = () => {
   useEffect(() => {
     const tl = gsap.timeline();
 
-    tl.from(".hero_slideshow-1", { y: "8vw", duration: 1.2 }, 1.8).to(
-      ".hero_slideshow-1",
-      { opacity: 1, duration: 1.1 },
-      1.9
-    );
+    tl.from(".hero_slideshow-1", { y: "8vw", duration: 1.2 }, 1.8)
+      .from(".top-haze_hero", { y: "8vw", duration: 1.2 }, 1.8)
+      .to(".hero_slideshow-1", { opacity: 1, duration: 1.5 }, 1.9);
   }, []);
 
   return (
     <Wrapper id="music-hero">
-      <TopHaze />
+      <TopHaze className="top-haze_hero" />
       <Card>
         <BG2 />
       </Card>

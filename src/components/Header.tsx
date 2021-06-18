@@ -13,7 +13,6 @@ import { useHistory } from "react-router-dom";
 const Header: React.FC<{}> = () => {
   // const desktop = useContext(DesktopContext);
   // const tablet = useContext(TabletContext);
-  // const wrapperRef = useRef(null);
   const history = useHistory().location;
   const [role, setRole] = useState("");
   const [display, setDisplay] = useState(true);
@@ -95,6 +94,16 @@ const Header: React.FC<{}> = () => {
     }
   };
 
+  useEffect(() => {
+    if (!initial) {
+      if (navOpen) {
+        gsap.to(".music__nav-btn", { opacity: 0, zIndex: 0, duration: 0.3 });
+      } else {
+        gsap.to(".music__nav-btn", { opacity: 1, zIndex: 10, duration: 0.7 });
+      }
+    }
+  }, [navOpen, initial]);
+
   const handleClick = () => {
     setNavOpen(true);
     navIsOpen.current = true;
@@ -127,7 +136,7 @@ const Header: React.FC<{}> = () => {
         <Link open={navOpen} className="header__link">
           Connect
         </Link>
-        <NavBtn onClick={handleClick} open={navOpen}>
+        <NavBtn className="music__nav-btn" onClick={handleClick}>
           <DavidSig />
         </NavBtn>
       </NavLinks>
@@ -193,7 +202,7 @@ const TitleContainer = styled.div<{ open: boolean }>`
   height: 4.3vw;
   transform: scaleY(${(props) => (props.open ? 1 : 0)});
   opacity: ${(props) => (props.open ? 1 : 0)};
-  transition: 0.4s;
+  transition: transform 0.3s 0.2s, opacity 0.5s;
   display: flex;
   flex-direction: column;
 
@@ -222,7 +231,7 @@ const RoleContainer = styled.div<{ open: boolean }>`
   margin-top: 0.8vw;
   transform: scaleY(${(props) => (props.open ? 1 : 0)});
   opacity: ${(props) => (props.open ? 1 : 0)};
-  transition: 0.4s;
+  transition: transform 0.3s 0.2s, opacity 0.5s;
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -267,7 +276,7 @@ const NavLinks = styled.div<{ open: boolean; initial: boolean }>`
   display: flex;
   width: ${(props) => (props.initial ? "25vw" : props.open ? "25vw" : "5.4vw")};
   position: relative;
-  transition: opacity 0.8s, width 0.4s, border 0.6s;
+  transition: opacity 0.8s, width 0.3s, border 0.6s;
   transform-origin: right;
   height: 2.5vw;
   align-items: flex-end;
@@ -307,27 +316,44 @@ const NavLinks = styled.div<{ open: boolean; initial: boolean }>`
   }
 `;
 
-const NavBtn = styled.button<{ open: boolean }>`
+const NavBtn = styled.button`
   width: 6vw;
   height: 100%;
   position: absolute;
   right: 0;
   top: 0;
-  z-index: ${(props) => (props.open ? 0 : 10)};
+  z-index: 0;
   appearance: none;
   -webkit-appearance: none;
   outline: none;
   border: none;
   border-radius: 10px;
-  opacity: ${(props) => (props.open ? 0 : 1)};
+  opacity: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   padding: 0 0.5vw 0 0;
   color: ${colors.coolWhite};
-  transition: opacity 0.6s;
-  transition-delay: 0.3s;
+  transition: transform 0.4s;
+  svg {
+    path {
+      transition: 0.4s;
+    }
+  }
+
+  :hover {
+    color: ${colors.coolWhite};
+    transform: scale(1.2);
+    transition: 0.4s;
+    svg {
+      path {
+        stroke: currentColor;
+        transition: 0.4s;
+      }
+    }
+  }
+
   ${media.tablet} {
   }
   ${media.mobile} {
