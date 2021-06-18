@@ -181,7 +181,7 @@ html {
   font-size: 100%; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
   -ms-text-size-adjust: 100%; /* 2 */
-  background-color: #17161b;
+  background-color: #000000;
 }
 /**
  * Address `outline` inconsistency between Chrome and other browsers.
@@ -391,4 +391,7 @@ section {
   -webkit-transform: translate3d(0, 0, 0);
   -webkit-transform-style: preserve-3d;
   -webkit-backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
