@@ -13,11 +13,26 @@ import Header from "components/Header";
 import styled from "styled-components";
 // import colors from "styles/Colors";
 
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
+import { MorphSVGPlugin } from "gsap/MorphSVGPlugin";
+import ScrollToPlugin from "gsap/ScrollToPlugin";
+import { CustomEase } from "gsap/CustomEase";
+
 const MusicPage = lazy(() => import("pages/MusicPage"));
 
 export const DesktopContext = createContext(false);
 export const TabletContext = createContext(false);
 export const MobileContext = createContext(false);
+
+gsap.registerPlugin(
+  ScrollTrigger,
+  DrawSVGPlugin,
+  ScrollToPlugin,
+  MorphSVGPlugin,
+  CustomEase
+);
 
 const App = () => {
   const [desktop, setDesktop] = useState(window.innerWidth > 1024);

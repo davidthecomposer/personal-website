@@ -6,8 +6,6 @@ import colors from "styles/Colors";
 import gsap from "gsap";
 import { Heading1 } from "styles/text";
 import { ReactComponent as DavidSigSVG } from "assets/svg/davidSig.svg";
-// import { ReactComponent as LogoDarkSVG } from "assets/svg/musicLogoDark.svg";
-// import { ReactComponent as LogoLightSVG } from "assets/svg/musicLogoLight.svg";
 import { useHistory } from "react-router-dom";
 
 const Header: React.FC<{}> = () => {
@@ -15,14 +13,17 @@ const Header: React.FC<{}> = () => {
   // const tablet = useContext(TabletContext);
   const history = useHistory().location;
   const [role, setRole] = useState("");
-  const [display, setDisplay] = useState(true);
+
   const name = useRef(null);
   const line = useRef(null);
   const myRole = useRef(null);
   const navLinks = useRef(null);
+  const [display, setDisplay] = useState(true);
   const [navOpen, setNavOpen] = useState(true);
   const navIsOpen = useRef(true);
   const [initial, setInitial] = useState(true);
+
+  const pressed = useRef(false);
 
   useEffect(() => {
     const pathname = history.pathname;
@@ -96,10 +97,93 @@ const Header: React.FC<{}> = () => {
 
   useEffect(() => {
     if (!initial) {
+      const ready =
+        !gsap.isTweening(".music__nav-btn") && !gsap.isTweening(".header_link");
+      if (!ready) {
+        gsap.getTweensOf(".music__nav-btn").forEach((tween) => {
+          tween.kill();
+        });
+        gsap.getTweensOf(".header__link").forEach((tween) => {
+          tween.kill();
+        });
+      }
+
       if (navOpen) {
-        gsap.to(".music__nav-btn", { opacity: 0, zIndex: 0, duration: 0.3 });
+        if (!ready) {
+          gsap.set(".music__nav-btn", { opacity: 1, zIndex: 10 });
+          gsap.set(".header__link", { opacity: 0, zIndex: 0 });
+        }
+        const tl = gsap.timeline();
+
+        tl.to(
+          ".music__nav-btn",
+          { opacity: 0, zIndex: 0, duration: 0.3 },
+          0
+        ).to(
+          ".header__link",
+          {
+            opacity: 1,
+            stagger: 0.1,
+            duration: 0.2,
+            reversed: true,
+            ease: "power1.inOut",
+            onComplete: () => {
+              gsap.set(".header__link", { zIndex: 10 });
+            },
+          },
+          0
+        );
       } else {
-        gsap.to(".music__nav-btn", { opacity: 1, zIndex: 10, duration: 0.7 });
+        if (!ready) {
+          gsap.set(".header__link", { opacity: 0, zIndex: 10 });
+          gsap.to(".music__nav-btn", { opacity: 1, zIndex: 10, duration: 0.3 });
+        } else {
+          if (pressed.current) {
+            gsap.set(".header__link", { opacity: 0, zIndex: 10 });
+            gsap.to(".music__nav-btn", {
+              opacity: 1,
+              zIndex: 10,
+              duration: 0.3,
+            });
+            pressed.current = false;
+          }
+          const tl1 = gsap.timeline();
+          tl1
+            .to(
+              ".music__nav-btn",
+              {
+                opacity: 1,
+                zIndex: 10,
+                duration: 0.7,
+                onComplete: () => {
+                  gsap.set(".header__link", { zIndex: 0 });
+                },
+              },
+              0.22
+            )
+            .fromTo(
+              ".david_sig",
+              { drawSVG: "0,0" },
+              {
+                drawSVG: "100%, 0",
+                stagger: 0.05,
+                duration: 0.05,
+
+                ease: "power1.inOut",
+              },
+              0.22
+            )
+            .to(
+              ".header__link",
+              {
+                opacity: 0,
+                stagger: 0.05,
+                duration: 0.2,
+                ease: "power1.inOut",
+              },
+              0
+            );
+        }
       }
     }
   }, [navOpen, initial]);
@@ -107,20 +191,25 @@ const Header: React.FC<{}> = () => {
   const handleClick = () => {
     setNavOpen(true);
     navIsOpen.current = true;
+    pressed.current = true;
   };
 
   return (
     <Wrapper willDisplay={display}>
       <TitleWrapper>
-        <TitleContainer open={navOpen}>
+        <TitleContainer open={navOpen && !pressed.current}>
           <Title ref={name}>David Campbell</Title>
         </TitleContainer>
         <Line ref={line} open={navOpen} initial={initial} />
-        <RoleContainer open={navOpen}>
+        <RoleContainer open={navOpen && !pressed.current}>
           <Role ref={myRole}>{role}</Role>
         </RoleContainer>
       </TitleWrapper>
-      <NavLinks ref={navLinks} open={navOpen} initial={initial}>
+      <NavLinks
+        ref={navLinks}
+        open={navOpen && !pressed.current}
+        initial={initial}
+      >
         <Link open={navOpen} className="header__link">
           Home
         </Link>
@@ -173,10 +262,6 @@ const TitleWrapper = styled.div`
   }
 `;
 
-// const Logo = styled(LogoDarkSVG)`
-//   width: 5vw;
-//   height: 5vw;
-// `;
 const Line = styled.div<{ open: boolean; initial: boolean }>`
   height: 4.3vw;
   border-left: 0.2vw solid ${colors.brightPurple};
@@ -202,7 +287,7 @@ const TitleContainer = styled.div<{ open: boolean }>`
   height: 4.3vw;
   transform: scaleY(${(props) => (props.open ? 1 : 0)});
   opacity: ${(props) => (props.open ? 1 : 0)};
-  transition: transform 0.3s 0.2s, opacity 0.5s;
+  transition: transform 0.3s 0.1s, opacity 0.5s;
   display: flex;
   flex-direction: column;
 
@@ -263,7 +348,7 @@ const Link = styled.a<{ open: boolean }>`
   font-size: 1.1vw;
   margin-right: 1.3vw;
   cursor: pointer;
-
+  opacity: 0;
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -274,23 +359,17 @@ const Link = styled.a<{ open: boolean }>`
 
 const NavLinks = styled.div<{ open: boolean; initial: boolean }>`
   display: flex;
-  width: ${(props) => (props.initial ? "25vw" : props.open ? "25vw" : "5.4vw")};
+  width: 25vw;
   position: relative;
-  transition: opacity 0.8s, width 0.3s, border 0.6s;
+  transition: opacity 0.8s, width 0.3s 0.4s, border 0.6s;
   transform-origin: right;
   height: 2.5vw;
   align-items: flex-end;
   overflow: hidden;
-  border: 2px solid
-    ${(props) => (props.open ? colors.brightPurpleOpaque : colors.beachBlue)};
-  border-radius: 10px;
+
   padding: 0 0 1vw 1.3vw;
   margin-top: 1vw;
   ${Link}:nth-child(even) {
-    opacity: ${(props) => (props.initial ? 0 : props.open ? 1 : 0)};
-    transform: scaleY(${(props) => (props.initial ? 1 : props.open ? 1 : 0)});
-    z-index: ${(props) => (props.open ? 10 : 0)};
-    transition: 0.2s;
     :hover {
       transform: skew(5deg, -5deg);
       color: ${colors.brightPurple};
@@ -298,10 +377,6 @@ const NavLinks = styled.div<{ open: boolean; initial: boolean }>`
     }
   }
   ${Link}:nth-child(odd) {
-    transition: 0.2s;
-    opacity: ${(props) => (props.initial ? 0 : props.open ? 1 : 0)};
-    transform: scaleY(${(props) => (props.initial ? 1 : props.open ? 1 : 0)});
-    z-index: ${(props) => (props.open ? 10 : 0)};
     :hover {
       transform: skew(-5deg, 5deg);
       color: ${colors.brightPurple};

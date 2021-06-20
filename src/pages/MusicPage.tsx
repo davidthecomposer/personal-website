@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 // import colors from "styles/Colors";
 import Hero from "sections/Music/Hero";
+import MediaMusic from "sections/Music/MediaMusic";
 // import { DesktopContext } from "App";
 
 const MusicPage: React.FC = () => {
@@ -10,6 +11,7 @@ const MusicPage: React.FC = () => {
   return (
     <Wrapper>
       <Hero />
+      <MediaMusic />
     </Wrapper>
   );
 };
