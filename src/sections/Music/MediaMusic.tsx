@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Heading1, MetroHeading32 } from "styles/text";
 import colors from "styles/Colors";
 import media from "styles/media";
+import mediaMusicBG from "assets/images/mediaMusicBG.jpg";
 
 const MediaMusic: React.FC<{}> = () => {
   return (
@@ -13,8 +14,10 @@ const MediaMusic: React.FC<{}> = () => {
 };
 
 const Wrapper = styled.section`
-  height: 100vw;
+  height: 125vw;
   padding: 21.4vw 0 0 0;
+  background-image: url(${mediaMusicBG});
+  background-size: cover;
   position: relative;
   box-sizing: border-box;
   /* -webkit-transform: translate3d(0, 0, 0);
