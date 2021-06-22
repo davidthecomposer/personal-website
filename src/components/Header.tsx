@@ -245,6 +245,17 @@ const Wrapper = styled.nav<{ willDisplay: boolean }>`
   padding: 0.5vw 2vw;
   z-index: 1000;
   right: 0;
+
+  ${media.fullWidth} {
+    height: 108px;
+    width: calc(100% - 72px);
+    display: ${(props) => (props.willDisplay ? "flex" : "none")};
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 36px;
+    z-index: 1000;
+    right: 0;
+  }
 `;
 
 const TitleWrapper = styled.div`
@@ -259,6 +270,8 @@ const TitleWrapper = styled.div`
   ${media.mobile} {
   }
   ${media.fullWidth} {
+    width: 1044px;
+    height: 90px;
   }
 `;
 
@@ -276,6 +289,10 @@ const Line = styled.div<{ open: boolean; initial: boolean }>`
   ${media.mobile} {
   }
   ${media.fullWidth} {
+    height: 77px;
+    border-left: 4px solid ${colors.brightPurple};
+
+    margin-top: 14px;
   }
 `;
 
@@ -296,6 +313,9 @@ const TitleContainer = styled.div<{ open: boolean }>`
   ${media.mobile} {
   }
   ${media.fullWidth} {
+    padding-right: 23px;
+    width: 684px;
+    height: 77px;
   }
 `;
 
@@ -322,6 +342,10 @@ const RoleContainer = styled.div<{ open: boolean }>`
   ${media.mobile} {
   }
   ${media.fullWidth} {
+    height: 36px;
+    padding-left: 23px;
+    width: 198px;
+    margin-top: 14px;
   }
 `;
 
@@ -341,6 +365,9 @@ const Role = styled.span`
   position: absolute;
   letter-spacing: 0;
   left: -100%;
+  ${media.fullWidth} {
+    font-size: 36px;
+  }
 `;
 const Link = styled.a<{ open: boolean }>`
   ${Heading1}
@@ -354,6 +381,8 @@ const Link = styled.a<{ open: boolean }>`
   ${media.mobile} {
   }
   ${media.fullWidth} {
+    font-size: 20px;
+    margin-right: 23px;
   }
 `;
 
@@ -388,6 +417,13 @@ const NavLinks = styled.div<{ open: boolean; initial: boolean }>`
   ${media.mobile} {
   }
   ${media.fullWidth} {
+    width: 450px;
+    position: relative;
+
+    height: 45px;
+
+    padding: 0 0 18px 23px;
+    margin-top: 18px;
   }
 `;
 
@@ -434,5 +470,22 @@ const NavBtn = styled.button`
   ${media.mobile} {
   }
   ${media.fullWidth} {
+    width: 108px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    padding: 0 9px 0 0;
   }
 `;
