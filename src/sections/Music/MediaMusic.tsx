@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useReducer } from "react";
 import styled from "styled-components";
-import { Heading1, Body1, SubHeader, SubHeader2 } from "styles/text";
+import { Heading1, Body1, SubHeader, SubHeader2, FormLabel } from "styles/text";
 import colors from "styles/Colors";
 import media from "styles/media";
 import mediaMusicBG from "assets/images/mediaMusicBG.jpg";
@@ -8,8 +8,50 @@ import { PrimaryButtonStyle } from "styles/Buttons";
 import flatline from "assets/images/flatline.jpg";
 import { ReactComponent as PlayButtonSVG } from "assets/svg/playButton.svg";
 import { ReactComponent as PauseButtonSVG } from "assets/svg/pauseButton.svg";
+import { ReactComponent as ButtonArrowSVG } from "assets/svg/buttonArrow.svg";
 
 const MediaMusic: React.FC<{}> = () => {
+  const inputNames = ["Name", "Email", "Project"];
+
+  const [formData, setFormData] = useReducer(
+    (
+      state: { name: string; email: string; project: string },
+      newState: { name: string; email: string; project: string }
+    ) => ({ ...state, ...newState }),
+    {
+      name: "",
+      email: "",
+      project: "",
+    }
+  );
+
+  const updateFormState = (e: any) => {
+    const name = e.target.name;
+    let newValue = e.target.value;
+    //@ts-ignore
+    setFormData({ [name]: newValue });
+  };
+
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
+
+  const inputs = inputNames.map((input, i) => {
+    return (
+      <FormRow key={i}>
+        <FormText>{input} :</FormText>
+        <TextInput
+          type={"text"}
+          id={`#${input.toLowerCase()}`}
+          name={input.toLowerCase()}
+          //@ts-ignore
+          value={formData[input]}
+          onChange={(e: any) => updateFormState(e)}
+        />
+      </FormRow>
+    );
+  });
+
   return (
     <Wrapper id="media-music">
       <Header>Music for Media</Header>
@@ -56,8 +98,14 @@ const MediaMusic: React.FC<{}> = () => {
           More Copy about the kinds of things I have at my disposal for media
           projects including sounds, conducting, styles, musicians, etc.
         </Text>
-        <GetInTouch>Get in Touch</GetInTouch>
+        <GetInTouch>
+          Get in Touch <Arrow />
+        </GetInTouch>
       </CTA>
+      <FormModal>
+        {inputs}
+        <SendMessage>Send Message</SendMessage>
+      </FormModal>
     </Wrapper>
   );
 };
@@ -440,6 +488,21 @@ const HeadLine = styled.h3`
   ${media.fullWidth} {
   }
 `;
+
+const Arrow = styled(ButtonArrowSVG)`
+  width: 2.5vw;
+  height: 1vw;
+  margin-left: 1.5vw;
+  z-index: 3;
+  transition: 0.5s;
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+  }
+  ${media.fullWidth} {
+  }
+`;
+
 const GetInTouch = styled.button`
   position: absolute;
   bottom: 0;
@@ -450,6 +513,13 @@ const GetInTouch = styled.button`
 
   padding-left: 0.8vw;
 
+  :hover {
+    ${Arrow} {
+      transform: translateX(0.4vw);
+
+      transition: 0.5s;
+    }
+  }
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -457,4 +527,77 @@ const GetInTouch = styled.button`
   ${media.fullWidth} {
   }
 `;
+
+const FormModal = styled.form`
+  position: absolute;
+  width: 24.7vw;
+  height: 19vw;
+  left: 63.4vw;
+  top: 92.3vw;
+  padding: 3.4vw;
+  background: ${colors.formSkinPurprle};
+  border-radius: 0.5vw;
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+  }
+  ${media.fullWidth} {
+  }
+`;
+
+const FormRow = styled.div`
+  display: flex;
+  ${FormLabel};
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.9vw;
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+  }
+  ${media.fullWidth} {
+  }
+`;
+
+const FormText = styled.p`
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+  }
+  ${media.fullWidth} {
+  }
+`;
+
+const TextInput = styled.input`
+  height: 2.5vw;
+  width: 16.5vw;
+  background: linear-gradient(
+    90.38deg,
+    #89c1b4 2.99%,
+    rgba(124, 146, 140, 0.81) 99.88%
+  );
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 0.3vw;
+  padding-left: 1vw;
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+  }
+  ${media.fullWidth} {
+  }
+`;
+
+const SendMessage = styled(GetInTouch)`
+  position: relative;
+  margin-left: 12.1vw;
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+  }
+  ${media.fullWidth} {
+  }
+`;
+
 export default MediaMusic;
