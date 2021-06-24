@@ -4,9 +4,9 @@ import styled from "styled-components";
 import { SlideHeading, MetroHeading32 } from "styles/text";
 // import colors from "styles/Colors";
 import gsap from "gsap";
-import { ReactComponent as BG2SVG } from "assets/svg/slide2BG.svg";
-import { ReactComponent as BG3SVG } from "assets/svg/slide3BG.svg";
-import { ReactComponent as BG4SVG } from "assets/svg/slide4BG.svg";
+// import { ReactComponent as BG2SVG } from "assets/svg/slide2BG.svg";
+// import { ReactComponent as BG3SVG } from "assets/svg/slide3BG.svg";
+// import { ReactComponent as BG4SVG } from "assets/svg/slide4BG.svg";
 import filmTeaser from "assets/images/davidFilmTeaser.jpg";
 import davidSerious from "assets/images/davidSerious.jpg";
 import Liz1 from "assets/images/Liz1.jpg";
@@ -17,7 +17,7 @@ import jennyCampbell from "assets/images/jennyCampbell.jpg";
 import oCTLogo from "assets/images/oCTLogo.jpg";
 import davidSmile1 from "assets/images/davidSmile1.jpg";
 import oCTSeason from "assets/images/oCTSeason.jpg";
-import colors from "styles/Colors";
+// import colors from "styles/Colors";
 
 const Hero: React.FC<{}> = () => {
   const [next, setNext] = useState(0);
@@ -368,21 +368,21 @@ const Card = styled.div`
   }
 `;
 
-const BG2 = styled.img`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  opacity: 0;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
+// const BG2 = styled.img`
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   z-index: -1;
+//   opacity: 0;
+//   ${media.tablet} {
+//   }
+//   ${media.mobile} {
+//   }
+//   ${media.fullWidth} {
+//   }
+// `;
 
 const Card2 = styled(Card)`
   ${Header} {
@@ -418,15 +418,6 @@ const Card2 = styled(Card)`
     z-index: 2;
     left: 63.6vw;
     top: -3.1vw;
-  }
-  ${BG2} {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    opacity: 0;
   }
 
   ${media.tablet} {
@@ -638,36 +629,36 @@ const Card4 = styled(Card)`
   }
 `;
 
-const BG3 = styled(BG3SVG)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  opacity: 0;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
-const BG4 = styled(BG4SVG)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  opacity: 0;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
+// const BG3 = styled(BG3SVG)`
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   z-index: -1;
+//   opacity: 0;
+//   ${media.tablet} {
+//   }
+//   ${media.mobile} {
+//   }
+//   ${media.fullWidth} {
+//   }
+// `;
+// const BG4 = styled(BG4SVG)`
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   z-index: -1;
+//   opacity: 0;
+//   ${media.tablet} {
+//   }
+//   ${media.mobile} {
+//   }
+//   ${media.fullWidth} {
+//   }
+// `;
 
 const SlideWrapper = styled.div`
   position: relative;

@@ -157,7 +157,11 @@ const MediaMusic: React.FC<{}> = () => {
       });
 
     return (
-      <GenreContainer key={`${title}-${index}`} z={index + 2}>
+      <GenreContainer
+        className={`${tabName ? tabName : "cover"}-genre-${index}`}
+        key={`${title}-${index}`}
+        z={index + 2}
+      >
         <PageAndTab
           className={`${tabName ? tabName : "cover"}-right`}
           z={index}
@@ -165,7 +169,18 @@ const MediaMusic: React.FC<{}> = () => {
           <RightPage>{pieceTemplates}</RightPage>
           {tabName && (
             //@ts-ignore
-            <PageTab onClick={() => handlePageTurn(tabName, turnPage)}>
+            <PageTab
+              onClick={() =>
+                handlePageTurn(
+                  tabName,
+                  //@ts-ignore;
+                  turnPage,
+                  `${"cover"}-genre-${index + 1}`,
+                  `${tabName}-genre-${index}`,
+                  index + 2
+                )
+              }
+            >
               {tabName}
             </PageTab>
           )}
@@ -180,9 +195,15 @@ const MediaMusic: React.FC<{}> = () => {
     );
   });
 
-  const handlePageTurn = (myClass: string, turnPage: string) => {
+  const handlePageTurn = (
+    myClass: string,
+    turnPage: string,
+    containerPage: string,
+    myContainer: string,
+    z: number
+  ) => {
     const tl = gsap.timeline();
-
+    console.log(myClass, turnPage, containerPage, myContainer, z);
     tl.to(
       `.${turnPage}-right`,
       {
@@ -217,6 +238,22 @@ const MediaMusic: React.FC<{}> = () => {
         {
           duration: 0,
           zIndex: soloTurned.current ? 0 : 1,
+        },
+        0.3
+      )
+      .to(
+        `.${containerPage}`,
+        {
+          duration: 0,
+          zIndex: soloTurned.current ? z : 0,
+        },
+        0.3
+      )
+      .to(
+        `.${myContainer}`,
+        {
+          duration: 0,
+          zIndex: soloTurned.current ? 0 : z,
         },
         0.3
       );
