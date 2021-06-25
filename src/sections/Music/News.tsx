@@ -1,24 +1,20 @@
-import React, { useEffect, useState, useRef } from "react";
+import React from "react";
 import styled from "styled-components";
 import { PrimaryButtonStyle } from "styles/Buttons";
-import { SlideHeading, MetroHeading32 } from "styles/text";
 import colors from "styles/Colors";
-import { Heading1, Body1, SubHeader, SubHeader2, FormLabel } from "styles/text";
+import { Heading1, Body1, SubHeader2 } from "styles/text";
 import sampleNews from "assets/images/sampleNews.jpg";
 import media from "styles/media";
 import gsap from "gsap";
-// import { ReactComponent as BG2SVG } from "assets/svg/slide2BG.svg";
-// import { ReactComponent as BG3SVG } from "assets/svg/slide3BG.svg";
-// import { ReactComponent as BG4SVG } from "assets/svg/slide4BG.svg";
-import filmTeaser from "assets/images/davidFilmTeaser.jpg";
-import davidSerious from "assets/images/davidSerious.jpg";
-import Liz1 from "assets/images/Liz1.jpg";
-import mandi1 from "assets/images/mandi1.jpg";
-import { setCommentRange } from "typescript";
+import twitter from "assets/svg/twitterIcon.svg";
+import instagram from "assets/svg/instagramIcon.svg";
+import web from "assets/svg/webIcon.svg";
+import facebook from "assets/svg/facebookIcon.svg";
+import liz2 from "assets/images/liz2.jpg";
+import mandiScarf from "assets/images/mandiScarf.jpg";
+import mandiDemo from "assets/images/mandiDemo.jpg";
 
 const News: React.FC<{}> = () => {
-  const [more, setMore] = useState(false);
-
   const newsItems = [
     {
       title: "News Title Longer 1",
@@ -27,16 +23,36 @@ const News: React.FC<{}> = () => {
         "In the works of Spelling, a predominant concept is the distinction between creation and destruction. Thus, many theories concerning the common ground between society and reality exist. In Models, Inc., Spelling reiterates modernist feminism; in The Heights he examines predialectic narrative. But the subject is contextualised into a semioticist paradigm of expression that includes truth as a reality. If modernist feminism holds, we have to choose between the subtextual paradigm of narrative and conceptualist deconstruction.",
       paragraph1:
         "In a sense, the subject is interpolated into a predialectic narrative that includes language as a whole. Several discourses concerning the semioticist paradigm of expression may be found.",
-      share1: "",
-      share2: "",
-      share3: "",
+      share: [
+        { icon: twitter, link: "" },
+        { icon: facebook, link: "" },
+        { icon: instagram, link: "" },
+        { icon: web, link: "" },
+      ],
+      links1: [
+        { icon: twitter, link: "" },
+        { icon: facebook, link: "" },
+        { icon: instagram, link: "" },
+        { icon: web, link: "" },
+      ],
+      links2: [
+        { icon: twitter, link: "" },
+        { icon: facebook, link: "" },
+        { icon: instagram, link: "" },
+        { icon: web, link: "" },
+      ],
       moreTitle: "Meet them",
-      moreImage1: "",
-      moreText1a: "",
-      moreText1b: "",
-      moreImage2: "",
+      moreImage1: mandiScarf,
+      moreText1: [
+        "In the works of Spelling, and destruction. ground between society and reality exist. In Models, Inc., Spelling reiterates modernist feminism; in The Heights he examines predialectic narrative. But the subject is contextualised into a semioticist paradigm of expression that includes truth as a reality. If modernist feminism holds, we have to choose between the subtextual paradigm of narrative and conceptualist deconstruction.",
+        "In a sense, the subject is interpolated into a predialectic narrative that includes language as a whole. Several discourses concerning the semioticist paradigm of expression may be found.",
+      ],
+      moreText2: [
+        "In the works of Spelling, and destruction. ground between society and reality exist. In Models, Inc., Spelling reiterates modernist feminism; in The Heights he examines predialectic narrative. But the subject is contextualised into a semioticist paradigm of expression that includes truth as a reality. If modernist feminism holds, we have to choose between the subtextual paradigm of narrative and conceptualist deconstruction.",
+        "In a sense, the subject is interpolated into a predialectic narrative that includes language as a whole. Several discourses concerning the semioticist paradigm of expression may be found.",
+      ],
+      moreImage2: liz2,
       moreText2a: "",
-      moreText2b: "",
     },
     {
       title: "News Title 2",
@@ -45,17 +61,35 @@ const News: React.FC<{}> = () => {
         "In the works of Spelling, a predominant concept is the distinction between creation and destruction. Thus, many theories concerning the common ground between society and reality exist. In Models, Inc., Spelling reiterates modernist feminism; in The Heights he examines predialectic narrative. But the subject is contextualised into a semioticist paradigm of expression that includes truth as a reality. If modernist feminism holds, we have to choose between the subtextual paradigm of narrative and conceptualist deconstruction.",
       paragraph1:
         "In a sense, the subject is interpolated into a predialectic narrative that includes language as a whole. Several discourses concerning the semioticist paradigm of expression may be found.",
-      share1: "",
-      share2: "",
-      share3: "",
+      share: [
+        { icon: twitter, link: "" },
+        { icon: facebook, link: "" },
+        { icon: instagram, link: "" },
+        { icon: web, link: "" },
+      ],
+
+      links1: [
+        { icon: twitter, link: "" },
+        { icon: facebook, link: "" },
+        { icon: instagram, link: "" },
+        { icon: web, link: "" },
+      ],
+      links2: [
+        { icon: twitter, link: "" },
+        { icon: facebook, link: "" },
+        { icon: instagram, link: "" },
+        { icon: web, link: "" },
+      ],
       moreTitle: "Meet them",
       layout: "full",
-      moreImage1: "",
-      moreText1a: "",
-      moreText1b: "",
+      moreImage1: mandiDemo,
       moreImage2: "",
-      moreText2a: "",
-      moreText2b: "",
+      moreText1: [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        "Ac ut consequat semper viverra. Porta non pulvinar neque laoreet suspendisse interdum consectetur libero id. Tortor condimentum lacinia quis vel eros donec. Pulvinar pellentesque habitant morbi tristique. Gravida rutrum quisque non tellus orci ac. Enim nulla aliquet porttitor lacus. Elit scelerisque mauris pellentesque pulvinar pellentesque habitant. Et tortor at risus viverra adipiscing at. Etiam sit amet nisl purus in. Nibh tortor id aliquet lectus. Neque viverra justo nec ultrices dui sapien eget mi proin. Integer feugiat scelerisque varius morbi. Magna ac placerat vestibulum lectus mauris ultrices eros. Id ornare arcu odio ut sem.",
+        "Ac ut consequat semper viverra. Porta non pulvinar neque laoreet suspendisse interdum consectetur libero id. Tortor condimentum lacinia quis vel eros donec. Pulvinar pellentesque habitant morbi tristique. Gravida rutrum quisque non tellus orci ac. Enim nulla aliquet porttitor lacus.",
+      ],
+      moreText2: [],
     },
   ];
 
@@ -67,20 +101,18 @@ const News: React.FC<{}> = () => {
       paragraph1,
       moreTitle,
       layout,
-      share1,
-      share2,
-      share3,
+      share,
+      links1,
+      links2,
       moreImage1,
       moreImage2,
-      moreText1a,
-      moreText1b,
-      moreText2a,
-      moreText2b,
+      moreText1,
+      moreText2,
     } = item;
 
     return (
       <NewsCard key={i}>
-        <Front more={more} className={`front-${i}`}>
+        <Front className={`front-${i}`}>
           <TitleContainer>
             <NewsTitle>{title}</NewsTitle>
           </TitleContainer>
@@ -95,34 +127,86 @@ const News: React.FC<{}> = () => {
             <MoreBtn onClick={() => handleMore(`.front-${i}`, `.more-${i}`)}>
               More
             </MoreBtn>
-            <Share>Share</Share>
+            <Share>
+              {" "}
+              <span>Share </span>{" "}
+              {share.map((link, i) => {
+                return (
+                  <a key={`share-${i}`} href={link.link}>
+                    <img src={link.icon} alt="link name" />
+                  </a>
+                );
+              })}{" "}
+            </Share>
           </ButtonRow>
         </Front>
-        <More more={more} className={`more-${i}`}>
-          <NewsTitle>{moreTitle}</NewsTitle>
+        <More className={`more-${i}`}>
+          <TitleContainer>
+            <NewsTitle>{moreTitle}</NewsTitle>
+          </TitleContainer>
           <Back onClick={() => handleBack(`.front-${i}`, `.more-${i}`)}>
             Back
           </Back>
           {!layout && (
             <Row>
               <Half>
-                <MoreImage />
-                <MoreText></MoreText>
-                <Links></Links>
+                <MoreText>
+                  {moreText1.map((text: string, i: any) => {
+                    return <p key={`text1-${i}`}>{text}</p>;
+                  })}
+                </MoreText>
+                <MoreImage src={moreImage1} />
+
+                <Links>
+                  <span>Links</span>
+                  {links1.map((link, i) => {
+                    return (
+                      <a key={`half-link-${i}`} href={link.link}>
+                        <img src={link.icon} alt="link name" />
+                      </a>
+                    );
+                  })}
+                </Links>
               </Half>
               <Half1>
-                <MoreImage />
-                <MoreText></MoreText>
-                <Links></Links>
+                <MoreImage src={moreImage2} />
+                <MoreText>
+                  {moreText2.map((text: string, i: any) => {
+                    return <p key={`text2-${i}`}>{text}</p>;
+                  })}
+                </MoreText>
+                <Links>
+                  <span>Links</span>
+                  {links2.map((link, i) => {
+                    return (
+                      <a key={`half1-link-${i}`} href={link.link}>
+                        <img src={link.icon} alt="link name" />
+                      </a>
+                    );
+                  })}
+                </Links>
               </Half1>
             </Row>
           )}
           {layout === "full" && (
             <Row>
               <Full>
-                <MoreImage />
-                <MoreText></MoreText>
-                <Links></Links>
+                <MoreImage src={moreImage1} />
+                <MoreText>
+                  {moreText1.map((text: string, i: any) => {
+                    return <p key={`text1-full${i}`}>{text}</p>;
+                  })}
+                </MoreText>
+                <Links>
+                  <span>Links</span>
+                  {links1.map((link, i) => {
+                    return (
+                      <a key={`link-full-link-${i}`} href={link.link}>
+                        <img src={link.icon} alt="link name" />
+                      </a>
+                    );
+                  })}
+                </Links>
               </Full>
             </Row>
           )}
@@ -211,7 +295,7 @@ const NewsCard = styled.div`
   width: 81.8vw;
   position: relative;
   overflow: hidden;
-  height: 31.9vw;
+  height: 38vw;
 
   margin-bottom: 11.3vw;
   ${media.tablet} {
@@ -222,14 +306,13 @@ const NewsCard = styled.div`
   }
 `;
 
-const Front = styled.div<{ more: boolean }>`
+const Front = styled.div`
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: 31.9vw;
   left: 0;
   top: 0;
-  transform: translateX(${(props) => (props.more ? "-101%" : "0")});
-  transition: transform 0.5s;
+
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -238,14 +321,13 @@ const Front = styled.div<{ more: boolean }>`
   }
 `;
 
-const More = styled.div<{ more: boolean }>`
+const More = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
   left: 100%;
   top: 0;
-  transform: translateX(${(props) => (props.more ? "-100%" : "0")});
-  transition: transform 0.8s;
+
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -348,18 +430,6 @@ const MainImage = styled.img`
   }
 `;
 
-const Share = styled.button`
-  ${PrimaryButtonStyle};
-  padding-left: 0.7vw;
-  width: 11.9vw;
-  border-color: #73d1ef;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
 const Back = styled.button`
   ${PrimaryButtonStyle};
   padding-left: 0.7vw;
@@ -367,6 +437,7 @@ const Back = styled.button`
   border-color: #73d1ef;
   z-index: 5;
   position: absolute;
+  top: 0.5vw;
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -387,6 +458,91 @@ const MoreBtn = styled.button`
   }
   ${media.fullWidth} {
   }
+`;
+
+const Row = styled.div`
+  position: relative;
+  display: flex;
+  height: 28.3vw;
+  width: 100%;
+  justify-content: space-between;
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+  }
+  ${media.fullWidth} {
+  }
+`;
+
+const MoreImage = styled.img`
+  width: 16.1vw;
+  height: 23.8vw;
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+  }
+  ${media.fullWidth} {
+  }
+`;
+
+const MoreText = styled.div`
+  ${Body1};
+  p {
+    margin-bottom: 0.6vw;
+  }
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+  }
+  ${media.fullWidth} {
+  }
+`;
+
+const Links = styled.div`
+  ${PrimaryButtonStyle};
+  height: 2.5vw;
+  padding: 0.2vw 0 0.3vw 0.7vw;
+  width: 11.9vw;
+  border-color: #ffcef8;
+  z-index: 5;
+  position: relative;
+  bottom: 0;
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  span {
+    margin-right: 4vw;
+  }
+  transition: 0.5s;
+  a {
+    position: relative;
+    margin-right: 0.6vw;
+    opacity: 0;
+    z-index: -1;
+    :hover {
+      transform: rotateZ(360deg);
+      transition: 0.3s;
+    }
+  }
+  :hover {
+    width: 18vw;
+    opacity: 0.5s;
+    a {
+      opacity: 1;
+      z-index: 2;
+      transition: opacity 0.4s z-index 0.4s 0.4s;
+    }
+  }
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+  }
+  ${media.fullWidth} {
+  }
+`;
+
+const Share = styled(Links)`
+  border-color: #73d1ef;
 `;
 
 const NewsItemsWrapper = styled.div`
@@ -422,12 +578,28 @@ const NewsItemsWrapper = styled.div`
     ${ButtonRow} {
       flex-direction: row-reverse;
     }
-    ${Share}, ${MoreBtn} {
+    ${MoreBtn} {
       text-align: right;
       padding-left: 0;
       padding-right: 0.7vw;
       margin-left: 1.3vw;
       margin-right: 0;
+    }
+    ${Links} {
+      border-color: #73d1ef;
+      padding-right: 0.7vw;
+      text-align: right;
+      z-index: 5;
+      flex-direction: row-reverse;
+      span {
+        margin-right: 0;
+        margin-left: 4vw;
+      }
+
+      a {
+        margin-left: 0.6vw;
+        margin-right: 0;
+      }
     }
     ${More} {
       ${NewsTitle} {
@@ -452,59 +624,20 @@ const NewsItemsWrapper = styled.div`
   }
 `;
 
-const Row = styled.div`
-  display: flex;
-  height: 28.3vw;
-  width: 100%;
-  justify-content: space-between;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
-
-const MoreImage = styled.div`
-  width: 16.1vw;
-  height: 23.8vw;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
-
-const MoreText = styled.p`
-  ${Body1};
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
-
-const Links = styled.div`
-  ${PrimaryButtonStyle};
-  padding-left: 0.7vw;
-  width: 11.9vw;
-  border-color: #73d1ef;
-  z-index: 5;
-  position: absolute;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
-
 const Half = styled.div`
   width: 38.7vw;
   height: 100%;
-
+  ${MoreText} {
+    position: absolute;
+    left: 17.6vw;
+    top: -0.5vw;
+    width: 21.1vw;
+  }
+  ${Links} {
+    position: absolute;
+    bottom: 0;
+    border-color: ${colors.formSkinPurprle};
+  }
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -513,9 +646,40 @@ const Half = styled.div`
   }
 `;
 const Half1 = styled.div`
+  position: relative;
   width: 38.7vw;
   height: 100%;
 
+  ${MoreText} {
+    margin-top: -0.5vw;
+    height: 26.2vw;
+  }
+  ${Links} {
+    position: absolute;
+    right: 0;
+    border-color: #73d1ef;
+    padding-right: 0.7vw;
+    text-align: right;
+    z-index: 5;
+    flex-direction: row-reverse;
+    span {
+      margin-right: 0;
+      margin-left: 4vw;
+    }
+
+    a {
+      margin-left: 0.6vw;
+      margin-right: 0;
+    }
+  }
+  ${MoreImage} {
+    float: left;
+    margin-bottom: 0;
+    margin-top: 4.4vw;
+    padding-right: 1.9vw;
+    shape-outside: padding-box;
+    z-index: -1;
+  }
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -527,6 +691,21 @@ const Half1 = styled.div`
 const Full = styled.div`
   width: 100%;
   height: 100%;
+  display: flex;
+  ${MoreImage} {
+    width: 29.3vw;
+    height: 23.8vw;
+    margin-right: 2.5vw;
+  }
+
+  ${Links} {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+  ${MoreText} {
+    width: 46.9vw;
+  }
 
   ${media.tablet} {
   }

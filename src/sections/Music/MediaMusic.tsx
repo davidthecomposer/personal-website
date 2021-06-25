@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useReducer } from "react";
 import styled from "styled-components";
 import { Heading1, Body1, SubHeader, SubHeader2, FormLabel } from "styles/text";
 import colors from "styles/Colors";
@@ -32,9 +32,9 @@ const MediaMusic: React.FC<{}> = () => {
     setFormData({ [name]: newValue });
   };
 
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
+  // useEffect(() => {
+  //   console.log(formData);
+  // }, [formData]);
 
   const inputs = inputNames.map((input, i) => {
     return (
