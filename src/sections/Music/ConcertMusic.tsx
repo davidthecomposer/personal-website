@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useRef } from "react";
+import React, { useReducer, useRef } from "react";
 import styled from "styled-components";
 import {
   Heading1,
@@ -88,7 +88,6 @@ const MediaMusic: React.FC<{}> = () => {
       index < concertPieces.length - 1 && concertPieces[index + 1].tabName
         ? concertPieces[index + 1].tabName
         : "cover";
-    console.log(turnPage);
     const allPlaylist =
       playList &&
       playList.map((piece, i) => {
@@ -203,7 +202,7 @@ const MediaMusic: React.FC<{}> = () => {
     z: number
   ) => {
     const tl = gsap.timeline();
-    console.log(myClass, turnPage, containerPage, myContainer, z);
+    // console.log(myClass, turnPage, containerPage, myContainer, z);
     tl.to(
       `.${turnPage}-right`,
       {
@@ -278,9 +277,9 @@ const MediaMusic: React.FC<{}> = () => {
     setFormData({ [name]: newValue });
   };
 
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
+  // useEffect(() => {
+  //   console.log(formData);
+  // }, [formData]);
 
   const inputs = inputNames.map((input, i) => {
     return (
