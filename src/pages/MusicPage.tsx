@@ -4,7 +4,9 @@ import styled from "styled-components";
 import Hero from "sections/Music/Hero";
 import MediaMusic from "sections/Music/MediaMusic";
 import ConcertMusic from "sections/Music/ConcertMusic";
+import About from "sections/Music/About";
 import News from "sections/Music/News";
+import Connect from "sections/Music/Connect";
 // import { DesktopContext } from "App";
 
 const MusicPage: React.FC = () => {
@@ -16,6 +18,8 @@ const MusicPage: React.FC = () => {
       <MediaMusic />
       <ConcertMusic />
       <News />
+      <About />
+      <Connect />
     </Wrapper>
   );
 };
