@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./fonts/typography.css";
 import Home from "pages/Home";
 import Header from "components/Header";
+import Footer from "components/Footer";
 // import Footer from "components/Footer";
 import styled from "styled-components";
 // import colors from "styles/Colors";
@@ -73,7 +74,7 @@ const App = () => {
                   </Suspense>
                 </Route>
               </Switch>
-              {/* <Footer /> */}
+              <Footer />
             </Router>
           </Wrapper>
         </MobileContext.Provider>
