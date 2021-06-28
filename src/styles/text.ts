@@ -72,6 +72,15 @@ letter-spacing: -0.02em;
 color: #E5FCFA;
 `;
 
+export const FooterSubHeader = `
+font-family: Julius Sans One;
+font-style: normal;
+font-weight: normal;
+font-size: 2.3vw;
+line-height: 100%;
+letter-spacing: -0.02em;
+`;
+
 export const SubHeader3 = `
 font-family: Julius Sans One;
 font-style: normal;

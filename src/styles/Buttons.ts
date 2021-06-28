@@ -11,7 +11,7 @@ ${Body1};
 border: 0.1vw solid white;
 border-width: min(2px);
 box-sizing: border-box;
-border-radius: 10px;
+border-radius: 0.6vw;
 padding-left: 2.3vw; 
 text-align: left;
 cursor: pointer;

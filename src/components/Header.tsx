@@ -277,7 +277,8 @@ const TitleWrapper = styled.div`
 
 const Line = styled.div<{ open: boolean; initial: boolean }>`
   height: 4.3vw;
-  border-left: 0.2vw solid ${colors.brightPurple};
+  background: ${colors.brightPurple};
+  width: 0.2vw;
 
   transform: scaleY(${(props) => (props.initial ? 0 : props.open ? 1 : 0)});
   opacity: 1;

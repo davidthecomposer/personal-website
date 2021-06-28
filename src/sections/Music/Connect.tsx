@@ -1,15 +1,18 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { Heading1, Body1, SubHeader, FormLabel } from "styles/text";
 import colors from "styles/Colors";
 import media from "styles/media";
 import connectBG from "assets/images/connectBG.jpg";
-
+import gsap from "gsap";
 import { PrimaryButtonStyle } from "styles/Buttons";
 import { ReactComponent as ButtonArrowSVG } from "assets/svg/buttonArrow.svg";
 
 const Connect: React.FC<{}> = () => {
   const inputNames = ["Name", "Email", "Project"];
+  const header = useRef(null);
+  const headerLine = useRef(null);
+  const collaborate = useRef(null);
 
   const [formData, setFormData] = useReducer(
     (
@@ -23,16 +26,38 @@ const Connect: React.FC<{}> = () => {
     }
   );
 
+  useEffect(() => {
+    const tl = gsap.timeline({
+      scrollTrigger: { trigger: collaborate.current, start: "top 80%" },
+    });
+
+    tl.from(collaborate.current, {
+      x: "+=6vw",
+      y: "+=3vw",
+      opacity: 0,
+      duration: 1,
+      ease: "power1.inOut",
+    });
+  }, []);
+
+  useEffect(() => {
+    const tl = gsap.timeline({ scrollTrigger: headerLine.current });
+
+    tl.to(headerLine.current, {
+      scale: 1,
+      duration: 1,
+      ease: "power1.inOut",
+    })
+      .to(header.current, { y: 0, duration: 0.6 }, 1)
+      .to(header.current, { x: 0, duration: 0.6 }, 1.6);
+  }, []);
+
   const updateFormState = (e: any) => {
     const name = e.target.name;
     let newValue = e.target.value;
     //@ts-ignore
     setFormData({ [name]: newValue });
   };
-
-  // useEffect(() => {
-  //   console.log(formData);
-  // }, [formData]);
 
   const inputs = inputNames.map((input, i) => {
     return (
@@ -52,8 +77,11 @@ const Connect: React.FC<{}> = () => {
 
   return (
     <Wrapper id="connect">
-      <Header>News</Header>
-      <Collaborate>
+      <HeaderWrapper>
+        <Header ref={header}>Connect</Header>
+        <HeaderLine ref={headerLine} />
+      </HeaderWrapper>
+      <Collaborate ref={collaborate}>
         <SubTitle>Let’s Connect</SubTitle>
         <Text>
           There are many variations of passages of Lorem Ipsum available, but
@@ -112,20 +140,10 @@ const Text = styled.p`
 const Header = styled.h2`
   ${Heading1};
   color: ${colors.brightPurple};
-  margin-left: 0;
-  margin-bottom: 11.3vw;
-
-  position: relative;
-  :before {
-    content: "";
-    width: 82.4vw;
-    height: 0.3vw;
-    margin-left: 5.6vw;
-    background: ${colors.brightPurple};
-    position: absolute;
-    bottom: -0.2vw;
-    border-radius: 0.3vw;
-  }
+  width: 51.4vw;
+  transform: translate(5.6vw, 100%);
+  position: absolute;
+  width: fit-content;
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -134,6 +152,39 @@ const Header = styled.h2`
   }
 `;
 
+const HeaderLine = styled.div`
+  width: 82.4vw;
+  height: 0.3vw;
+  margin-left: 5.6vw;
+  background: ${colors.brightPurple};
+  position: absolute;
+  bottom: 0;
+  transform: scaleX(0);
+  transform-origin: 100%;
+  border-radius: 0.3vw;
+
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+  }
+  ${media.fullWidth} {
+  }
+`;
+
+const HeaderWrapper = styled.div`
+  position: relative;
+  width: 90vw;
+  height: 5vw;
+
+  overflow: hidden;
+
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+  }
+  ${media.fullWidth} {
+  }
+`;
 const Collaborate = styled.div`
   position: absolute;
   width: 37.4vw;
