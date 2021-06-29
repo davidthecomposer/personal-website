@@ -321,9 +321,6 @@ const Wrapper = styled.section`
   padding: 9vw 0 0 0;
   position: relative;
   box-sizing: border-box;
-  /* -webkit-transform: translate3d(0, 0, 0);
-  -webkit-transform-style: preserve-3d;
-  -webkit-backface-visibility: hidden; */
 
   ${media.mobile} {
     width: 100%;
@@ -459,53 +456,7 @@ const Card = styled.div`
   }
   ${media.mobile} {
   }
-  ${media.fullWidth} {
-    width: 1584px;
-    height: 810px;
-
-    position: absolute;
-    left: 110px;
-    top: 187px;
-    z-index: 1;
-
-    img {
-      position: absolute;
-      width: 100%;
-      top: 0;
-      z-index: -1;
-      opacity: 0;
-    }
-    ${Header} {
-      width: fit-content;
-      bottom: -67px;
-
-      right: 124px;
-    }
-
-    ${Metro36} {
-      right: 214px;
-      bottom: 130px;
-
-      width: fit-content;
-    }
-  }
 `;
-
-// const BG2 = styled.img`
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   z-index: -1;
-//   opacity: 0;
-//   ${media.tablet} {
-//   }
-//   ${media.mobile} {
-//   }
-//   ${media.fullWidth} {
-//   }
-// `;
 
 const Card2 = styled(Card)`
   ${Header} {
@@ -546,42 +497,6 @@ const Card2 = styled(Card)`
   ${media.tablet} {
   }
   ${media.mobile} {
-  }
-  ${media.fullWidth} {
-    ${Header} {
-      width: 648px;
-      bottom: 56px;
-      left: 101px;
-    }
-
-    ${Metro36} {
-      left: 11px;
-      top: 68px;
-
-      width: fit-content;
-    }
-    img {
-      width: 317px;
-      height: 455px;
-      box-shadow: 11px 11px 29px 13px rgba(0, 0, 0, 0.25);
-      border-radius: 0vw;
-    }
-
-    img:nth-child(1) {
-      z-index: 1;
-      left: 526px;
-      top: -104px;
-    }
-    img:nth-child(2) {
-      z-index: 3;
-      left: 835px;
-      top: 88px;
-    }
-    img:nth-child(3) {
-      z-index: 2;
-      left: 1145px;
-      top: -56px;
-    }
   }
 `;
 const Card3 = styled(Card)`
@@ -629,47 +544,6 @@ const Card3 = styled(Card)`
   }
   ${media.mobile} {
   }
-  ${media.fullWidth} {
-    ${Header} {
-      width: 637px;
-      right: auto;
-      bottom: 38px;
-      right: 50px;
-    }
-
-    ${Metro36} {
-      right: 140px;
-      top: 76px;
-
-      width: fit-content;
-    }
-
-    img {
-      position: absolute;
-      width: 322px;
-      height: 454px;
-      box-shadow: 11px 11px 29px 13px rgba(0, 0, 0, 0.25);
-      border-radius: 0vw;
-    }
-
-    img:nth-child(1) {
-      z-index: 1;
-      left: 4px;
-      top: 110px;
-    }
-    img:nth-child(2) {
-      z-index: 3;
-      width: 443px;
-      height: 443px;
-      left: 320px;
-      top: 7px;
-    }
-    img:nth-child(3) {
-      z-index: 2;
-      left: 760px;
-      top: -95px;
-    }
-  }
 `;
 const Card4 = styled(Card)`
   ${Header} {
@@ -712,76 +586,7 @@ const Card4 = styled(Card)`
   }
   ${media.mobile} {
   }
-  ${media.fullWidth} {
-    ${Header} {
-      width: fit-content;
-      left: 90px;
-      top: 148px;
-    }
-
-    ${Metro36} {
-      right: 175px;
-      bottom: 45px;
-      width: fit-content;
-    }
-
-    img {
-      position: absolute;
-      box-shadow: 11px 11px 29px 13px rgba(0, 0, 0, 0.25);
-      border-radius: 0vw;
-    }
-
-    img:nth-child(1) {
-      z-index: 1;
-
-      width: 367px;
-      height: 439px;
-
-      right: 85px;
-      top: -13px;
-    }
-    img:nth-child(2) {
-      z-index: 2;
-      width: 1073px;
-      height: 405px;
-      top: auto;
-      right: auto;
-      left: 90px;
-      bottom: 180px;
-    }
-  }
 `;
-
-// const BG3 = styled(BG3SVG)`
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   z-index: -1;
-//   opacity: 0;
-//   ${media.tablet} {
-//   }
-//   ${media.mobile} {
-//   }
-//   ${media.fullWidth} {
-//   }
-// `;
-// const BG4 = styled(BG4SVG)`
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   z-index: -1;
-//   opacity: 0;
-//   ${media.tablet} {
-//   }
-//   ${media.mobile} {
-//   }
-//   ${media.fullWidth} {
-//   }
-// `;
 
 const SlideWrapper = styled.div`
   position: relative;
@@ -790,9 +595,6 @@ const SlideWrapper = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
-  }
-  ${media.fullWidth} {
-    height: 970px;
   }
 `;
 

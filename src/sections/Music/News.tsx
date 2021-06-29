@@ -293,9 +293,6 @@ const Wrapper = styled.section`
     height: 240vw;
     padding: 15vw 0vw 0vw 23vw;
   }
-  ${media.fullWidth} {
-    padding: 162px 0 0 0;
-  }
 `;
 
 const Header = styled.h2`

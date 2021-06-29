@@ -7,22 +7,10 @@ import mediaMusicBG from "assets/images/mediaMusicBG.jpg";
 import { PrimaryButtonStyle } from "styles/Buttons";
 import flatline from "assets/images/flatline.jpg";
 import gsap from "gsap";
+import AudioPlayer from "components/AudioPlayer";
 import { ReactComponent as PlayButtonSVG } from "assets/svg/playButton.svg";
 import { ReactComponent as PauseButtonSVG } from "assets/svg/pauseButton.svg";
 import { ReactComponent as ButtonArrowSVG } from "assets/svg/buttonArrow.svg";
-const flatlineMP3 = require("assets/audio/flatLine.mp3").default;
-const forceOfNatureMP3 =
-  require("../../assets/audio/forceOfNature.mp3").default;
-const loveStoryMP3 = require("../../assets/audio/loveStory.mp3").default;
-const mischeivousMP3 = require("../../assets/audio/mischeivous.mp3").default;
-const redemptionMP3 = require("../../assets/audio/redemption.mp3").default;
-const rescueMP3 = require("../../assets/audio/rescue.mp3").default;
-const afterMP3 = require("../../assets/audio/rockIntro.mp3").default;
-const starlightMP3 =
-  require("../../assets/audio/starlightStarbright.mp3").default;
-const starFlightMP3 =
-  require("../../assets/audio/starflightStarbright.mp3").default;
-const turningPointMP3 = require("../../assets/audio/turningPoint.mp3").default;
 
 const MediaMusic: React.FC<{}> = () => {
   const inputNames = ["Name", "Email", "Project"];
@@ -40,11 +28,6 @@ const MediaMusic: React.FC<{}> = () => {
   const [activeTrack, setActiveTrack] = useState(0);
   const [trackState, setTrackState] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState(0);
-  useEffect(() => {
-    if (audioPlayer.current) {
-      console.log(audioPlayer.current);
-    }
-  }, [playing]);
 
   const tracks = useRef([
     {
@@ -55,8 +38,6 @@ const MediaMusic: React.FC<{}> = () => {
         "Details about the music. Could talk about orchestration or instruments or something that would add interest.",
       story:
         "This Is where the story will go. It will be a short paragraph about the scene and will explain Some kind of thing about it. It will try to set the mood and give the reader some more intormation about why I made the choices I did. ",
-      initialTime: "3:45",
-      audio: flatlineMP3,
     },
     {
       title: "Rescue",
@@ -66,8 +47,6 @@ const MediaMusic: React.FC<{}> = () => {
         "Details about the music. Could talk about orchestration or instruments or something that would add interest.",
       story:
         "This Is where the story will go. It will be a short paragraph about the scene and will explain Some kind of thing about it. It will try to set the mood and give the reader some more intormation about why I made the choices I did. ",
-      initialTime: "3:45",
-      audio: rescueMP3,
     },
     {
       title: "Mischeivous Endeavors",
@@ -75,8 +54,6 @@ const MediaMusic: React.FC<{}> = () => {
       video: false,
       music: "",
       story: "",
-      initialTime: "",
-      audio: mischeivousMP3,
     },
     {
       title: "Turning Point",
@@ -84,8 +61,6 @@ const MediaMusic: React.FC<{}> = () => {
       video: false,
       music: "",
       story: "",
-      initialTime: "",
-      audio: turningPointMP3,
     },
     {
       title: "After",
@@ -93,8 +68,6 @@ const MediaMusic: React.FC<{}> = () => {
       video: false,
       music: "",
       story: "",
-      initialTime: "",
-      audio: afterMP3,
     },
     {
       title: "Redemption",
@@ -102,8 +75,6 @@ const MediaMusic: React.FC<{}> = () => {
       video: false,
       music: "",
       story: "",
-      initialTime: "",
-      audio: redemptionMP3,
     },
     {
       title: "StarLight, StarFlight",
@@ -111,8 +82,6 @@ const MediaMusic: React.FC<{}> = () => {
       video: false,
       music: "",
       story: "",
-      initialTime: "",
-      audio: starlightMP3,
     },
     {
       title: "Starflight, Starbright",
@@ -120,8 +89,6 @@ const MediaMusic: React.FC<{}> = () => {
       video: false,
       music: "",
       story: "",
-      initialTime: "",
-      audio: starFlightMP3,
     },
     {
       title: "Music for a Love Story",
@@ -129,8 +96,6 @@ const MediaMusic: React.FC<{}> = () => {
       video: false,
       music: "",
       story: "",
-      initialTime: "",
-      audio: loveStoryMP3,
     },
     {
       title: "Force Of Nature",
@@ -138,8 +103,6 @@ const MediaMusic: React.FC<{}> = () => {
       video: false,
       music: "",
       story: "",
-      initialTime: "",
-      audio: forceOfNatureMP3,
     },
   ]);
 
@@ -163,38 +126,6 @@ const MediaMusic: React.FC<{}> = () => {
     //@ts-ignore
     setFormData({ [name]: newValue });
   };
-
-  const playAudio = () => {
-    if (audioPlayer.current) {
-      //@ts-ignore
-      audioPlayer.current.play();
-    }
-  };
-
-  const pauseAudio = () => {
-    if (audioPlayer.current) {
-      //@ts-ignore
-      audioPlayer.current.pause();
-    }
-  };
-
-  useEffect(() => {
-    //@ts-ignore
-    if (audioPlayer.current.playing) {
-    }
-  }, [activeTrack]);
-
-  const trackList = tracks.current.map((track, i) => {
-    return (
-      <Track key={i}>
-        <Row1 active={activeTrack === i} onClick={() => setActiveTrack(i)}>
-          <Text>{track.title}</Text>
-          <Text>{track.initialTime}</Text>
-        </Row1>
-        <Progress></Progress>
-      </Track>
-    );
-  });
 
   const allTracks = tracks.current.map((track, i) => {
     return (
@@ -308,49 +239,13 @@ const MediaMusic: React.FC<{}> = () => {
     );
   });
 
-  const handleClick = () => {
-    if (isPlaying.current) {
-      setPlaying(false);
-      //@ts-ignore
-      audioPlayer.current.pause();
-      isPlaying.current = false;
-    } else {
-      setPlaying(true);
-      //@ts-ignore
-      audioPlayer.current.play();
-      isPlaying.current = true;
-    }
-  };
-
   return (
     <Wrapper id="media-music">
       <HeaderWrapper>
         <Header ref={header}>Music for Media</Header>
         <HeaderLine ref={headerLine} />
       </HeaderWrapper>
-      <Playlist ref={playList}>
-        <PlayBack>
-          <Play onClick={handleClick} play={playing}>
-            <PauseButton />
-            <PlayButton />
-          </Play>
-          <AutoPlay>
-            <Text>Auto-play</Text>
-          </AutoPlay>
-        </PlayBack>
-
-        <Inner>
-          <Track>
-            <Player src={tracks.current[activeTrack].audio} ref={audioPlayer} />
-            <Row1 active>
-              <Text>{nowPlaying}</Text>
-              <Text>{timeRemaining}</Text>
-            </Row1>
-            <Progress></Progress>
-          </Track>
-          {trackList}
-        </Inner>
-      </Playlist>
+      <AudioPlayer />
       <Screen ref={screen}>{allTracks}</Screen>
       <CTA ref={cta}>
         <HeadLine>Have a Media Project?</HeadLine>
@@ -403,8 +298,6 @@ const Header = styled.h2`
   }
   ${media.mobile} {
   }
-  ${media.fullWidth} {
-  }
 `;
 
 const HeaderLine = styled.div`
@@ -422,8 +315,6 @@ const HeaderLine = styled.div`
   }
   ${media.mobile} {
   }
-  ${media.fullWidth} {
-  }
 `;
 
 const HeaderWrapper = styled.div`
@@ -436,61 +327,6 @@ const HeaderWrapper = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
-
-const Playlist = styled.div`
-  position: absolute;
-  width: 22.5vw;
-  height: 31.3vw;
-  left: 6.3vw;
-  top: 40.9vw;
-
-  border: 0.1vw solid rgba(219, 219, 219, 0.15);
-  /* card Shadow */
-  background: radial-gradient(
-    87.7% 87.7% at 14.86% 8.6%,
-    rgba(0, 186, 227, 0.1) 0%,
-    rgba(9, 45, 56, 0.1) 32.81%,
-    rgba(21, 111, 131, 0.1) 78.1%,
-    rgba(2, 209, 255, 0.1) 100%
-  );
-  border: 1px solid #000000;
-  box-sizing: border-box;
-
-  /* Note: backdrop-filter has minimal browser support */
-
-  border-radius: 5px;
-  box-shadow: 0.6vw 0.6vw 1.9vw 0.8vw rgba(0, 0, 0, 0.25);
-  border-radius: 0.3vw;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
-
-const Inner = styled.div`
-  position: absolute;
-  width: 20.1vw;
-  height: 25.8vw;
-  left: 0.7vw;
-  top: 3.9vw;
-  padding: 0.5vw;
-  background: radial-gradient(
-    50% 50% at 50% 50%,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 0.95) 100%
-  );
-  border-radius: 0.3vw;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
   }
 `;
 
@@ -518,8 +354,6 @@ const Screen = styled.div`
   }
   ${media.mobile} {
   }
-  ${media.fullWidth} {
-  }
 `;
 
 const TrackWrapper = styled.div<{ activeTrack: boolean }>`
@@ -534,8 +368,6 @@ const TrackWrapper = styled.div<{ activeTrack: boolean }>`
   }
   ${media.mobile} {
   }
-  ${media.fullWidth} {
-  }
 `;
 
 const ControlPanel = styled.div`
@@ -545,8 +377,6 @@ const ControlPanel = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
-  }
-  ${media.fullWidth} {
   }
 `;
 
@@ -561,8 +391,6 @@ const Story = styled.button`
   }
   ${media.mobile} {
   }
-  ${media.fullWidth} {
-  }
 `;
 const Music = styled.button`
   ${PrimaryButtonStyle};
@@ -574,8 +402,6 @@ const Music = styled.button`
   ${media.tablet} {
   }
   ${media.mobile} {
-  }
-  ${media.fullWidth} {
   }
 `;
 const Details = styled.button`
@@ -589,8 +415,6 @@ const Details = styled.button`
   }
   ${media.mobile} {
   }
-  ${media.fullWidth} {
-  }
 `;
 
 const Text = styled.div`
@@ -600,8 +424,6 @@ const Text = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
-  }
-  ${media.fullWidth} {
   }
 `;
 
@@ -615,8 +437,6 @@ const TrackText = styled.p<{ visibleText?: boolean }>`
   }
   ${media.mobile} {
   }
-  ${media.fullWidth} {
-  }
 `;
 
 const Title = styled.h3`
@@ -627,8 +447,6 @@ const Title = styled.h3`
   ${media.tablet} {
   }
   ${media.mobile} {
-  }
-  ${media.fullWidth} {
   }
 `;
 
@@ -649,149 +467,6 @@ const ImageWrapper = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
-
-const PlayBack = styled.div`
-  position: absolute;
-  width: 19.1vw;
-  height: 2.9vw;
-  left: 0.7vw;
-  top: 0.5vw;
-  background: #000000;
-  border-radius: 0.3vw;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 1vw;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
-
-const PlayButton = styled(PlayButtonSVG)`
-  opacity: 1;
-  position: relative;
-  width: 1.2vw;
-  height: 1.4vw;
-
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
-
-const PauseButton = styled(PauseButtonSVG)`
-  opacity: 1;
-  position: absolute;
-  width: 2vw;
-  height: 2vw;
-  top: 0.2vw;
-  left: 0.2vw;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
-const Play = styled.button<{ play: boolean }>`
-  position: relative;
-  width: 2.5vw;
-  height: 2.5vw;
-  border-radius: 100%;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: ${colors.formSkinPurprle};
-
-  ${PlayButton} {
-    opacity: ${(props) => (props.play ? 0 : 1)};
-  }
-
-  ${PauseButton} {
-    opacity: ${(props) => (props.play ? 1 : 0)};
-  }
-
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
-
-const AutoPlay = styled.button`
-  width: 7.5vw;
-  height: 2.5vw;
-  border-radius: 0.6vw;
-  background: ${colors.formSkinPurprle};
-  appearance: none;
-  --webkit-appearance: none;
-  border: none;
-  padding: 0.2vw;
-
-  ${Text} {
-    color: ${colors.activeTeal};
-    background: black;
-    width: 100%;
-    height: 100%;
-    line-height: 2vw;
-    border-radius: 0.4vw;
-  }
-
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
-
-const Track = styled.div`
-  ${Body1};
-  height: 2.6vw;
-
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
-
-const Row1 = styled.div<{ active: boolean }>`
-  display: flex;
-  justify-content: space-between;
-
-  ${Text} {
-    width: fit-content;
-    color: ${(props) =>
-      props.active ? colors.coolWhite : colors.coolWhiteLight};
-  }
-
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
-
-const Progress = styled.div`
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
   }
 `;
 
@@ -947,20 +622,6 @@ const SendMessage = styled(GetInTouch)`
 const TextWrapper = styled.div`
   width: 19.3vw;
   position: relative;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
-
-const Player = styled.audio`
-  height: 0;
-  width: 0;
-  position: relative;
-  padding: 0;
-  display: none;
   ${media.tablet} {
   }
   ${media.mobile} {
