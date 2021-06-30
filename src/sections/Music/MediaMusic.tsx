@@ -8,8 +8,6 @@ import { PrimaryButtonStyle } from "styles/Buttons";
 import flatline from "assets/images/flatline.jpg";
 import gsap from "gsap";
 import AudioPlayer from "components/AudioPlayer";
-import { ReactComponent as PlayButtonSVG } from "assets/svg/playButton.svg";
-import { ReactComponent as PauseButtonSVG } from "assets/svg/pauseButton.svg";
 import { ReactComponent as ButtonArrowSVG } from "assets/svg/buttonArrow.svg";
 
 const MediaMusic: React.FC<{}> = () => {
@@ -21,13 +19,9 @@ const MediaMusic: React.FC<{}> = () => {
   const cta = useRef(null);
   const form = useRef(null);
   const [enter, setEnter] = useState(false);
-  const [firstLoad, setFirstLoad] = useState(true);
-  const audioPlayer = useRef<HTMLAudioElement>(null);
-  const isPlaying = useRef(false);
-  const [playing, setPlaying] = useState(false);
-  const [activeTrack, setActiveTrack] = useState(0);
+
+  const [activeScreen, setActiveScreen] = useState(0);
   const [trackState, setTrackState] = useState(0);
-  const [timeRemaining, setTimeRemaining] = useState(0);
 
   const tracks = useRef([
     {
@@ -106,7 +100,82 @@ const MediaMusic: React.FC<{}> = () => {
     },
   ]);
 
-  const [nowPlaying, setNowPlaying] = useState(tracks.current[0].title);
+  useEffect(() => {
+    if (form.current) {
+      const tl = gsap.timeline();
+      if (enter) {
+        tl.to(form.current, { scale: 1, duration: 0 }, 0).to(
+          form.current,
+          { opacity: 1, y: 0, duration: 0.6 },
+          0.1
+        );
+      } else {
+        tl.to(form.current, { scale: 0, y: "100px", duration: 0 }, 0.6).to(
+          form.current,
+          { opacity: 0, duration: 0.6 },
+          0
+        );
+      }
+    }
+  }, [enter]);
+
+  useEffect(() => {
+    if (headerLine.current) {
+      const tl = gsap.timeline({
+        scrollTrigger: { trigger: headerLine.current, start: "top 90%" },
+      });
+
+      tl.to(headerLine.current, {
+        scale: 1,
+        duration: 1,
+        ease: "power1.inOut",
+      })
+        .to(header.current, { y: 0, duration: 0.6 }, 1)
+        .to(header.current, { x: 0, duration: 0.6 }, 1.6);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (screen.current) {
+      const tl = gsap.timeline({
+        scrollTrigger: { trigger: screen.current, start: "top 90%" },
+      });
+
+      tl.from(screen.current, {
+        x: "+=3vw",
+        y: "+=3vw",
+        opacity: 0,
+        duration: 1,
+        ease: "power1.inOut",
+      }).from(
+        playList.current,
+        {
+          x: "-=3vw",
+          y: "+=3vw",
+          duration: 1,
+          opacity: 0,
+          ease: "power1.inOut",
+        },
+        0.3
+      );
+    }
+  }, []);
+
+  useEffect(() => {
+    if (cta.current) {
+      const tl = gsap.timeline({
+        scrollTrigger: { trigger: cta.current, start: "top 80%" },
+      });
+
+      tl.from(cta.current, {
+        x: "+=6vw",
+        y: "+=3vw",
+        opacity: 0,
+        duration: 1,
+        ease: "power1.inOut",
+      });
+    }
+  }, []);
 
   const [formData, setFormData] = useReducer(
     (
@@ -129,9 +198,9 @@ const MediaMusic: React.FC<{}> = () => {
 
   const allTracks = tracks.current.map((track, i) => {
     return (
-      <TrackWrapper
+      <ScreenWrapper
         key={`track-presentation-${i}`}
-        activeTrack={activeTrack === i}
+        activeScreen={activeScreen === i}
       >
         <ControlPanel>
           <Story onClick={() => setTrackState(0)}>Story</Story>
@@ -139,10 +208,10 @@ const MediaMusic: React.FC<{}> = () => {
           <Details>Details</Details>
         </ControlPanel>
         <TextWrapper>
-          <TrackText visibleText={activeTrack === i && trackState === 0}>
+          <TrackText visibleText={activeScreen === i && trackState === 0}>
             {track.story}
           </TrackText>
-          <TrackText visibleText={activeTrack === i && trackState === 1}>
+          <TrackText visibleText={activeScreen === i && trackState === 1}>
             {track.music}
           </TrackText>
         </TextWrapper>
@@ -150,78 +219,9 @@ const MediaMusic: React.FC<{}> = () => {
           <img src={track.img} alt={track.title} />
         </ImageWrapper>
         <Title>{track.title}</Title>
-      </TrackWrapper>
+      </ScreenWrapper>
     );
   });
-
-  useEffect(() => {
-    const tl = gsap.timeline();
-    if (enter) {
-      tl.to(form.current, { scale: 1, duration: 0 }, 0).to(
-        form.current,
-        { opacity: 1, y: 0, duration: 0.6 },
-        0.1
-      );
-    } else {
-      tl.to(form.current, { scale: 0, y: "100px", duration: 0 }, 0.6).to(
-        form.current,
-        { opacity: 0, duration: 0.6 },
-        0
-      );
-    }
-  }, [enter]);
-
-  useEffect(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: { trigger: headerLine.current, start: "top 90%" },
-    });
-
-    tl.to(headerLine.current, {
-      scale: 1,
-      duration: 1,
-      ease: "power1.inOut",
-    })
-      .to(header.current, { y: 0, duration: 0.6 }, 1)
-      .to(header.current, { x: 0, duration: 0.6 }, 1.6);
-  }, []);
-
-  useEffect(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: { trigger: screen.current, start: "top 90%" },
-    });
-
-    tl.from(screen.current, {
-      x: "+=3vw",
-      y: "+=3vw",
-      opacity: 0,
-      duration: 1,
-      ease: "power1.inOut",
-    }).from(
-      playList.current,
-      {
-        x: "-=3vw",
-        y: "+=3vw",
-        duration: 1,
-        opacity: 0,
-        ease: "power1.inOut",
-      },
-      0.3
-    );
-  }, []);
-
-  useEffect(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: { trigger: cta.current, start: "top 80%" },
-    });
-
-    tl.from(cta.current, {
-      x: "+=6vw",
-      y: "+=3vw",
-      opacity: 0,
-      duration: 1,
-      ease: "power1.inOut",
-    });
-  }, []);
 
   const inputs = inputNames.map((input, i) => {
     return (
@@ -245,7 +245,7 @@ const MediaMusic: React.FC<{}> = () => {
         <Header ref={header}>Music for Media</Header>
         <HeaderLine ref={headerLine} />
       </HeaderWrapper>
-      <AudioPlayer />
+      <AudioPlayer setActiveScreen={setActiveScreen} />
       <Screen ref={screen}>{allTracks}</Screen>
       <CTA ref={cta}>
         <HeadLine>Have a Media Project?</HeadLine>
@@ -356,14 +356,15 @@ const Screen = styled.div`
   }
 `;
 
-const TrackWrapper = styled.div<{ activeTrack: boolean }>`
+const ScreenWrapper = styled.div<{ activeScreen: boolean }>`
   position: absolute;
   width: 60vw;
   height: 28vw;
   padding: 1.5vw;
   top: 0;
   left: 0;
-  opacity: ${(props) => (props.activeTrack ? 1 : 0)};
+  opacity: ${(props) => (props.activeScreen ? 1 : 0)};
+  transition: opacity 0.5s;
   ${media.tablet} {
   }
   ${media.mobile} {

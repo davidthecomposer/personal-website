@@ -1,12 +1,8 @@
-import React, { useEffect, useReducer, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import styled from "styled-components";
-import { Heading1, Body1, SubHeader, SubHeader2, FormLabel } from "styles/text";
+import { Body1 } from "styles/text";
 import colors from "styles/Colors";
 import media from "styles/media";
-
-import { PrimaryButtonStyle } from "styles/Buttons";
-
-import gsap from "gsap";
 import { ReactComponent as PlayButtonSVG } from "assets/svg/playButton.svg";
 import { ReactComponent as PauseButtonSVG } from "assets/svg/pauseButton.svg";
 
@@ -21,21 +17,17 @@ const starlightMP3 = require("assets/audio/starlightStarbright.mp3").default;
 const starFlightMP3 = require("assets/audio/starflightStarbright.mp3").default;
 const turningPointMP3 = require("assets/audio/turningPoint.mp3").default;
 
-const AudioPlayer: React.FC<{}> = () => {
-  const playList = useRef(null);
+type Props = {
+  setActiveScreen: any;
+};
 
-  const [enter, setEnter] = useState(false);
-  const [firstLoad, setFirstLoad] = useState(true);
+const AudioPlayer: React.FC<Props> = ({ setActiveScreen }) => {
+  const playList = useRef(null);
   const audioPlayer = useRef<HTMLAudioElement>(null);
   const isPlaying = useRef(false);
   const [playing, setPlaying] = useState(false);
   const [activeTrack, setActiveTrack] = useState(0);
-  const [count, setCount] = useState(false);
-  const [ready, setReady] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState("0:00");
-  const [pureTime, setPureTime] = useState(0);
-  const [pureDuration, setPureDuration] = useState(0);
-  const [currentTime, setCurrentTime] = useState("");
   const [autoPlay, setAutoPlay] = useState(false);
 
   const tracks = useRef([
@@ -44,19 +36,21 @@ const AudioPlayer: React.FC<{}> = () => {
       initialTime: "3:45",
       audio: flatlineMP3,
       id: 0,
+      currentTime: 0,
     },
     {
       title: "Rescue",
       initialTime: "3:45",
       audio: rescueMP3,
       id: 1,
+      currentTime: 0,
     },
     {
       title: "Mischeivous Endeavors",
-
       initialTime: "2:41",
       audio: mischeivousMP3,
       id: 2,
+      currentTime: 0,
     },
     {
       title: "Turning Point",
@@ -64,6 +58,7 @@ const AudioPlayer: React.FC<{}> = () => {
       initialTime: "3:32",
       audio: turningPointMP3,
       id: 3,
+      currentTime: 0,
     },
     {
       title: "After",
@@ -71,19 +66,21 @@ const AudioPlayer: React.FC<{}> = () => {
       initialTime: "1:10",
       audio: afterMP3,
       id: 4,
+      currentTime: 0,
     },
     {
       title: "Redemption",
-
       initialTime: "2:54",
       audio: redemptionMP3,
       id: 5,
+      currentTime: 0,
     },
     {
       title: "StarLight, StarFlight",
       initialTime: "4:27",
       audio: starlightMP3,
       id: 6,
+      currentTime: 0,
     },
     {
       title: "Starflight, Starbright",
@@ -91,20 +88,21 @@ const AudioPlayer: React.FC<{}> = () => {
       initialTime: "6:05",
       audio: starFlightMP3,
       id: 7,
+      currentTime: 0,
     },
     {
       title: "Music for a Love Story",
-
       initialTime: "3:05",
       audio: loveStoryMP3,
       id: 8,
+      currentTime: 0,
     },
     {
       title: "Force Of Nature",
-
       initialTime: "1:52",
       audio: forceOfNatureMP3,
       id: 9,
+      currentTime: 0,
     },
   ]);
   const [trackOrder, setTrackOrder] = useState(
@@ -122,36 +120,42 @@ const AudioPlayer: React.FC<{}> = () => {
   );
 
   const [nowPlaying, setNowPlaying] = useState(tracks.current[0].title);
-  const [trackData, setTrackData] = useReducer(
-    (
-      state: { name: string; email: string; project: string },
-      newState: { name: string; email: string; project: string }
-    ) => ({ ...state, ...newState }),
-    {
-      name: "",
-      email: "",
-      project: "",
-    }
-  );
 
-  const updateTrackData = (time: number, name: string) => {
-    //@ts-ignore
-    setFormData({ [name]: time });
-  };
-
-  const playAudio = () => {
+  const playAudio = useCallback(() => {
     if (audioPlayer.current) {
-      //@ts-ignore
+      audioPlayer.current.currentTime = tracks.current[activeTrack].currentTime;
       audioPlayer.current.play();
     }
-  };
+  }, [activeTrack]);
 
-  const pauseAudio = () => {
+  //   const pauseAudio = () => {
+  //     if (audioPlayer.current) {
+  //       //@ts-ignore
+  //       audioPlayer.current.pause();
+  //     }
+  //   };
+
+  const endAudio = () => {
     if (audioPlayer.current) {
       //@ts-ignore
-      audioPlayer.current.pause();
+      audioPlayer.current.load();
+      isPlaying.current = false;
+      setPlaying(!playing);
     }
   };
+
+  const handleTrackChange = useCallback(
+    (num: number) => {
+      if (audioPlayer.current) {
+        const startTime = Math.floor(audioPlayer.current.currentTime);
+        const location = Math.floor(audioPlayer.current.duration - startTime);
+        tracks.current[activeTrack].currentTime = startTime;
+        tracks.current[activeTrack].initialTime = returnTimeString(location);
+      }
+      setActiveTrack(num);
+    },
+    [activeTrack]
+  );
 
   useEffect(() => {
     const trackList = tracks.current.map((track, i) => {
@@ -174,35 +178,41 @@ const AudioPlayer: React.FC<{}> = () => {
       ...trackList.slice(activeTrack, trackList.length),
       ...trackList.slice(0, activeTrack),
     ];
-
-    console.log(trackListOrdered);
-
     const activeInfo = trackListOrdered[0].props["data-id"];
-    console.log(activeInfo, tracks.current[activeInfo].title);
     setNowPlaying(tracks.current[activeInfo].title);
+    setActiveScreen(activeInfo);
     setTrackOrder(trackListOrdered);
 
     if (autoPlay && isPlaying.current) {
       playAudio();
     }
-  }, [activeTrack, autoPlay]);
-
-  const handleTrackChange = (num: number) => {
-    setActiveTrack(num);
-  };
+  }, [activeTrack, autoPlay, handleTrackChange, playAudio, setActiveScreen]);
 
   const handleClick = () => {
-    if (isPlaying.current) {
+    if (isPlaying.current && audioPlayer.current) {
       setPlaying(false);
-      //@ts-ignore
+
       audioPlayer.current.pause();
       isPlaying.current = false;
     } else {
       setPlaying(true);
-      //@ts-ignore
-      audioPlayer.current.play();
-      isPlaying.current = true;
+      if (audioPlayer.current) {
+        audioPlayer.current.play();
+        isPlaying.current = true;
+      }
     }
+  };
+
+  const returnTimeString = (time: number) => {
+    return `${Math.floor(time / 60)}:${
+      time < 10
+        ? `0${time}`
+        : time % 60 < 10
+        ? `0${time % 60}`
+        : time % 60
+        ? time % 60
+        : "00"
+    }`;
   };
 
   const getDuration = () => {
@@ -210,24 +220,24 @@ const AudioPlayer: React.FC<{}> = () => {
       const audio = audioPlayer.current;
       const time = Math.floor(audio.duration) - Math.floor(audio.currentTime);
 
-      const timeRemainingFormat = `${Math.floor(time / 60)}:${
-        time < 10
-          ? `0${time}`
-          : time % 60 < 10
-          ? `0${time % 60}`
-          : time % 60
-          ? time % 60
-          : "00"
-      }`;
+      const timeRemainingFormat = returnTimeString(time);
 
       setTimeRemaining(timeRemainingFormat);
-      setPureTime(audioPlayer.current.currentTime);
-      setPureDuration(audioPlayer.current.duration);
+      //   setPureTime(audioPlayer.current.currentTime);
+      //   setPureDuration(audioPlayer.current.duration);
     }
   };
 
   const handleEnd = () => {
-    setActiveTrack(activeTrack + 1);
+    if (autoPlay) {
+      setActiveTrack(
+        activeTrack === tracks.current.length - 1 ? 0 : activeTrack + 1
+      );
+    } else {
+      if (audioPlayer.current) {
+        endAudio();
+      }
+    }
   };
 
   return (
@@ -248,7 +258,6 @@ const AudioPlayer: React.FC<{}> = () => {
             onDurationChange={getDuration}
             onTimeUpdate={getDuration}
             onEnded={handleEnd}
-            onLoad={() => setReady(true)}
             src={tracks.current[activeTrack].audio}
             ref={audioPlayer}
           />
