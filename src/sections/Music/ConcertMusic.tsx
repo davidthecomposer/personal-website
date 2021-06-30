@@ -1,4 +1,4 @@
-import React, { useReducer, useRef } from "react";
+import React, { useReducer, useRef, useEffect } from "react";
 import styled from "styled-components";
 import {
   Heading1,
@@ -21,6 +21,46 @@ import gsap from "gsap";
 const MediaMusic: React.FC<{}> = () => {
   const inputNames = ["Name", "Email", "Project"];
   const soloTurned = useRef(false);
+  const header = useRef(null);
+  const headerLine = useRef(null);
+  const musicBook = useRef(null);
+  const cta = useRef(null);
+
+  useEffect(() => {
+    const tl = gsap.timeline({ scrollTrigger: headerLine.current });
+
+    tl.to(headerLine.current, {
+      scale: 1,
+      duration: 1,
+      ease: "power1.inOut",
+    })
+      .to(header.current, { y: 0, duration: 0.6 }, 1)
+      .to(header.current, { x: 0, duration: 0.6 }, 1.6);
+  }, []);
+
+  useEffect(() => {
+    const tl = gsap.timeline({
+      scrollTrigger: { trigger: musicBook.current, start: "top 90%" },
+    });
+
+    tl.from(musicBook.current, {
+      x: "+=3vw",
+      y: "+=3vw",
+      opacity: 0,
+      duration: 1.5,
+      ease: "power1.inOut",
+      onComplete: () => {
+        handlePageTurn(
+          "Solo",
+          //@ts-ignore;
+          "cover",
+          `cover-genre-1`,
+          `Solo-genre-0`,
+          2
+        );
+      },
+    });
+  }, []);
 
   const [formData, setFormData] = useReducer(
     (
@@ -202,7 +242,7 @@ const MediaMusic: React.FC<{}> = () => {
     z: number
   ) => {
     const tl = gsap.timeline();
-    // console.log(myClass, turnPage, containerPage, myContainer, z);
+    console.log(myClass, turnPage, containerPage, myContainer, z);
     tl.to(
       `.${turnPage}-right`,
       {
@@ -301,11 +341,11 @@ const MediaMusic: React.FC<{}> = () => {
     <Wrapper id="Concert Music">
       <TopFade />
       <HeaderWrapper>
-        <Header>Concert Music</Header>
-        <HeaderLine />
+        <Header ref={header}>Concert Music</Header>
+        <HeaderLine ref={headerLine} />
       </HeaderWrapper>
-      <MusicBook>{allConcert}</MusicBook>
-      <CTA>
+      <MusicBook ref={musicBook}>{allConcert}</MusicBook>
+      <CTA ref={cta}>
         <HeadLine>Want to Collaborate?</HeadLine>
         <Text>
           More Copy about the kinds of things I have at my disposal for media
@@ -343,11 +383,12 @@ const Wrapper = styled.section`
 `;
 
 const HeaderWrapper = styled.div`
-  display: flex;
+  position: relative;
   flex-direction: column;
   width: 88.1vw;
   margin-left: 6.3vw;
-  align-items: flex-end;
+  height: 5vw;
+  overflow: hidden;
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -359,9 +400,10 @@ const HeaderWrapper = styled.div`
 const Header = styled.h2`
   ${Heading1};
   color: ${colors.brightPurple};
+  transform: translate(-5.6vw, 100%);
+  position: absolute;
   width: fit-content;
-  position: relative;
-
+  right: 0;
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -371,12 +413,14 @@ const Header = styled.h2`
 `;
 
 const HeaderLine = styled.div`
-  position: relative;
+  position: absolute;
   width: 82.4vw;
   height: 0.3vw;
-  margin-right: 3.9vw;
+  right: 3.9vw;
+  bottom: 0;
   background: ${colors.brightPurple};
-
+  transform: scaleX(0);
+  transform-origin: 0%;
   border-radius: 0.3vw;
   ${media.tablet} {
   }

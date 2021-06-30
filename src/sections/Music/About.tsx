@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { Heading1, Body1 } from "styles/text";
 import colors from "styles/Colors";
@@ -8,19 +8,80 @@ import davidAbout from "assets/images/davidAbout.jpg";
 // import { PrimaryButtonStyle } from "styles/Buttons";
 // import { ReactComponent as ButtonArrowSVG } from "assets/svg/buttonArrow.svg";
 // import { ReactComponent as ScoreIconSVG } from "assets/svg/scoreIcon.svg";
-// import gsap from "gsap";
+import gsap from "gsap";
 
 const About: React.FC<{}> = () => {
+  const header = useRef(null);
+  const headerLine = useRef(null);
+  const davidImage = useRef(null);
+  const teal = useRef(null);
+  const grey = useRef(null);
+
+  useEffect(() => {
+    const tl = gsap.timeline({ scrollTrigger: headerLine.current });
+
+    tl.to(
+      headerLine.current,
+      {
+        scale: 1,
+        duration: 1,
+        ease: "power1.inOut",
+      },
+      0
+    )
+      .to(header.current, { y: 0, duration: 0.6 }, 1)
+      .to(header.current, { x: 0, duration: 0.6 }, 1.6)
+      .to(".about-bg-cover", { opacity: 0, duration: 2 }, 1)
+      .to(".about-images", { opacity: 1, stagger: 0.5, duration: 4 }, 2)
+      .to(".about-text", { opacity: 1, duration: 1.5 }, 4);
+  }, []);
+
+  useEffect(() => {
+    const tl = gsap.timeline({
+      scrollTrigger: { trigger: davidImage.current, scrub: true },
+    });
+    tl.from(
+      ".about-text",
+      {
+        yPercent: 60,
+        xPercent: -3,
+        ease: "none",
+      },
+      0
+    )
+      .to(
+        teal.current,
+        {
+          yPercent: 100,
+          xPercent: 20,
+          ease: "none",
+        },
+        0
+      )
+      .to(
+        grey.current,
+        {
+          yPercent: -20,
+          xPercent: -40,
+          ease: "none",
+        },
+        0
+      );
+  }, []);
+
   return (
     <Wrapper id="about">
       <HeaderWrapper>
-        <Header>About</Header>
-        <HeaderLine />
+        <Header ref={header} className="about-header">
+          About
+        </Header>
+        <HeaderLine ref={headerLine} />
       </HeaderWrapper>
-      <Teal />
-      <Grey />
-      <DavidImage src={davidAbout} />
-      <Text>
+      <DavidImage src={davidAbout} className="about-images" ref={davidImage} />
+      <Teal className="about-images" ref={teal} />
+      <Grey className="about-images" ref={grey} />
+
+      <Text className="about-text">
         "But I must explain to you how all this mistaken idea of denouncing
         pleasure and praising pain was born and I will give you a complete
         account of the system, and expound the actual teachings of the great
@@ -66,13 +127,14 @@ const About: React.FC<{}> = () => {
         Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section
         1.10.32.
       </Text>
+      <CoverDiv className="about-bg-cover" />
     </Wrapper>
   );
 };
 
 const Wrapper = styled.section`
   height: 158.5vw;
-  padding: 15.4vw 0 0 0;
+  padding: 15.4vw 0 20vw 0;
   background-size: cover;
   position: relative;
   box-sizing: border-box;
@@ -90,11 +152,12 @@ const Wrapper = styled.section`
 `;
 
 const HeaderWrapper = styled.div`
-  display: flex;
+  position: relative;
   flex-direction: column;
   width: 88.1vw;
   margin-left: 6.3vw;
-  align-items: flex-end;
+  height: 5vw;
+  overflow: hidden;
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -106,9 +169,10 @@ const HeaderWrapper = styled.div`
 const Header = styled.h2`
   ${Heading1};
   color: ${colors.brightPurple};
+  transform: translate(-5.6vw, 100%);
+  position: absolute;
   width: fit-content;
-  position: relative;
-
+  right: 0;
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -118,12 +182,14 @@ const Header = styled.h2`
 `;
 
 const HeaderLine = styled.div`
-  position: relative;
+  position: absolute;
   width: 82.4vw;
   height: 0.3vw;
-  margin-right: 3.9vw;
+  right: 3.9vw;
+  bottom: 0;
   background: ${colors.brightPurple};
-
+  transform: scaleX(0);
+  transform-origin: 0%;
   border-radius: 0.3vw;
   ${media.tablet} {
   }
@@ -140,7 +206,8 @@ const Text = styled.p`
   height: 75.6vw;
   left: 56.9vw;
   top: 60vw;
-
+  opacity: 0;
+  z-index: 3;
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -155,8 +222,9 @@ const Teal = styled.div`
   height: 55.7vw;
   left: 38.6vw;
   top: 31.9vw;
-
+  opacity: 0;
   background: rgba(115, 209, 239, 0.15);
+  z-index: 1;
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -171,8 +239,9 @@ const Grey = styled.div`
   height: 68.9vw;
   left: 22.3vw;
   top: 48.3vw;
-
-  background: rgba(25, 24, 28, 0.5);
+  opacity: 0;
+  background: #1f1f20;
+  z-index: 2;
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -182,11 +251,30 @@ const Grey = styled.div`
 `;
 
 const DavidImage = styled.img`
-  position: absolute;
+  position: sticky;
   width: 36.9vw;
   height: 52.6vw;
   left: 13.2vw;
-  top: 44.7vw;
+  top: 5vw;
+  margin-top: 44.7vw;
+  opacity: 0;
+  z-index: 3;
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+  }
+  ${media.fullWidth} {
+  }
+`;
+
+const CoverDiv = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: black;
 
   ${media.tablet} {
   }

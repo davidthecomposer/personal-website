@@ -4,9 +4,6 @@ import styled from "styled-components";
 import { SlideHeading, MetroHeading32 } from "styles/text";
 // import colors from "styles/Colors";
 import gsap from "gsap";
-// import { ReactComponent as BG2SVG } from "assets/svg/slide2BG.svg";
-// import { ReactComponent as BG3SVG } from "assets/svg/slide3BG.svg";
-// import { ReactComponent as BG4SVG } from "assets/svg/slide4BG.svg";
 import filmTeaser from "assets/images/davidFilmTeaser.jpg";
 import davidSerious from "assets/images/davidSerious.jpg";
 import Liz1 from "assets/images/Liz1.jpg";
@@ -17,7 +14,7 @@ import jennyCampbell from "assets/images/jennyCampbell.jpg";
 import oCTLogo from "assets/images/oCTLogo.jpg";
 import davidSmile1 from "assets/images/davidSmile1.jpg";
 import oCTSeason from "assets/images/oCTSeason.jpg";
-// import colors from "styles/Colors";
+import { useRectGlow } from "components/Blurs";
 
 const Hero: React.FC<{}> = () => {
   const [next, setNext] = useState(0);
@@ -25,6 +22,92 @@ const Hero: React.FC<{}> = () => {
   const ord = useRef(["main1", "ssc", "coc", "cir"]);
   const length = useRef(114 - ord.current.length * 7);
   const direction = useRef(true);
+  const tealCanvas = useRef(null);
+  const tealCanvas1 = useRef(null);
+  const yellowCanvas = useRef(null);
+  const wrapper = useRef(null);
+  const purpleCanvas = useRef(null);
+  const redCanvas = useRef(null);
+  const purpleCanvas2 = useRef(null);
+  const orangeCanvas = useRef(null);
+  const wrapper1 = useRef(null);
+  const wrapper2 = useRef(null);
+
+  useRectGlow(
+    wrapper,
+    purpleCanvas,
+    0,
+    0.1,
+    0.56,
+    0.5,
+    Math.PI / 12,
+    "#91199455"
+  );
+  useRectGlow(
+    wrapper,
+    tealCanvas,
+    0.5,
+    0.6,
+    0.41,
+    0.15,
+    Math.PI / 12,
+    "#009EA886"
+  );
+
+  useRectGlow(
+    wrapper,
+    redCanvas,
+    0.3,
+    0.3,
+    0.55,
+    0.2,
+    Math.PI / 12,
+    "#FF010188"
+  );
+
+  useRectGlow(
+    wrapper,
+    tealCanvas1,
+    0.1,
+    0.1,
+    0.46,
+    0.47,
+    Math.PI / 12,
+    "#2CBBA1"
+  );
+
+  useRectGlow(
+    wrapper,
+    yellowCanvas,
+    0.45,
+    0.1,
+    0.42,
+    0.45,
+    Math.PI / 12,
+    "#99A43C"
+  );
+
+  useRectGlow(
+    wrapper2,
+    purpleCanvas2,
+    0.1,
+    0.05,
+    0.75,
+    0.52,
+    Math.PI / 12,
+    "#4C2D8F77"
+  );
+
+  useRectGlow(
+    wrapper2,
+    orangeCanvas,
+    0.2,
+    0.2,
+    0.65,
+    0.4,
+    Math.PI / 12,
+    "#BB702C"
+  );
 
   useEffect(() => {
     const tl = gsap.timeline({
@@ -109,7 +192,7 @@ const Hero: React.FC<{}> = () => {
         )
         .to(
           `.${current}-bg`,
-          { opacity: 1, duration: 1.8, ease: "power1.inOut" },
+          { opacity: 1, duration: 4, ease: "power1.inOut" },
           0.1
         )
         .to(
@@ -187,9 +270,12 @@ const Hero: React.FC<{}> = () => {
         <Card4 className="slideshow-cir">
           <img className="cir-image" src={davidSmile1} alt="David Campbell" />
           <img className="cir-image" src={oCTSeason} alt="oCTSeason" />
-          {/* <BG4 className="cir-bg" /> */}
           <Header className="cir-header">Composer-in-residence</Header>
           <Metro36 className="cir-metro">beginning 2020</Metro36>
+          <CanvasGroup ref={wrapper2} className="cir-bg">
+            <Canvas ref={orangeCanvas} blur={5} />
+            <Canvas ref={purpleCanvas2} blur={4} />
+          </CanvasGroup>
         </Card4>
         <Card3 className="slideshow-coc">
           <img className="coc-image" src={davidSkeptic} alt="David Campbell" />
@@ -202,7 +288,10 @@ const Hero: React.FC<{}> = () => {
 
           <Header className="coc-header">Chamber Opera Commission</Header>
           <Metro36 className="coc-metro">Summer 2022</Metro36>
-          {/* <BG3 className="coc-bg" /> */}
+          <CanvasGroup ref={wrapper1} className="coc-bg">
+            <Canvas ref={yellowCanvas} blur={5} />
+            <Canvas ref={tealCanvas1} blur={4} />
+          </CanvasGroup>
         </Card3>
 
         <Card2 className="slideshow-ssc">
@@ -211,7 +300,11 @@ const Hero: React.FC<{}> = () => {
           <img className="ssc-image" src={mandi1} alt="Mandi Barrus" />
           <Header className="ssc-header">Song Cycle Commission</Header>
           <Metro36 className="ssc-metro">Autumn 2021</Metro36>
-          {/* <BG2 className="ssc-bg" src={slide2BG} /> */}
+          <CanvasGroup ref={wrapper} className="ssc-bg">
+            <Canvas ref={redCanvas} blur={9} z={3} />
+            <Canvas ref={purpleCanvas} blur={3.5} z={2} />
+            <Canvas ref={tealCanvas} blur={2.5} z={1} />
+          </CanvasGroup>
         </Card2>
         <Card className="slideshow-main1">
           <Header className="main1-header">Flatline</Header>
@@ -228,9 +321,6 @@ const Wrapper = styled.section`
   padding: 9vw 0 0 0;
   position: relative;
   box-sizing: border-box;
-  /* -webkit-transform: translate3d(0, 0, 0);
-  -webkit-transform-style: preserve-3d;
-  -webkit-backface-visibility: hidden; */
 
   ${media.mobile} {
     width: 100%;
@@ -239,6 +329,36 @@ const Wrapper = styled.section`
   }
   ${media.fullWidth} {
     padding: 162px 0 0 0;
+  }
+`;
+
+const Canvas = styled.canvas<{ blur: number; z?: number }>`
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  filter: blur(${(props) => `${props.blur}vw`});
+  z-index: ${(props) => props.z};
+`;
+
+const CanvasGroup = styled.div`
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+
+  z-index: -1;
+  ${media.mobile} {
+    width: 190vw;
+    height: 225vw;
+    left: -45vw;
+    top: 50vw;
+    ${Canvas} {
+      filter: blur(25vw);
+    }
   }
 `;
 
@@ -336,53 +456,7 @@ const Card = styled.div`
   }
   ${media.mobile} {
   }
-  ${media.fullWidth} {
-    width: 1584px;
-    height: 810px;
-
-    position: absolute;
-    left: 110px;
-    top: 187px;
-    z-index: 1;
-
-    img {
-      position: absolute;
-      width: 100%;
-      top: 0;
-      z-index: -1;
-      opacity: 0;
-    }
-    ${Header} {
-      width: fit-content;
-      bottom: -67px;
-
-      right: 124px;
-    }
-
-    ${Metro36} {
-      right: 214px;
-      bottom: 130px;
-
-      width: fit-content;
-    }
-  }
 `;
-
-// const BG2 = styled.img`
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   z-index: -1;
-//   opacity: 0;
-//   ${media.tablet} {
-//   }
-//   ${media.mobile} {
-//   }
-//   ${media.fullWidth} {
-//   }
-// `;
 
 const Card2 = styled(Card)`
   ${Header} {
@@ -423,42 +497,6 @@ const Card2 = styled(Card)`
   ${media.tablet} {
   }
   ${media.mobile} {
-  }
-  ${media.fullWidth} {
-    ${Header} {
-      width: 648px;
-      bottom: 56px;
-      left: 101px;
-    }
-
-    ${Metro36} {
-      left: 11px;
-      top: 68px;
-
-      width: fit-content;
-    }
-    img {
-      width: 317px;
-      height: 455px;
-      box-shadow: 11px 11px 29px 13px rgba(0, 0, 0, 0.25);
-      border-radius: 0vw;
-    }
-
-    img:nth-child(1) {
-      z-index: 1;
-      left: 526px;
-      top: -104px;
-    }
-    img:nth-child(2) {
-      z-index: 3;
-      left: 835px;
-      top: 88px;
-    }
-    img:nth-child(3) {
-      z-index: 2;
-      left: 1145px;
-      top: -56px;
-    }
   }
 `;
 const Card3 = styled(Card)`
@@ -506,47 +544,6 @@ const Card3 = styled(Card)`
   }
   ${media.mobile} {
   }
-  ${media.fullWidth} {
-    ${Header} {
-      width: 637px;
-      right: auto;
-      bottom: 38px;
-      right: 50px;
-    }
-
-    ${Metro36} {
-      right: 140px;
-      top: 76px;
-
-      width: fit-content;
-    }
-
-    img {
-      position: absolute;
-      width: 322px;
-      height: 454px;
-      box-shadow: 11px 11px 29px 13px rgba(0, 0, 0, 0.25);
-      border-radius: 0vw;
-    }
-
-    img:nth-child(1) {
-      z-index: 1;
-      left: 4px;
-      top: 110px;
-    }
-    img:nth-child(2) {
-      z-index: 3;
-      width: 443px;
-      height: 443px;
-      left: 320px;
-      top: 7px;
-    }
-    img:nth-child(3) {
-      z-index: 2;
-      left: 760px;
-      top: -95px;
-    }
-  }
 `;
 const Card4 = styled(Card)`
   ${Header} {
@@ -589,76 +586,7 @@ const Card4 = styled(Card)`
   }
   ${media.mobile} {
   }
-  ${media.fullWidth} {
-    ${Header} {
-      width: fit-content;
-      left: 90px;
-      top: 148px;
-    }
-
-    ${Metro36} {
-      right: 175px;
-      bottom: 45px;
-      width: fit-content;
-    }
-
-    img {
-      position: absolute;
-      box-shadow: 11px 11px 29px 13px rgba(0, 0, 0, 0.25);
-      border-radius: 0vw;
-    }
-
-    img:nth-child(1) {
-      z-index: 1;
-
-      width: 367px;
-      height: 439px;
-
-      right: 85px;
-      top: -13px;
-    }
-    img:nth-child(2) {
-      z-index: 2;
-      width: 1073px;
-      height: 405px;
-      top: auto;
-      right: auto;
-      left: 90px;
-      bottom: 180px;
-    }
-  }
 `;
-
-// const BG3 = styled(BG3SVG)`
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   z-index: -1;
-//   opacity: 0;
-//   ${media.tablet} {
-//   }
-//   ${media.mobile} {
-//   }
-//   ${media.fullWidth} {
-//   }
-// `;
-// const BG4 = styled(BG4SVG)`
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   z-index: -1;
-//   opacity: 0;
-//   ${media.tablet} {
-//   }
-//   ${media.mobile} {
-//   }
-//   ${media.fullWidth} {
-//   }
-// `;
 
 const SlideWrapper = styled.div`
   position: relative;
@@ -667,9 +595,6 @@ const SlideWrapper = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
-  }
-  ${media.fullWidth} {
-    height: 970px;
   }
 `;
 

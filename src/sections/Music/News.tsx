@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { PrimaryButtonStyle } from "styles/Buttons";
 import colors from "styles/Colors";
@@ -15,7 +15,9 @@ import mandiScarf from "assets/images/mandiScarf.jpg";
 import mandiDemo from "assets/images/mandiDemo.jpg";
 
 const News: React.FC<{}> = () => {
-  const newsItems = [
+  const header = useRef(null);
+  const headerLine = useRef(null);
+  const newsItems = useRef([
     {
       title: "News Title Longer 1",
       mainImage: sampleNews,
@@ -91,9 +93,36 @@ const News: React.FC<{}> = () => {
       ],
       moreText2: [],
     },
-  ];
+  ]);
 
-  const allNewsItems = newsItems.map((item, i) => {
+  useEffect(() => {
+    const tl = gsap.timeline({ scrollTrigger: headerLine.current });
+
+    tl.to(headerLine.current, {
+      scale: 1,
+      duration: 1,
+      ease: "power1.inOut",
+    })
+      .to(header.current, { y: 0, duration: 0.6 }, 1)
+      .to(header.current, { x: 0, duration: 0.6 }, 1.6);
+  }, []);
+
+  useEffect(() => {
+    newsItems.current.forEach((item, i) => {
+      const tl = gsap.timeline({
+        scrollTrigger: { trigger: `.newsCard-${i}`, start: "top 60%" },
+      });
+
+      tl.from(`.newsCard-${i}`, {
+        opacity: 0,
+        x: i % 2 === 0 ? "-=2vw" : "+=2vw",
+        duration: 0.9,
+        ease: "power1.inOut",
+      });
+    });
+  }, [newsItems]);
+
+  const allNewsItems = newsItems.current.map((item, i) => {
     const {
       title,
       mainImage,
@@ -111,7 +140,7 @@ const News: React.FC<{}> = () => {
     } = item;
 
     return (
-      <NewsCard key={i}>
+      <NewsCard key={i} className={`newsCard-${i}`}>
         <Front className={`front-${i}`}>
           <TitleContainer>
             <NewsTitle>{title}</NewsTitle>
@@ -241,7 +270,10 @@ const News: React.FC<{}> = () => {
 
   return (
     <Wrapper id="news">
-      <Header>News</Header>
+      <HeaderWrapper>
+        <Header ref={header}>News</Header>
+        <HeaderLine ref={headerLine} />
+      </HeaderWrapper>
       <NewsItemsWrapper>{allNewsItems}</NewsItemsWrapper>
     </Wrapper>
   );
@@ -261,28 +293,48 @@ const Wrapper = styled.section`
     height: 240vw;
     padding: 15vw 0vw 0vw 23vw;
   }
-  ${media.fullWidth} {
-    padding: 162px 0 0 0;
-  }
 `;
 
 const Header = styled.h2`
   ${Heading1};
   color: ${colors.brightPurple};
-  margin-left: 0;
-  margin-bottom: 11.3vw;
-
-  position: relative;
-  :before {
-    content: "";
-    width: 82.4vw;
-    height: 0.3vw;
-    margin-left: 5.6vw;
-    background: ${colors.brightPurple};
-    position: absolute;
-    bottom: -0.2vw;
-    border-radius: 0.3vw;
+  width: 51.4vw;
+  transform: translate(5.6vw, 100%);
+  position: absolute;
+  width: fit-content;
+  ${media.tablet} {
   }
+  ${media.mobile} {
+  }
+  ${media.fullWidth} {
+  }
+`;
+
+const HeaderLine = styled.div`
+  width: 82.4vw;
+  height: 0.3vw;
+  margin-left: 5.6vw;
+  background: ${colors.brightPurple};
+  position: absolute;
+  bottom: 0;
+  transform: scaleX(0);
+  transform-origin: 100%;
+  border-radius: 0.3vw;
+
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+  }
+  ${media.fullWidth} {
+  }
+`;
+
+const HeaderWrapper = styled.div`
+  position: relative;
+  width: 90vw;
+  height: 5vw;
+  overflow: hidden;
+  margin-bottom: 15.3vw;
   ${media.tablet} {
   }
   ${media.mobile} {
