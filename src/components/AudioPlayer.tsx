@@ -3,8 +3,10 @@ import styled from "styled-components";
 import { Body1 } from "styles/text";
 import colors from "styles/Colors";
 import media from "styles/media";
+import gsap from "gsap";
 import { ReactComponent as PlayButtonSVG } from "assets/svg/playButton.svg";
 import { ReactComponent as PauseButtonSVG } from "assets/svg/pauseButton.svg";
+import { ReactComponent as ProgressSVG } from "assets/svg/progress.svg";
 
 const flatlineMP3 = require("assets/audio/flatLine.mp3").default;
 const forceOfNatureMP3 = require("assets/audio/forceOfNature.mp3").default;
@@ -21,15 +23,125 @@ type Props = {
   setActiveScreen: any;
 };
 
+type AudioElementProps = {
+  track: string;
+  returnTimeString: any;
+  setTimeRemaining: any;
+  activeTrack: boolean;
+  setActiveTrack: any;
+  tracks: any;
+  isPlaying: any;
+  setPlaying: any;
+  canPlay: boolean;
+  playing: boolean;
+  trackID: number;
+  shouldAutoPlay: any;
+};
+
+const AudioElement: React.FC<AudioElementProps> = ({
+  track,
+  returnTimeString,
+  setTimeRemaining,
+  activeTrack,
+  setActiveTrack,
+  tracks,
+  isPlaying,
+  setPlaying,
+  canPlay,
+  playing,
+  trackID,
+  shouldAutoPlay,
+}) => {
+  const player = useRef<HTMLAudioElement>(null);
+  const handleEnd = () => {
+    if (player.current) {
+      player.current.currentTime = 0;
+      player.current.pause();
+    }
+    if (!shouldAutoPlay.current) {
+      console.log("ohno");
+      setPlaying(false);
+    }
+
+    setActiveTrack(trackID === tracks.length - 1 ? 0 : trackID + 1);
+  };
+
+  useEffect(() => {
+    if (activeTrack && player.current) {
+      const tl = gsap.timeline({
+        paused: true,
+
+        onUpdate: () => {
+          if (player.current) {
+            const time = player.current.currentTime;
+            const duration = player.current.duration;
+            const percentage = `${((time / duration) * 100).toFixed(2)}%`;
+            gsap.set(".media__progress", { drawSVG: `0 ${percentage}` });
+          }
+        },
+      });
+      tl.to(
+        ".media__progress",
+        { opacity: 1, duration: player?.current.duration },
+        0
+      );
+
+      if (canPlay) {
+        tl.play();
+      } else {
+        tl.pause();
+      }
+    }
+  }, [activeTrack, canPlay]);
+
+  useEffect(() => {
+    if (player.current) {
+      if (canPlay) {
+        player.current.play();
+      } else {
+        player.current.pause();
+      }
+    }
+  }, [canPlay, activeTrack, trackID]);
+
+  const getDuration = () => {
+    if (player.current) {
+      const time =
+        //@ts-ignore
+        Math.floor(player.current.duration) -
+        //@ts-ignore
+        Math.floor(player.current.currentTime);
+
+      const timeRemainingFormat = returnTimeString(time);
+
+      setTimeRemaining(timeRemainingFormat);
+
+      // setPureTime(audioPlayer.current.currentTime);
+      // setPureDuration(audioPlayer.current.duration);
+    }
+  };
+
+  return (
+    <Player
+      onDurationChange={getDuration}
+      onTimeUpdate={getDuration}
+      onEnded={handleEnd}
+      src={track}
+      ref={player}
+      autoPlay={false}
+    />
+  );
+};
+
 const AudioPlayer: React.FC<Props> = ({ setActiveScreen }) => {
   const playList = useRef(null);
-  const audioPlayer = useRef<HTMLAudioElement>(null);
   const isPlaying = useRef(false);
   const [playing, setPlaying] = useState(false);
   const [activeTrack, setActiveTrack] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState("0:00");
+  const [nextTrack, setNextTrack] = useState(0);
   const [autoPlay, setAutoPlay] = useState(false);
-
+  const shouldAutoPlay = useRef(false);
   const tracks = useRef([
     {
       title: "Flatline",
@@ -105,103 +217,6 @@ const AudioPlayer: React.FC<Props> = ({ setActiveScreen }) => {
       currentTime: 0,
     },
   ]);
-  const [trackOrder, setTrackOrder] = useState(
-    tracks.current.map((track, i) => {
-      return (
-        <Track selected={activeTrack === i} key={i} data-id={track.id}>
-          <Row1 active={activeTrack === i} onClick={() => handleTrackChange(i)}>
-            <Text>{track.title}</Text>
-            <Text>{track.initialTime}</Text>
-          </Row1>
-          <Progress></Progress>
-        </Track>
-      );
-    })
-  );
-
-  const [nowPlaying, setNowPlaying] = useState(tracks.current[0].title);
-
-  const playAudio = useCallback(() => {
-    if (audioPlayer.current) {
-      audioPlayer.current.currentTime = tracks.current[activeTrack].currentTime;
-      audioPlayer.current.play();
-    }
-  }, [activeTrack]);
-
-  //   const pauseAudio = () => {
-  //     if (audioPlayer.current) {
-  //       //@ts-ignore
-  //       audioPlayer.current.pause();
-  //     }
-  //   };
-
-  const endAudio = () => {
-    if (audioPlayer.current) {
-      //@ts-ignore
-      audioPlayer.current.load();
-      isPlaying.current = false;
-      setPlaying(!playing);
-    }
-  };
-
-  const handleTrackChange = useCallback(
-    (num: number) => {
-      if (audioPlayer.current) {
-        const startTime = Math.floor(audioPlayer.current.currentTime);
-        const location = Math.floor(audioPlayer.current.duration - startTime);
-        tracks.current[activeTrack].currentTime = startTime;
-        tracks.current[activeTrack].initialTime = returnTimeString(location);
-      }
-      setActiveTrack(num);
-    },
-    [activeTrack]
-  );
-
-  useEffect(() => {
-    const trackList = tracks.current.map((track, i) => {
-      return (
-        <Track
-          selected={activeTrack === i}
-          key={i}
-          data-id={track.id}
-          className={`track${i}`}
-        >
-          <Row1 active={activeTrack === i} onClick={() => handleTrackChange(i)}>
-            <Text>{track.title}</Text>
-            <Text>{track.initialTime}</Text>
-          </Row1>
-          <Progress></Progress>
-        </Track>
-      );
-    });
-    const trackListOrdered = [
-      ...trackList.slice(activeTrack, trackList.length),
-      ...trackList.slice(0, activeTrack),
-    ];
-    const activeInfo = trackListOrdered[0].props["data-id"];
-    setNowPlaying(tracks.current[activeInfo].title);
-    setActiveScreen(activeInfo);
-    setTrackOrder(trackListOrdered);
-
-    if (autoPlay && isPlaying.current) {
-      playAudio();
-    }
-  }, [activeTrack, autoPlay, handleTrackChange, playAudio, setActiveScreen]);
-
-  const handleClick = () => {
-    if (isPlaying.current && audioPlayer.current) {
-      setPlaying(false);
-
-      audioPlayer.current.pause();
-      isPlaying.current = false;
-    } else {
-      setPlaying(true);
-      if (audioPlayer.current) {
-        audioPlayer.current.play();
-        isPlaying.current = true;
-      }
-    }
-  };
 
   const returnTimeString = (time: number) => {
     return `${Math.floor(time / 60)}:${
@@ -215,30 +230,103 @@ const AudioPlayer: React.FC<Props> = ({ setActiveScreen }) => {
     }`;
   };
 
-  const getDuration = () => {
-    if (audioPlayer.current) {
-      const audio = audioPlayer.current;
-      const time = Math.floor(audio.duration) - Math.floor(audio.currentTime);
-
-      const timeRemainingFormat = returnTimeString(time);
-
-      setTimeRemaining(timeRemainingFormat);
-      //   setPureTime(audioPlayer.current.currentTime);
-      //   setPureDuration(audioPlayer.current.duration);
-    }
-  };
-
-  const handleEnd = () => {
-    if (autoPlay) {
-      setActiveTrack(
-        activeTrack === tracks.current.length - 1 ? 0 : activeTrack + 1
+  const [trackOrder, setTrackOrder] = useState(
+    tracks.current.map((track, i) => {
+      return (
+        <Track selected={activeTrack === i} key={i} data-id={track.id}>
+          <AudioElement
+            track={track.audio}
+            returnTimeString={returnTimeString}
+            setTimeRemaining={setTimeRemaining}
+            activeTrack={activeTrack === i}
+            setActiveTrack={setActiveTrack}
+            tracks={tracks.current}
+            isPlaying={isPlaying.current}
+            setPlaying={setPlaying}
+            canPlay={activeTrack === i && playing}
+            playing={playing}
+            trackID={track.id}
+            shouldAutoPlay={shouldAutoPlay}
+          />
+          <Row1 active={activeTrack === i} onClick={() => setActiveTrack(i)}>
+            <Text>{track.title}</Text>
+            <Text>{track.initialTime}</Text>
+          </Row1>
+          <Progress>
+            <ProgressInner />
+          </Progress>
+        </Track>
       );
-    } else {
-      if (audioPlayer.current) {
-        endAudio();
-      }
-    }
+    })
+  );
+
+  const [nowPlaying, setNowPlaying] = useState(tracks.current[0].title);
+
+  //   const playAudio = useCallback(() => {
+  //     if (audioPlayer.current) {
+  //       audioPlayer.current.currentTime = tracks.current[activeTrack].currentTime;
+  //       audioPlayer.current.play();
+  //     }
+  //   }, [activeTrack]);
+
+  //   const pauseAudio = () => {
+  //     if (audioPlayer.current) {
+  //       //@ts-ignore
+  //       audioPlayer.current.pause();
+  //     }
+  //   };
+
+  useEffect(() => {
+    console.log("hitting here");
+    const trackList = tracks.current.map((track, i) => {
+      return (
+        <Track selected={activeTrack === i} key={i} data-id={track.id}>
+          <AudioElement
+            track={track.audio}
+            returnTimeString={returnTimeString}
+            setTimeRemaining={setTimeRemaining}
+            activeTrack={activeTrack === i}
+            setActiveTrack={setActiveTrack}
+            tracks={tracks.current}
+            isPlaying={isPlaying.current}
+            setPlaying={setPlaying}
+            canPlay={activeTrack === i && playing}
+            playing={playing}
+            trackID={track.id}
+            shouldAutoPlay={shouldAutoPlay}
+          />
+          <Row1 active={activeTrack === i} onClick={() => setActiveTrack(i)}>
+            <Text>{track.title}</Text>
+            <Text>{track.initialTime}</Text>
+          </Row1>
+          <Progress>
+            <ProgressInner />
+          </Progress>
+        </Track>
+      );
+    });
+    console.log(activeTrack);
+    const trackListOrdered = [
+      ...trackList.slice(activeTrack, trackList.length),
+      ...trackList.slice(0, activeTrack),
+    ];
+    const activeInfo = trackListOrdered[0].props["data-id"];
+    setNowPlaying(tracks.current[activeInfo].title);
+    setActiveScreen(activeInfo);
+    setTrackOrder(trackListOrdered);
+  }, [activeTrack, setActiveScreen, playing, nextTrack]);
+
+  const handleClick = () => {
+    setPlaying(!playing);
   };
+
+  useEffect(() => {
+    if (autoPlay) {
+      shouldAutoPlay.current = true;
+    } else {
+      shouldAutoPlay.current = false;
+    }
+  }, [autoPlay]);
 
   return (
     <Playlist ref={playList}>
@@ -252,23 +340,7 @@ const AudioPlayer: React.FC<Props> = ({ setActiveScreen }) => {
         </AutoPlay>
       </PlayBack>
 
-      <Inner>
-        <Track selected={false}>
-          <Player
-            onDurationChange={getDuration}
-            onTimeUpdate={getDuration}
-            onEnded={handleEnd}
-            src={tracks.current[activeTrack].audio}
-            ref={audioPlayer}
-          />
-          <Row1 active>
-            <Text>{nowPlaying}</Text>
-            <Text>{timeRemaining}</Text>
-          </Row1>
-          <Progress></Progress>
-        </Track>
-        {trackOrder}
-      </Inner>
+      <Inner>{trackOrder}</Inner>
     </Playlist>
   );
 };
@@ -426,8 +498,8 @@ const AutoPlay = styled.button<{ active: boolean }>`
 
 const Track = styled.div<{ selected: boolean }>`
   ${Body1};
-  height: ${(props) => (props.selected ? 0 : "2.6vw")};
-  transform: scaleY(${(props) => (props.selected ? 0 : 1)});
+  width: 100%;
+  height: 2.6vw;
   cursor: pointer;
   transition: 0.3s;
   ${media.hover} {
@@ -447,10 +519,19 @@ const Track = styled.div<{ selected: boolean }>`
   }
 `;
 
+const TrackMain = styled.div`
+  ${Body1};
+  height: 2.6vw;
+  width: 100%;
+  position: relative;
+  cursor: pointer;
+`;
+
 const Row1 = styled.div<{ active: boolean }>`
   display: flex;
   justify-content: space-between;
-
+  position: relative;
+  z-index: 1;
   ${Text} {
     width: fit-content;
     transition: 0.3s;
@@ -467,6 +548,13 @@ const Row1 = styled.div<{ active: boolean }>`
 `;
 
 const Progress = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 1.3vw;
+  left: 0vw;
+  top: 0.7vw;
+  z-index: 0;
+
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -481,6 +569,18 @@ const Player = styled.audio`
   position: relative;
   padding: 0;
   display: none;
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+  }
+  ${media.fullWidth} {
+  }
+`;
+
+const ProgressInner = styled(ProgressSVG)`
+  width: 100%;
+  height: 100%;
+
   ${media.tablet} {
   }
   ${media.mobile} {
