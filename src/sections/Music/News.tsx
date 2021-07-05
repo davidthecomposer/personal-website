@@ -14,7 +14,7 @@ import liz2 from "assets/images/liz2.jpg";
 import mandiScarf from "assets/images/mandiScarf.jpg";
 import mandiDemo from "assets/images/mandiDemo.jpg";
 
-const News: React.FC<{}> = () => {
+const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
   const header = useRef(null);
   const headerLine = useRef(null);
   const newsItems = useRef([
@@ -290,8 +290,8 @@ const Wrapper = styled.section`
 
   ${media.mobile} {
     width: 100%;
-    height: 240vw;
-    padding: 15vw 0vw 0vw 23vw;
+
+    padding: 0 2.4vw 52.2vw 2.4vw;
   }
 `;
 

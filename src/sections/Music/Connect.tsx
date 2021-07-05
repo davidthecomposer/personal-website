@@ -8,7 +8,7 @@ import gsap from "gsap";
 import { PrimaryButtonStyle } from "styles/Buttons";
 import { ReactComponent as ButtonArrowSVG } from "assets/svg/buttonArrow.svg";
 
-const Connect: React.FC<{}> = () => {
+const Connect: React.FC<{ mobile: boolean }> = ({ mobile }) => {
   const inputNames = ["Name", "Email", "Project"];
   const header = useRef(null);
   const headerLine = useRef(null);
@@ -119,8 +119,9 @@ const Wrapper = styled.section`
 
   ${media.mobile} {
     width: 100%;
-    height: 240vw;
-    padding: 12.3vw 0vw 0vw 23vw;
+    height: 279.5vw;
+    padding: 0;
+    background-position: 50% 50%;
   }
 `;
 

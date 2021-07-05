@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
-// import colors from "styles/Colors";
+import { MobileContext } from "App";
 import Hero from "sections/Music/Hero";
 import MediaMusic from "sections/Music/MediaMusic";
 import ConcertMusic from "sections/Music/ConcertMusic";
@@ -10,16 +10,16 @@ import Connect from "sections/Music/Connect";
 // import { DesktopContext } from "App";
 
 const MusicPage: React.FC = () => {
-  //   const desktop = useContext(DesktopContext);
+  const mobile = useContext(MobileContext);
 
   return (
     <Wrapper>
-      <Hero />
-      <MediaMusic />
-      <ConcertMusic />
-      <News />
-      <About />
-      <Connect />
+      <Hero mobile={mobile} />
+      <MediaMusic mobile={mobile} />
+      <ConcertMusic mobile={mobile} />
+      <News mobile={mobile} />
+      <About mobile={mobile} />
+      <Connect mobile={mobile} />
     </Wrapper>
   );
 };

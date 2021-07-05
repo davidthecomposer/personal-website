@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import styled from "styled-components";
 // import { ButtonRegularStyles } from "components/Buttons";
 import { SlideHeading, MetroHeading32 } from "styles/text";
@@ -14,9 +14,18 @@ import jennyCampbell from "assets/images/jennyCampbell.jpg";
 import oCTLogo from "assets/images/oCTLogo.jpg";
 import davidSmile1 from "assets/images/davidSmile1.jpg";
 import oCTSeason from "assets/images/oCTSeason.jpg";
+import filmTeaserM from "assets/images/davidFilmTeaserM.jpg";
+import davidSeriousM from "assets/images/davidSeriousM.jpg";
+import Liz1M from "assets/images/Liz1M.jpg";
+import mandi1M from "assets/images/mandi1M.jpg";
+import davidSkepticM from "assets/images/davidSkepticM.jpg";
+import jennyCampbellM from "assets/images/jennyCampbellM.jpg";
+import oCTLogoM from "assets/images/oCTLogoM.jpg";
+import davidSmile1M from "assets/images/davidSmile1M.jpg";
+import oCTSeasonM from "assets/images/oCTSeasonM.jpg";
 import { useRectGlow } from "components/Blurs";
 
-const Hero: React.FC<{}> = () => {
+const Hero: React.FC<{ mobile: boolean }> = ({ mobile }) => {
   const [next, setNext] = useState(0);
   const initial = useRef(true);
   const ord = useRef(["main1", "ssc", "coc", "cir"]);
@@ -268,8 +277,16 @@ const Hero: React.FC<{}> = () => {
     <Wrapper id="music-hero">
       <SlideWrapper id="slide__wrapper">
         <Card4 className="slideshow-cir">
-          <img className="cir-image" src={davidSmile1} alt="David Campbell" />
-          <img className="cir-image" src={oCTSeason} alt="oCTSeason" />
+          <img
+            className="cir-image"
+            src={mobile ? davidSmile1M : davidSmile1}
+            alt="David Campbell"
+          />
+          <img
+            className="cir-image"
+            src={mobile ? oCTSeasonM : oCTSeason}
+            alt="oCTSeason"
+          />
           <Header className="cir-header">Composer-in-residence</Header>
           <Metro36 className="cir-metro">beginning 2020</Metro36>
           <CanvasGroup ref={wrapper2} className="cir-bg">
@@ -278,11 +295,19 @@ const Hero: React.FC<{}> = () => {
           </CanvasGroup>
         </Card4>
         <Card3 className="slideshow-coc">
-          <img className="coc-image" src={davidSkeptic} alt="David Campbell" />
-          <img className="coc-image" src={oCTLogo} alt="Mandi Barrus" />
           <img
             className="coc-image"
-            src={jennyCampbell}
+            src={mobile ? davidSkepticM : davidSkeptic}
+            alt="David Campbell"
+          />
+          <img
+            className="coc-image"
+            src={mobile ? oCTLogoM : oCTLogo}
+            alt="Mandi Barrus"
+          />
+          <img
+            className="coc-image"
+            src={mobile ? jennyCampbellM : jennyCampbell}
             alt="Jennifer Campbell"
           />
 
@@ -295,9 +320,21 @@ const Hero: React.FC<{}> = () => {
         </Card3>
 
         <Card2 className="slideshow-ssc">
-          <img className="ssc-image" src={davidSerious} alt="David Campbell" />
-          <img className="ssc-image" src={Liz1} alt="Liz Christensen" />
-          <img className="ssc-image" src={mandi1} alt="Mandi Barrus" />
+          <img
+            className="ssc-image"
+            src={mobile ? davidSeriousM : davidSerious}
+            alt="David Campbell"
+          />
+          <img
+            className="ssc-image"
+            src={mobile ? Liz1M : Liz1}
+            alt="Liz Christensen"
+          />
+          <img
+            className="ssc-image"
+            src={mobile ? mandi1M : mandi1}
+            alt="Mandi Barrus"
+          />
           <Header className="ssc-header">Song Cycle Commission</Header>
           <Metro36 className="ssc-metro">Autumn 2021</Metro36>
           <CanvasGroup ref={wrapper} className="ssc-bg">
@@ -309,7 +346,11 @@ const Hero: React.FC<{}> = () => {
         <Card className="slideshow-main1">
           <Header className="main1-header">Flatline</Header>
           <Metro36 className="main1-metro">New Music</Metro36>
-          <img className="main1-bg" src={filmTeaser} alt={"david conducting"} />
+          <img
+            className="main1-bg"
+            src={mobile ? filmTeaserM : filmTeaser}
+            alt={"david conducting"}
+          />
         </Card>
       </SlideWrapper>
       <Counter className="hero__counter">{counters}</Counter>
@@ -324,8 +365,8 @@ const Wrapper = styled.section`
 
   ${media.mobile} {
     width: 100%;
-    height: 240vw;
-    padding: 15vw 0vw 0vw 23vw;
+    overflow: hidden;
+    padding: 15vw 0 58.1vw 0;
   }
   ${media.fullWidth} {
     padding: 162px 0 0 0;
@@ -352,10 +393,10 @@ const CanvasGroup = styled.div`
 
   z-index: -1;
   ${media.mobile} {
-    width: 190vw;
-    height: 225vw;
-    left: -45vw;
-    top: 50vw;
+    width: 100vw;
+    height: 200vw;
+    left: 0;
+    top: 0;
     ${Canvas} {
       filter: blur(25vw);
     }
@@ -390,6 +431,8 @@ const Counter = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    bottom: 52vw;
+    left: 5vw;
   }
   ${media.fullWidth} {
   }
@@ -455,6 +498,31 @@ const Card = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    img {
+      position: absolute;
+      width: 100vw;
+      top: 32.9vw;
+      z-index: -1;
+      opacity: 0;
+    }
+    ${Header} {
+      bottom: 15.5vw;
+      font-size: 8.7vw;
+      right: 2.4vw;
+    }
+
+    ${Metro36} {
+      right: auto;
+      bottom: auto;
+      left: 4.8vw;
+      top: 17.9vw;
+      font-size: 5.8vw;
+      width: fit-content;
+    }
   }
 `;
 
@@ -480,8 +548,8 @@ const Card2 = styled(Card)`
 
   img:nth-child(1) {
     z-index: 1;
-    left: 29.2vw;
-    top: -5.8vw;
+    left: 253px;
+    top: 240px;
   }
   img:nth-child(2) {
     z-index: 3;
@@ -497,6 +565,42 @@ const Card2 = styled(Card)`
   ${media.tablet} {
   }
   ${media.mobile} {
+    img {
+      width: 33.1vw;
+      height: 46.4vw;
+      box-shadow: 0.6vw 0.6vw 1.6vw 0.7vw rgba(0, 0, 0, 0.25);
+      border-radius: 6px;
+    }
+
+    img:nth-child(1) {
+      z-index: 1;
+      left: 61.1vw;
+      top: 58vw;
+    }
+    img:nth-child(2) {
+      z-index: 3;
+      left: 8.2vw;
+      top: 68.8vw;
+    }
+    img:nth-child(3) {
+      z-index: 2;
+      left: 30.2vw;
+      top: 25.4vw;
+    }
+    ${Header} {
+      width: 57.5vw;
+      bottom: auto;
+
+      left: 5.8vw;
+      top: 3.6vw;
+    }
+
+    ${Metro36} {
+      left: 34.5vw;
+      top: 127.5vw;
+
+      width: fit-content;
+    }
   }
 `;
 const Card3 = styled(Card)`
@@ -543,6 +647,46 @@ const Card3 = styled(Card)`
   ${media.tablet} {
   }
   ${media.mobile} {
+    img {
+      position: absolute;
+      width: 33.1vw;
+      height: 46.4vw;
+      box-shadow: 0.6vw 0.6vw 1.6vw 0.7vw rgba(0, 0, 0, 0.25);
+      border-radius: 6px;
+    }
+
+    img:nth-child(1) {
+      z-index: 3;
+      left: 62.6vw;
+      top: 77.1vw;
+    }
+    img:nth-child(2) {
+      z-index: 1;
+      width: 56.5vw;
+      height: 56.5vw;
+      left: 90px;
+      top: 105px;
+    }
+    img:nth-child(3) {
+      z-index: 2;
+      left: 6vw;
+      top: 77.1vw;
+    }
+    ${Header} {
+      width: fit-content;
+      top: 6.8vw;
+      left: 8.5vw;
+      bottom: auto;
+      right: auto;
+    }
+
+    ${Metro36} {
+      right: auto;
+      top: auto;
+      bottom: 3.9vw;
+      left: 29.2vw;
+      width: fit-content;
+    }
   }
 `;
 const Card4 = styled(Card)`
@@ -585,6 +729,34 @@ const Card4 = styled(Card)`
   ${media.tablet} {
   }
   ${media.mobile} {
+    img:nth-child(1) {
+      z-index: 1;
+
+      width: 33.1vw;
+      height: 46.4vw;
+      left: 33.3vw;
+      top: 70.8vw;
+      right: auto;
+    }
+    img:nth-child(2) {
+      width: 95.2vw;
+      height: 36.5vw;
+      left: 2.4vw;
+      top: 28.5vw;
+    }
+    ${Header} {
+      width: 60.9vw;
+
+      left: 8.5vw;
+      top: 6.8vw;
+    }
+
+    ${Metro36} {
+      width: 56vw;
+
+      left: 29.2vw;
+      top: 124.6vw;
+    }
   }
 `;
 
@@ -595,6 +767,9 @@ const SlideWrapper = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 100%;
+    height: 144.9vw;
+    top: 15.2vw;
   }
 `;
 

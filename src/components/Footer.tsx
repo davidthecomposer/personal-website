@@ -165,6 +165,17 @@ const Wrapper = styled.footer`
     rgba(44, 47, 78, 0.895521) 23.42%,
     rgba(42, 19, 90, 0.41) 90.48%
   );
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+    height: 234.5vw;
+    width: 95.2vw;
+    padding: 12.6vw 2.4vw 6vw;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  ${media.fullWidth} {
+  }
 `;
 
 const BuildColumn = styled.div`
@@ -173,6 +184,7 @@ const BuildColumn = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 100%;
   }
   ${media.fullWidth} {
   }
@@ -289,6 +301,7 @@ const SocialColumn = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 100%;
   }
   ${media.fullWidth} {
   }

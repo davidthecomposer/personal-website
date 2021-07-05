@@ -10,7 +10,7 @@ import davidAbout from "assets/images/davidAbout.jpg";
 // import { ReactComponent as ScoreIconSVG } from "assets/svg/scoreIcon.svg";
 import gsap from "gsap";
 
-const About: React.FC<{}> = () => {
+const About: React.FC<{ mobile: boolean }> = ({ mobile }) => {
   const header = useRef(null);
   const headerLine = useRef(null);
   const davidImage = useRef(null);
@@ -146,8 +146,8 @@ const Wrapper = styled.section`
 
   ${media.mobile} {
     width: 100%;
-    height: 240vw;
-    padding: 12.3vw 0vw 0vw 23vw;
+
+    padding: 0 2.4vw 72.5vw;
   }
 `;
 

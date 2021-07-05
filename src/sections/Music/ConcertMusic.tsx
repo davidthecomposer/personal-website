@@ -20,7 +20,7 @@ import gsap from "gsap";
 import AudioPlayerMinimal from "components/AudioPlayerMinimal";
 import { concertPieces } from "data/ConcertPieces";
 
-const MediaMusic: React.FC<{}> = () => {
+const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
   const [enter, setEnter] = useState(false);
   const header = useRef(null);
   const headerLine = useRef(null);
@@ -307,8 +307,9 @@ const Wrapper = styled.section`
 
   ${media.mobile} {
     width: 100%;
-    height: 240vw;
-    padding: 15vw 0vw 0vw 23vw;
+    height: 371vw;
+    padding: 0;
+    background-position: 50% 50%;
   }
 `;
 

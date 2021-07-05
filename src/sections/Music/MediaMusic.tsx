@@ -21,7 +21,7 @@ import gsap from "gsap";
 import AudioPlayer from "components/AudioPlayer";
 import { ReactComponent as ButtonArrowSVG } from "assets/svg/buttonArrow.svg";
 
-const MediaMusic: React.FC<{}> = () => {
+const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
   const header = useRef(null);
   const headerLine = useRef(null);
   const screen = useRef(null);
@@ -233,21 +233,23 @@ const Wrapper = styled.section`
 
   ${media.mobile} {
     width: 100%;
-    height: 240vw;
-    padding: 15vw 0vw 0vw 23vw;
+    height: 320.5vw;
+    padding: 0;
+    background-position: 50% 50%;
   }
 `;
 
 const Header = styled.h2`
   ${Heading1};
   color: ${colors.brightPurple};
-  width: 51.4vw;
   transform: translate(5.6vw, 100%);
   position: absolute;
   width: fit-content;
   ${media.tablet} {
   }
   ${media.mobile} {
+    transform: translate(8.5vw, 110%);
+    font-size: 13.3vw;
   }
 `;
 
@@ -265,6 +267,10 @@ const HeaderLine = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    height: 1vw;
+    border-radius: 1vw;
+    width: 82.1vw;
+    margin-left: 8.5vw;
   }
 `;
 
@@ -278,6 +284,7 @@ const HeaderWrapper = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    height: 29.7vw;
   }
 `;
 
