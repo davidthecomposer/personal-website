@@ -1,30 +1,34 @@
-import React, { useReducer, useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import {
   Heading1,
   Body1,
   SubHeader,
   SubHeader3,
-  FormLabel,
   Playlist,
   ConcertTitle,
   BodySmall,
 } from "styles/text";
 import colors from "styles/Colors";
 import media from "styles/media";
+import ContactForm from "components/ContactForm";
 import concertMusicBG from "assets/images/concertMusic.jpg";
 import { PrimaryButtonStyle } from "styles/Buttons";
 import { ReactComponent as ButtonArrowSVG } from "assets/svg/buttonArrow.svg";
 import { ReactComponent as ScoreIconSVG } from "assets/svg/scoreIcon.svg";
 import gsap from "gsap";
+import AudioPlayerMinimal from "components/AudioPlayerMinimal";
+import { concertPieces } from "data/ConcertPieces";
 
 const MediaMusic: React.FC<{}> = () => {
-  const inputNames = ["Name", "Email", "Project"];
-  const soloTurned = useRef(false);
+  const [enter, setEnter] = useState(false);
   const header = useRef(null);
   const headerLine = useRef(null);
   const musicBook = useRef(null);
   const cta = useRef(null);
+  const page = useRef(0);
+  const [activePage, setActivePage] = useState(0);
+  const [activePiece, setActivePiece] = useState(0);
 
   useEffect(() => {
     const tl = gsap.timeline({ scrollTrigger: headerLine.current });
@@ -50,94 +54,27 @@ const MediaMusic: React.FC<{}> = () => {
       duration: 1.5,
       ease: "power1.inOut",
       onComplete: () => {
-        handlePageTurn(
-          "Solo",
-          //@ts-ignore;
-          "cover",
-          `cover-genre-1`,
-          `Solo-genre-0`,
-          2
-        );
+        handlePageTurn(0, concertPieces.length);
       },
     });
   }, []);
 
-  const [formData, setFormData] = useReducer(
-    (
-      state: { name: string; email: string; project: string },
-      newState: { name: string; email: string; project: string }
-    ) => ({ ...state, ...newState }),
-    {
-      name: "",
-      email: "",
-      project: "",
-    }
-  );
-
-  const concertPieces = [
-    {
-      title: "Solo Pieces",
-      tabName: "Solo",
-      playList: ["Copernicus Etudes", "Three Pieces for Clarinet"],
-      allPieces: [
-        {
-          title: "Copernicus Etudes",
-          key: "copernicus",
-          year: "2020",
-          description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-          movements: [
-            "First",
-            "Second",
-            "Third",
-            "Fourth",
-            "Fifth",
-            "Sixth",
-            "Seventh",
-            "Eighth",
-            "Ninth",
-          ],
-          instrumentation: ["Solo Piano"],
-          scoreSample: "",
-          duration: "28 minutes",
-        },
-      ],
-    },
-    {
-      title: "cover",
-      playList: ["cover"],
-      allPieces: [
-        {
-          title: "Concert Music",
-          key: "cover",
-          year: "",
-          description: "",
-          movements: [""],
-          instrumentation: [""],
-          scoreSample: "",
-          duration: "",
-        },
-      ],
-    },
-  ];
-
   const allConcert = concertPieces.map((genre, index) => {
-    const { title, playList, allPieces, tabName } = genre;
+    const { nexTitle, playList, allPieces, tabName } = genre;
 
-    const turnPage =
-      index < concertPieces.length - 1 && concertPieces[index + 1].tabName
-        ? concertPieces[index + 1].tabName
-        : "cover";
     const allPlaylist =
       playList &&
       playList.map((piece, i) => {
         return (
-          <Piece key={`${title}-piece-${i}`}>{`${i + 1}. ${piece}`}</Piece>
+          <Piece
+            onClick={() => setActivePiece(i)}
+            key={`${nexTitle}-piece-${i}`}
+          >{`${i + 1}. ${piece}`}</Piece>
         );
       });
     const pieceTemplates =
       allPieces &&
-      allPieces.map((piece: any, i) => {
+      allPieces.map((piece: any, i: number) => {
         const {
           title,
           year,
@@ -147,11 +84,18 @@ const MediaMusic: React.FC<{}> = () => {
           scoreSample,
           duration,
           key,
+          cover,
         } = piece;
 
         const allMovements = movements.map((mvt: any, i: number) => {
           return (
-            <Movement key={`${key}-mvt-${i}`}>{`${i + 1}. ${mvt}`}</Movement>
+            <AudioPlayerMinimal
+              key={`${key}-mvt-${i}`}
+              track={mvt.audio}
+              title={mvt.name}
+              initialTime={mvt.initialTime}
+              id={i}
+            />
           );
         });
 
@@ -160,9 +104,9 @@ const MediaMusic: React.FC<{}> = () => {
         });
 
         return (
-          <InfoWrapper key={title}>
+          <InfoWrapper key={title} visible={activePiece === i}>
             <PieceTitle>{title}</PieceTitle>
-            {tabName && (
+            {!cover && (
               <>
                 <Underline />
                 <Year>{year}</Year>
@@ -180,10 +124,7 @@ const MediaMusic: React.FC<{}> = () => {
                           <ScoreIcon />
                         </a>
                       </ScoreSample>
-                      <Duration>
-                        <SmallTitle>Duration: </SmallTitle>
-                        {duration}
-                      </Duration>
+                      <Duration>{duration}</Duration>
                     </Row>
                     <SmallTitle>Instrumentation: </SmallTitle>
                     <Instrumentation>{allInstrumentation}</Instrumentation>
@@ -196,146 +137,134 @@ const MediaMusic: React.FC<{}> = () => {
       });
 
     return (
-      <GenreContainer
-        className={`${tabName ? tabName : "cover"}-genre-${index}`}
-        key={`${title}-${index}`}
-        z={index + 2}
+      <FrontAndBackPage
+        className={`page-${index}`}
+        key={`${nexTitle}-${index}`}
+        z={concertPieces.length - index}
       >
-        <PageAndTab
-          className={`${tabName ? tabName : "cover"}-right`}
-          z={index}
-        >
-          <RightPage>{pieceTemplates}</RightPage>
-          {tabName && (
-            //@ts-ignore
-            <PageTab
-              onClick={() =>
-                handlePageTurn(
-                  tabName,
-                  //@ts-ignore;
-                  turnPage,
-                  `${"cover"}-genre-${index + 1}`,
-                  `${tabName}-genre-${index}`,
-                  index + 2
-                )
-              }
-            >
-              {tabName}
-            </PageTab>
-          )}
-        </PageAndTab>
-        {tabName && (
-          <LeftPage className={`${tabName}-left`} z={index + 1}>
-            <Genre>{title}</Genre>
+        <PiecesInfo className={`pieces__info-${index}`}>
+          <PiecesInfoWrap className={`pieces__info-wrap-${index}`}>
+            {pieceTemplates}
+          </PiecesInfoWrap>
+        </PiecesInfo>
+
+        <TableOfContents className={`toc-${index}`}>
+          <TOCWrap className={`toc-wrap-${index}`}>
+            <Genre>{nexTitle}</Genre>
             {allPlaylist}
-          </LeftPage>
-        )}
-      </GenreContainer>
+          </TOCWrap>
+          {tabName && (
+            <>
+              <PageTab
+                activeTab={activePage === index}
+                className={`tab-${index}-front`}
+                onClick={() => {
+                  handlePageTurn(index, concertPieces.length - index);
+                }}
+                yOffset={index}
+              >
+                {tabName}
+              </PageTab>
+              <PageTabBack
+                activeTab={activePage === index}
+                className={`tab-${index}-back`}
+                onClick={() => {
+                  handlePageTurn(index, concertPieces.length - index);
+                }}
+                yOffset={index}
+              >
+                <span>{tabName}</span>
+              </PageTabBack>
+            </>
+          )}
+        </TableOfContents>
+      </FrontAndBackPage>
     );
   });
 
-  const handlePageTurn = (
-    myClass: string,
-    turnPage: string,
-    containerPage: string,
-    myContainer: string,
-    z: number
-  ) => {
-    const tl = gsap.timeline();
-    console.log(myClass, turnPage, containerPage, myContainer, z);
-    tl.to(
-      `.${turnPage}-right`,
-      {
-        rotateY: soloTurned.current ? 0 : -180,
+  const handlePageTurn = (num: number, z: number) => {
+    const turnBack = page.current > num || (num === 1 && page.current);
+    setActivePage(num);
 
-        duration: 1,
-      },
-      0
-    )
-      .to(
-        `.${myClass}-left`,
-        {
-          rotateY: soloTurned.current ? 180 : 0,
+    let pages = [];
+    for (
+      let i = turnBack ? num + 1 : page.current;
+      i <= (turnBack ? page.current : num);
+      i++
+    ) {
+      pages.push({
+        page: `.page-${i}`,
+        toc: `.toc-${i}`,
+        pi: `.pieces__info-${i}`,
+        front: `.tab-${i}-front`,
+        tocWrap: `.toc-wrap-${i}`,
+        piWrap: `.pieces__info-wrap-${i}`,
+        z: turnBack ? concertPieces.length - i : i,
+      });
+    }
 
-          duration: 1,
-          onComplete: () => {
-            soloTurned.current = !soloTurned.current;
-          },
+    if (turnBack) {
+      pages = pages.reverse();
+    }
+
+    const turnPage = (
+      pageClass: string,
+      toc: string,
+      pi: string,
+      delay: number,
+      z: number,
+      front: string,
+      tocWrap: string,
+      piWrap: string
+    ) => {
+      const tl = gsap.timeline({
+        onComplete: () => {
+          page.current = num;
         },
-        0
-      )
-      .to(
-        `.${turnPage}-right`,
+      });
+      tl.to(
+        pageClass,
         {
-          zIndex: soloTurned.current ? 1 : 0,
-          duration: 0,
+          rotateY: turnBack ? 0 : 180,
+          duration: 0.8,
+
+          ease: "power1.inOut",
         },
-        0.3
+        0 + delay
       )
-      .to(
-        `.${myClass}-left`,
-        {
-          duration: 0,
-          zIndex: soloTurned.current ? 0 : 1,
-        },
-        0.3
-      )
-      .to(
-        `.${containerPage}`,
-        {
-          duration: 0,
-          zIndex: soloTurned.current ? z : 0,
-        },
-        0.3
-      )
-      .to(
-        `.${myContainer}`,
-        {
-          duration: 0,
-          zIndex: soloTurned.current ? 0 : z,
-        },
-        0.3
+        .to(pageClass, { zIndex: z, duration: 0 }, 0.5 + delay)
+        .to(front, { opacity: turnBack ? 1 : 0, duration: 0.2 }, 0.2 + delay)
+        .to(toc, { zIndex: turnBack ? 0 : 1, duration: 0 }, 0.3 + delay)
+
+        .to(pi, { zIndex: turnBack ? 1 : 0, duration: 0 }, 0.3 + delay)
+        .to(
+          tocWrap,
+          { opacity: turnBack ? 0 : 1, duration: turnBack ? 0.6 : 0.6 },
+          0.2 + delay
+        )
+
+        .to(
+          piWrap,
+          { opacity: turnBack ? 1 : 0, duration: turnBack ? 0.6 : 0.6 },
+          0.2 + delay
+        );
+
+      return tl;
+    };
+
+    pages.forEach((animation, i) => {
+      turnPage(
+        animation.page,
+        animation.toc,
+        animation.pi,
+        0.3 * i,
+        animation.z,
+        animation.front,
+        animation.tocWrap,
+        animation.piWrap
       );
-
-    // :hover {
-    //   ${PageAndTab} {
-    //     transform: rotateY(-180deg) rotateZ(0);
-    //     transition: 1s;
-    //   }
-    //   ${LeftPage} {
-    //     transform: rotateY(0) rotateZ(0.25deg);
-    //     transition: 1s;
-    //     z-index: 3;
-    //   }
-    // }
+    });
   };
-
-  const updateFormState = (e: any) => {
-    const name = e.target.name;
-    let newValue = e.target.value;
-    //@ts-ignore
-    setFormData({ [name]: newValue });
-  };
-
-  // useEffect(() => {
-  //   console.log(formData);
-  // }, [formData]);
-
-  const inputs = inputNames.map((input, i) => {
-    return (
-      <FormRow key={i}>
-        <FormText>{input} :</FormText>
-        <TextInput
-          type={"text"}
-          id={`#${input.toLowerCase()}`}
-          name={input.toLowerCase()}
-          //@ts-ignore
-          value={formData[input]}
-          onChange={(e: any) => updateFormState(e)}
-        />
-      </FormRow>
-    );
-  });
 
   return (
     <Wrapper id="Concert Music">
@@ -351,14 +280,15 @@ const MediaMusic: React.FC<{}> = () => {
           More Copy about the kinds of things I have at my disposal for media
           projects including sounds, conducting, styles, musicians, etc.
         </Text>
-        <GetInTouch>
+        <GetInTouch
+          onClick={() => {
+            setEnter(true);
+          }}
+        >
           Get in Touch <Arrow />
         </GetInTouch>
       </CTA>
-      <FormModal>
-        {inputs}
-        <SendMessage>Send Message</SendMessage>
-      </FormModal>
+      <ContactForm enter={enter} leftVal={"63.4vw"} topVal={"102.4vw"} />
     </Wrapper>
   );
 };
@@ -478,7 +408,11 @@ const Arrow = styled(ButtonArrowSVG)`
   height: 1vw;
   margin-left: 1.5vw;
   z-index: 3;
+  color: ${colors.activeTeal};
   transition: 0.5s;
+  path {
+    fill: currentColor;
+  }
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -512,78 +446,6 @@ const GetInTouch = styled.button`
   }
 `;
 
-const FormModal = styled.form`
-  position: absolute;
-  width: 24.7vw;
-  height: 19vw;
-  left: 63.4vw;
-  top: 102.4vw;
-  padding: 3.4vw;
-  background: ${colors.formSkinPurprle};
-  border-radius: 0.5vw;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
-
-const FormRow = styled.div`
-  display: flex;
-  ${FormLabel};
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2.9vw;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
-
-const FormText = styled.p`
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
-
-const TextInput = styled.input`
-  height: 2.5vw;
-  width: 16.5vw;
-  background: linear-gradient(
-    90.38deg,
-    #89c1b4 2.99%,
-    rgba(124, 146, 140, 0.81) 99.88%
-  );
-  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 0.3vw;
-  padding-left: 1vw;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
-
-const SendMessage = styled(GetInTouch)`
-  position: relative;
-  margin-left: 12.1vw;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
-
 const TopFade = styled.div`
   position: absolute;
   top: -8vw;
@@ -600,15 +462,18 @@ const TopFade = styled.div`
   }
 `;
 
-const GenreContainer = styled.div<{ z: number }>`
+const FrontAndBackPage = styled.div<{ z: number }>`
   position: absolute;
-  left: 0;
+  left: 32.2vw;
   top: 0;
   perspective: 200vw;
+  transform: rotateY(0);
+  transform-origin: left;
   transform-style: flat;
-  width: 64.4vw;
+  width: 32.2vw;
   height: 46.6vw;
   z-index: ${(props) => props.z};
+  border: none;
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -617,14 +482,16 @@ const GenreContainer = styled.div<{ z: number }>`
   }
 `;
 
-const LeftPage = styled.div<{ z: number }>`
+const TableOfContents = styled.div`
   position: absolute;
   width: 32.2vw;
   height: 46.6vw;
   left: 0;
   top: 0;
-  transform: rotateY(180.5deg) rotateZ(0);
-  transform-origin: right;
+
+  z-index: 0;
+  transform: rotateY(0);
+  transform-origin: left;
 
   background: linear-gradient(
     187.02deg,
@@ -636,7 +503,7 @@ const LeftPage = styled.div<{ z: number }>`
   border: 0.1vw solid #f0f0f0;
   box-sizing: border-box;
   padding: 2.5vw 0 0 3.1vw;
-  z-index: ${(props) => props.z};
+
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -645,37 +512,22 @@ const LeftPage = styled.div<{ z: number }>`
   }
 `;
 
-const PageAndTab = styled.div<{ z: number }>`
+const PiecesInfo = styled.div`
+  position: absolute;
   width: 32.2vw;
   height: 46.6vw;
-  left: 32.2vw;
-  top: 0vw;
-  position: absolute;
-  transform: rotateY(0), rotateZ(0.25deg);
-
+  transform: rotateY(0);
   transform-origin: left;
-  z-index: ${(props) => props.z};
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
-const RightPage = styled.div`
-  position: absolute;
-  width: 32.2vw;
-  height: 46.6vw;
   left: 0;
   top: 0;
-
+  z-index: 1;
   background: linear-gradient(
     91.3deg,
     #dbdbdb 4.24%,
     #f5f5f5 32.97%,
     #ffffff 91.8%
   );
-  border: 0.1vw solid #f0f0f0;
+  border: 0 solid #f0f0f0;
   box-sizing: border-box;
   padding: 3.6vw 2.3vw 2.3vw 2.4vw;
 
@@ -702,16 +554,91 @@ const MusicBook = styled.div`
   }
 `;
 
-const PageTab = styled.button`
-  width: 8.9vw;
+const PageTab = styled.button<{ yOffset: number; activeTab: boolean }>`
+  width: 8vw;
   height: 3.1vw;
   position: absolute;
-  background: linear-gradient(270deg, #17161b 10.32%, #fefefe 88.1%);
+  background: linear-gradient(
+    ${(props) =>
+      props.activeTab
+        ? `270deg, #17161b 10.32%, #fefefe 88.1%, #fefefe00 100%`
+        : `270deg, #F4F4F4 10.32%, #F4F4F4 88.1%, #fefefe00 100%`}
+  );
   border-radius: 10% 15% 15% 10% / 10% 48% 40% 10%;
-  right: -7.9vw;
-  top: 3.6vw;
-  color: #f8ffce;
-  /* box-shadow: 0px 0.5vw 0.3vw rgba(0, 0, 0, 0.25); */
+  right: -7.1vw;
+  top: ${(props) => props.yOffset * 2.6 + 3.6}vw;
+  color: ${(props) => (props.activeTab ? "#f8ffce" : "#2e2e2e")};
+  opacity: 1;
+  box-shadow: 0px 0.5vw 0.3vw rgba(0, 0, 0, 0.25);
+  z-index: 1;
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+  }
+  ${media.fullWidth} {
+  }
+`;
+
+const PageTabBack = styled.button<{ yOffset: number; activeTab: boolean }>`
+  width: 8vw;
+  height: 3.1vw;
+  position: absolute;
+  background: linear-gradient(
+    ${(props) =>
+      props.activeTab
+        ? `270deg, #17161b 10.32%, #fefefe 88.1%, #fefefe00 100%`
+        : `270deg, #F4F4F4 10.32%, #F4F4F4 88.1%, #fefefe00 100%`}
+  );
+  border-radius: 10% 15% 15% 10% / 10% 48% 40% 10%;
+  right: -7.1vw;
+  top: ${(props) => props.yOffset * 2.6 + 3.6}vw;
+  color: ${(props) => (props.activeTab ? "#f8ffce" : "#2e2e2e")};
+  opacity: 1;
+  z-index: 0;
+
+  span {
+    position: absolute;
+    top: 0.9vw;
+    transform: rotateY(180deg);
+    transform-origin: "50% 50%";
+    right: 1.9vw;
+  }
+  ::after {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0.6vw -0.5vw 0.8vw -0.4vw rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 0.6vw -0.5vw 0.8vw -0.4vw rgba(0, 0, 0, 0.25);
+    border-radius: 0 15% 15% 10% / 10% 48% 40% 10%;
+  }
+
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+  }
+  ${media.fullWidth} {
+  }
+`;
+
+const TOCWrap = styled.div`
+  transform: rotateY(180deg);
+  transform-origin: "50% 50%";
+  position: absolute;
+  right: 4.9vw;
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+  }
+  ${media.fullWidth} {
+  }
+`;
+
+const PiecesInfoWrap = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -723,7 +650,7 @@ const PageTab = styled.button`
 const Piece = styled.p`
   ${Playlist};
   margin-bottom: 2vw;
-
+  cursor: pointer;
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -743,7 +670,11 @@ const Genre = styled.h2`
   }
 `;
 
-const InfoWrapper = styled.div`
+const InfoWrapper = styled.div<{ visible: boolean }>`
+  position: absolute;
+  opacity: ${(props) => (props.visible ? 1 : 0)};
+  width: 27.5vw;
+  height: 40.7vw;
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -819,21 +750,10 @@ const Row = styled.div`
   }
 `;
 
-const Movement = styled.div`
-  margin-bottom: 0.2vw;
-  color: #17161b95;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
-
 const Movements = styled.div`
   ${BodySmall};
 
-  width: 10.6vw;
+  width: 13vw;
   margin-left: 1.8vw;
   ${media.tablet} {
   }
@@ -844,7 +764,7 @@ const Movements = styled.div`
 `;
 
 const InfoColumn = styled.div`
-  width: 15.1vw;
+  width: 14vw;
 
   ${media.tablet} {
   }
@@ -865,9 +785,13 @@ const ScoreSample = styled.div`
 `;
 
 const Duration = styled.div`
-  width: 5vw;
   ${BodySmall};
+  font-size: 2.1vw;
   color: #17161b95;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+
   ${media.tablet} {
   }
   ${media.mobile} {

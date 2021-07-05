@@ -1,23 +1,32 @@
-import React, { useEffect, useReducer, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import ContactForm from "components/ContactForm";
 import styled from "styled-components";
-import { Heading1, Body1, SubHeader, SubHeader2, FormLabel } from "styles/text";
+import { Heading1, Body1, SubHeader, SubHeader2 } from "styles/text";
 import colors from "styles/Colors";
 import media from "styles/media";
 import mediaMusicBG from "assets/images/mediaMusicBG.jpg";
 import { PrimaryButtonStyle } from "styles/Buttons";
 import flatline from "assets/images/flatline.jpg";
+import after from "assets/images/after.jpg";
+import forceOfNature from "assets/images/forceOfNature.jpg";
+import mischeivous from "assets/images/mischeivous.jpg";
+import redemption from "assets/images/redemption.jpg";
+import rescue from "assets/images/rescue.jpg";
+import starFlight from "assets/images/starFlight.jpg";
+import starlight from "assets/images/starlight.jpg";
+import turningPoint from "assets/images/turningPoint.jpg";
+import loveStory from "assets/images/loveStory.jpg";
+
 import gsap from "gsap";
 import AudioPlayer from "components/AudioPlayer";
 import { ReactComponent as ButtonArrowSVG } from "assets/svg/buttonArrow.svg";
 
 const MediaMusic: React.FC<{}> = () => {
-  const inputNames = ["Name", "Email", "Project"];
   const header = useRef(null);
   const headerLine = useRef(null);
   const screen = useRef(null);
-  const playList = useRef(null);
   const cta = useRef(null);
-  const form = useRef(null);
+  const [playListEnter, setPlayListEnter] = useState(false);
   const [enter, setEnter] = useState(false);
 
   const [activeScreen, setActiveScreen] = useState(0);
@@ -28,14 +37,13 @@ const MediaMusic: React.FC<{}> = () => {
       title: "Flatline",
       img: flatline,
       video: false,
-      music:
-        "Details about the music. Could talk about orchestration or instruments or something that would add interest.",
+      music: "The Music",
       story:
         "This Is where the story will go. It will be a short paragraph about the scene and will explain Some kind of thing about it. It will try to set the mood and give the reader some more intormation about why I made the choices I did. ",
     },
     {
       title: "Rescue",
-      img: flatline,
+      img: rescue,
       video: false,
       music:
         "Details about the music. Could talk about orchestration or instruments or something that would add interest.",
@@ -44,80 +52,61 @@ const MediaMusic: React.FC<{}> = () => {
     },
     {
       title: "Mischeivous Endeavors",
-      img: flatline,
+      img: mischeivous,
       video: false,
       music: "",
       story: "",
     },
     {
       title: "Turning Point",
-      img: flatline,
+      img: turningPoint,
       video: false,
       music: "",
       story: "",
     },
     {
       title: "After",
-      img: flatline,
+      img: after,
       video: false,
       music: "",
       story: "",
     },
     {
       title: "Redemption",
-      img: flatline,
+      img: redemption,
       video: false,
       music: "",
       story: "",
     },
     {
       title: "StarLight, StarFlight",
-      img: flatline,
+      img: starlight,
       video: false,
       music: "",
       story: "",
     },
     {
       title: "Starflight, Starbright",
-      img: flatline,
+      img: starFlight,
       video: false,
       music: "",
       story: "",
     },
     {
       title: "Music for a Love Story",
-      img: flatline,
+      img: loveStory,
       video: false,
       music: "",
       story: "",
     },
     {
       title: "Force Of Nature",
-      img: flatline,
+      img: forceOfNature,
       video: false,
       music: "",
       story: "",
     },
   ]);
-
-  useEffect(() => {
-    if (form.current) {
-      const tl = gsap.timeline();
-      if (enter) {
-        tl.to(form.current, { scale: 1, duration: 0 }, 0).to(
-          form.current,
-          { opacity: 1, y: 0, duration: 0.6 },
-          0.1
-        );
-      } else {
-        tl.to(form.current, { scale: 0, y: "100px", duration: 0 }, 0.6).to(
-          form.current,
-          { opacity: 0, duration: 0.6 },
-          0
-        );
-      }
-    }
-  }, [enter]);
 
   useEffect(() => {
     if (headerLine.current) {
@@ -139,24 +128,21 @@ const MediaMusic: React.FC<{}> = () => {
     if (screen.current) {
       const tl = gsap.timeline({
         scrollTrigger: { trigger: screen.current, start: "top 90%" },
+        onStart: () => {
+          setPlayListEnter(true);
+        },
       });
 
-      tl.from(screen.current, {
-        x: "+=3vw",
-        y: "+=3vw",
-        opacity: 0,
-        duration: 1,
-        ease: "power1.inOut",
-      }).from(
-        playList.current,
+      tl.from(
+        screen.current,
         {
-          x: "-=3vw",
+          x: "+=3vw",
           y: "+=3vw",
-          duration: 1,
           opacity: 0,
+          duration: 1,
           ease: "power1.inOut",
         },
-        0.3
+        0
       );
     }
   }, []);
@@ -177,25 +163,6 @@ const MediaMusic: React.FC<{}> = () => {
     }
   }, []);
 
-  const [formData, setFormData] = useReducer(
-    (
-      state: { name: string; email: string; project: string },
-      newState: { name: string; email: string; project: string }
-    ) => ({ ...state, ...newState }),
-    {
-      name: "",
-      email: "",
-      project: "",
-    }
-  );
-
-  const updateFormState = (e: any) => {
-    const name = e.target.name;
-    let newValue = e.target.value;
-    //@ts-ignore
-    setFormData({ [name]: newValue });
-  };
-
   const allTracks = tracks.current.map((track, i) => {
     return (
       <ScreenWrapper
@@ -205,7 +172,7 @@ const MediaMusic: React.FC<{}> = () => {
         <ControlPanel>
           <Story onClick={() => setTrackState(0)}>Story</Story>
           <Music onClick={() => setTrackState(1)}>Music</Music>
-          <Details>Details</Details>
+          {/* <Details>Details</Details> */}
         </ControlPanel>
         <TextWrapper>
           <TrackText visibleText={activeScreen === i && trackState === 0}>
@@ -223,35 +190,22 @@ const MediaMusic: React.FC<{}> = () => {
     );
   });
 
-  const inputs = inputNames.map((input, i) => {
-    return (
-      <FormRow key={i}>
-        <FormText>{input} :</FormText>
-        <TextInput
-          type={"text"}
-          id={`#${input.toLowerCase()}`}
-          name={input.toLowerCase()}
-          //@ts-ignore
-          value={formData[input]}
-          onChange={(e: any) => updateFormState(e)}
-        />
-      </FormRow>
-    );
-  });
-
   return (
     <Wrapper id="media-music">
       <HeaderWrapper>
         <Header ref={header}>Music for Media</Header>
         <HeaderLine ref={headerLine} />
       </HeaderWrapper>
-      <AudioPlayer setActiveScreen={setActiveScreen} />
+      <AudioPlayer introAni={playListEnter} setActiveScreen={setActiveScreen} />
       <Screen ref={screen}>{allTracks}</Screen>
       <CTA ref={cta}>
         <HeadLine>Have a Media Project?</HeadLine>
         <Text>
-          More Copy about the kinds of things I have at my disposal for media
-          projects including sounds, conducting, styles, musicians, etc.
+          Great music can add so much to any media production. I have access to
+          world-class virtual instruments and knowledge in order to add that
+          extra level of craft and realism to help promote your artistic vision.
+          For projects with a larger budget I am also able to incorporate live
+          musicians and have experience conduting choirs and orchestras.
         </Text>
         <GetInTouch
           onClick={() => {
@@ -261,10 +215,7 @@ const MediaMusic: React.FC<{}> = () => {
           Get in Touch <Arrow />
         </GetInTouch>
       </CTA>
-      <FormModal ref={form}>
-        {inputs}
-        <SendMessage>Send Message</SendMessage>
-      </FormModal>
+      <ContactForm enter={enter} leftVal={"63.4vw"} topVal={"92.3vw"} />
     </Wrapper>
   );
 };
@@ -388,6 +339,30 @@ const Story = styled.button`
   border-color: #50caff;
   margin-bottom: 1.4vw;
   margin-right: 1.9vw;
+  position: relative;
+  z-index: 10;
+  :after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #01d5fa1f;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    transform: scale(0);
+    transform-origin: 0% 10%;
+    transition: 0.5s;
+  }
+  ${media.hover} {
+    :hover {
+      :after {
+        transform: scale(1);
+        transition: 0.5s;
+      }
+    }
+  }
+
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -400,23 +375,46 @@ const Music = styled.button`
   border-color: #0c9912;
   border-radius: 0.6vw;
   margin-bottom: 1.4vw;
+  position: relative;
+  z-index: 10;
+  :after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #0c991250;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    transform: scale(0);
+    transform-origin: 0% 10%;
+    transition: 0.5s;
+  }
+  ${media.hover} {
+    :hover {
+      :after {
+        transform: scale(1);
+        transition: 0.5s;
+      }
+    }
+  }
   ${media.tablet} {
   }
   ${media.mobile} {
   }
 `;
-const Details = styled.button`
-  ${PrimaryButtonStyle};
-  padding: 0;
-  text-align: center;
-  border-color: #f5ed28;
-  margin-bottom: 1.4vw;
+// const Details = styled.button`
+//   ${PrimaryButtonStyle};
+//   padding: 0;
+//   text-align: center;
+//   border-color: #f5ed28;
+//   margin-bottom: 1.4vw;
 
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-`;
+//   ${media.tablet} {
+//   }
+//   ${media.mobile} {
+//   }
+// `;
 
 const Text = styled.div`
   ${Body1};
@@ -537,81 +535,6 @@ const GetInTouch = styled.button`
       transition: 0.5s;
     }
   }
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
-
-const FormModal = styled.form`
-  position: absolute;
-  width: 24.7vw;
-  height: 19vw;
-  left: 63.4vw;
-  top: 92.3vw;
-  padding: 3.4vw;
-  background: ${colors.formSkinPurprle};
-  border-radius: 0.5vw;
-  opacity: 0;
-  transform: scale(0) translateY(100px);
-
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
-
-const FormRow = styled.div`
-  display: flex;
-  ${FormLabel};
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2.9vw;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
-
-const FormText = styled.p`
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
-
-const TextInput = styled.input`
-  height: 2.5vw;
-  width: 16.5vw;
-  background: linear-gradient(
-    90.38deg,
-    #89c1b4 2.99%,
-    rgba(124, 146, 140, 0.81) 99.88%
-  );
-  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 0.3vw;
-  padding-left: 1vw;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
-
-const SendMessage = styled(GetInTouch)`
-  position: relative;
-  margin-left: 12.1vw;
   ${media.tablet} {
   }
   ${media.mobile} {

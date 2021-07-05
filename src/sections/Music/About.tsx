@@ -32,8 +32,8 @@ const About: React.FC<{}> = () => {
       .to(header.current, { y: 0, duration: 0.6 }, 1)
       .to(header.current, { x: 0, duration: 0.6 }, 1.6)
       .to(".about-bg-cover", { opacity: 0, duration: 2 }, 1)
-      .to(".about-images", { opacity: 1, stagger: 0.5, duration: 4 }, 2)
-      .to(".about-text", { opacity: 1, duration: 1.5 }, 4);
+      .to(".about-images", { opacity: 1, stagger: 0.5, duration: 4 }, 1)
+      .to(".about-text", { opacity: 1, duration: 1.5 }, 1);
   }, []);
 
   useEffect(() => {
