@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { Body1 } from "styles/text";
 import colors from "styles/Colors";
@@ -21,6 +21,7 @@ const turningPointMP3 = require("assets/audio/turningPoint.mp3").default;
 
 type Props = {
   setActiveScreen: any;
+  introAni: boolean;
 };
 
 type AudioElementProps = {
@@ -30,10 +31,10 @@ type AudioElementProps = {
   activeTrack: boolean;
   setActiveTrack: any;
   tracks: any;
-  isPlaying: any;
+
   setPlaying: any;
   canPlay: boolean;
-  playing: boolean;
+
   trackID: number;
   shouldAutoPlay: any;
 };
@@ -45,10 +46,8 @@ const AudioElement: React.FC<AudioElementProps> = ({
   activeTrack,
   setActiveTrack,
   tracks,
-  isPlaying,
   setPlaying,
   canPlay,
-  playing,
   trackID,
   shouldAutoPlay,
 }) => {
@@ -59,12 +58,14 @@ const AudioElement: React.FC<AudioElementProps> = ({
       player.current.pause();
     }
     if (!shouldAutoPlay.current) {
-      console.log("ohno");
       setPlaying(false);
     }
 
     setActiveTrack(trackID === tracks.length - 1 ? 0 : trackID + 1);
   };
+  useEffect(() => {
+    gsap.set(".media__progress", { drawSVG: "0 0" });
+  }, []);
 
   useEffect(() => {
     if (activeTrack && player.current) {
@@ -133,13 +134,12 @@ const AudioElement: React.FC<AudioElementProps> = ({
   );
 };
 
-const AudioPlayer: React.FC<Props> = ({ setActiveScreen }) => {
+const AudioPlayer: React.FC<Props> = ({ setActiveScreen, introAni }) => {
   const playList = useRef(null);
-  const isPlaying = useRef(false);
   const [playing, setPlaying] = useState(false);
   const [activeTrack, setActiveTrack] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState("0:00");
-  const [nextTrack, setNextTrack] = useState(0);
+
   const [autoPlay, setAutoPlay] = useState(false);
   const shouldAutoPlay = useRef(false);
   const tracks = useRef([
@@ -218,6 +218,18 @@ const AudioPlayer: React.FC<Props> = ({ setActiveScreen }) => {
     },
   ]);
 
+  useEffect(() => {
+    if (introAni) {
+      gsap.from(playList.current, {
+        x: "-=3vw",
+        y: "+=3vw",
+        duration: 1,
+        opacity: 0,
+        ease: "power1.inOut",
+      });
+    }
+  }, [introAni]);
+
   const returnTimeString = (time: number) => {
     return `${Math.floor(time / 60)}:${
       time < 10
@@ -241,16 +253,14 @@ const AudioPlayer: React.FC<Props> = ({ setActiveScreen }) => {
             activeTrack={activeTrack === i}
             setActiveTrack={setActiveTrack}
             tracks={tracks.current}
-            isPlaying={isPlaying.current}
             setPlaying={setPlaying}
             canPlay={activeTrack === i && playing}
-            playing={playing}
             trackID={track.id}
             shouldAutoPlay={shouldAutoPlay}
           />
           <Row1 active={activeTrack === i} onClick={() => setActiveTrack(i)}>
             <Text>{track.title}</Text>
-            <Text>{track.initialTime}</Text>
+            <Text>{activeTrack === i ? timeRemaining : track.initialTime}</Text>
           </Row1>
           <Progress>
             <ProgressInner />
@@ -260,24 +270,7 @@ const AudioPlayer: React.FC<Props> = ({ setActiveScreen }) => {
     })
   );
 
-  const [nowPlaying, setNowPlaying] = useState(tracks.current[0].title);
-
-  //   const playAudio = useCallback(() => {
-  //     if (audioPlayer.current) {
-  //       audioPlayer.current.currentTime = tracks.current[activeTrack].currentTime;
-  //       audioPlayer.current.play();
-  //     }
-  //   }, [activeTrack]);
-
-  //   const pauseAudio = () => {
-  //     if (audioPlayer.current) {
-  //       //@ts-ignore
-  //       audioPlayer.current.pause();
-  //     }
-  //   };
-
   useEffect(() => {
-    console.log("hitting here");
     const trackList = tracks.current.map((track, i) => {
       return (
         <Track selected={activeTrack === i} key={i} data-id={track.id}>
@@ -288,16 +281,14 @@ const AudioPlayer: React.FC<Props> = ({ setActiveScreen }) => {
             activeTrack={activeTrack === i}
             setActiveTrack={setActiveTrack}
             tracks={tracks.current}
-            isPlaying={isPlaying.current}
             setPlaying={setPlaying}
             canPlay={activeTrack === i && playing}
-            playing={playing}
             trackID={track.id}
             shouldAutoPlay={shouldAutoPlay}
           />
           <Row1 active={activeTrack === i} onClick={() => setActiveTrack(i)}>
             <Text>{track.title}</Text>
-            <Text>{track.initialTime}</Text>
+            <Text>{activeTrack === i ? timeRemaining : track.initialTime}</Text>
           </Row1>
           <Progress>
             <ProgressInner />
@@ -305,16 +296,15 @@ const AudioPlayer: React.FC<Props> = ({ setActiveScreen }) => {
         </Track>
       );
     });
-    console.log(activeTrack);
+
     const trackListOrdered = [
       ...trackList.slice(activeTrack, trackList.length),
       ...trackList.slice(0, activeTrack),
     ];
     const activeInfo = trackListOrdered[0].props["data-id"];
-    setNowPlaying(tracks.current[activeInfo].title);
     setActiveScreen(activeInfo);
     setTrackOrder(trackListOrdered);
-  }, [activeTrack, setActiveScreen, playing, nextTrack]);
+  }, [activeTrack, setActiveScreen, playing, timeRemaining]);
 
   const handleClick = () => {
     setPlaying(!playing);
@@ -363,9 +353,6 @@ const Playlist = styled.div`
   );
   border: 1px solid #000000;
   box-sizing: border-box;
-
-  /* Note: backdrop-filter has minimal browser support */
-
   border-radius: 5px;
   box-shadow: 0.6vw 0.6vw 1.9vw 0.8vw rgba(0, 0, 0, 0.25);
   border-radius: 0.3vw;
@@ -427,7 +414,7 @@ const PlayButton = styled(PlayButtonSVG)`
   position: relative;
   width: 1.2vw;
   height: 1.4vw;
-
+  transition: 0.4s;
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -441,6 +428,7 @@ const PauseButton = styled(PauseButtonSVG)`
   height: 2vw;
   top: 0.2vw;
   left: 0.2vw;
+  transition: 0.4s;
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -456,6 +444,15 @@ const Play = styled.button<{ play: boolean }>`
   justify-content: center;
   align-items: center;
   background: ${colors.formSkinPurprle};
+
+  ${media.hover} {
+    :hover {
+      ${PlayButton}, ${PauseButton} {
+        transform: scale(0.8);
+        transition: 0.4s;
+      }
+    }
+  }
 
   ${PlayButton} {
     opacity: ${(props) => (props.play ? 0 : 1)};
@@ -480,7 +477,14 @@ const AutoPlay = styled.button<{ active: boolean }>`
   --webkit-appearance: none;
   border: none;
   padding: 0.2vw;
-
+  ${media.hover} {
+    :hover {
+      ${Text} {
+        color: ${colors.coolWhiteLight};
+        transition: 0.4s;
+      }
+    }
+  }
   ${Text} {
     color: ${(props) => (props.active ? colors.activeTeal : colors.dullTeal)};
     background: black;
@@ -488,6 +492,7 @@ const AutoPlay = styled.button<{ active: boolean }>`
     height: 100%;
     line-height: 2vw;
     border-radius: 0.4vw;
+    transition: 0.4s;
   }
 
   ${media.tablet} {
@@ -517,14 +522,6 @@ const Track = styled.div<{ selected: boolean }>`
   }
   ${media.fullWidth} {
   }
-`;
-
-const TrackMain = styled.div`
-  ${Body1};
-  height: 2.6vw;
-  width: 100%;
-  position: relative;
-  cursor: pointer;
 `;
 
 const Row1 = styled.div<{ active: boolean }>`

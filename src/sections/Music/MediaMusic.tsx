@@ -25,9 +25,8 @@ const MediaMusic: React.FC<{}> = () => {
   const header = useRef(null);
   const headerLine = useRef(null);
   const screen = useRef(null);
-  const playList = useRef(null);
   const cta = useRef(null);
-
+  const [playListEnter, setPlayListEnter] = useState(false);
   const [enter, setEnter] = useState(false);
 
   const [activeScreen, setActiveScreen] = useState(0);
@@ -129,24 +128,21 @@ const MediaMusic: React.FC<{}> = () => {
     if (screen.current) {
       const tl = gsap.timeline({
         scrollTrigger: { trigger: screen.current, start: "top 90%" },
+        onStart: () => {
+          setPlayListEnter(true);
+        },
       });
 
-      tl.from(screen.current, {
-        x: "+=3vw",
-        y: "+=3vw",
-        opacity: 0,
-        duration: 1,
-        ease: "power1.inOut",
-      }).from(
-        playList.current,
+      tl.from(
+        screen.current,
         {
-          x: "-=3vw",
+          x: "+=3vw",
           y: "+=3vw",
-          duration: 1,
           opacity: 0,
+          duration: 1,
           ease: "power1.inOut",
         },
-        0.3
+        0
       );
     }
   }, []);
@@ -176,7 +172,7 @@ const MediaMusic: React.FC<{}> = () => {
         <ControlPanel>
           <Story onClick={() => setTrackState(0)}>Story</Story>
           <Music onClick={() => setTrackState(1)}>Music</Music>
-          <Details>Details</Details>
+          {/* <Details>Details</Details> */}
         </ControlPanel>
         <TextWrapper>
           <TrackText visibleText={activeScreen === i && trackState === 0}>
@@ -200,7 +196,7 @@ const MediaMusic: React.FC<{}> = () => {
         <Header ref={header}>Music for Media</Header>
         <HeaderLine ref={headerLine} />
       </HeaderWrapper>
-      <AudioPlayer setActiveScreen={setActiveScreen} />
+      <AudioPlayer introAni={playListEnter} setActiveScreen={setActiveScreen} />
       <Screen ref={screen}>{allTracks}</Screen>
       <CTA ref={cta}>
         <HeadLine>Have a Media Project?</HeadLine>
@@ -343,6 +339,30 @@ const Story = styled.button`
   border-color: #50caff;
   margin-bottom: 1.4vw;
   margin-right: 1.9vw;
+  position: relative;
+  z-index: 10;
+  :after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #01d5fa1f;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    transform: scale(0);
+    transform-origin: 0% 10%;
+    transition: 0.5s;
+  }
+  ${media.hover} {
+    :hover {
+      :after {
+        transform: scale(1);
+        transition: 0.5s;
+      }
+    }
+  }
+
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -355,23 +375,46 @@ const Music = styled.button`
   border-color: #0c9912;
   border-radius: 0.6vw;
   margin-bottom: 1.4vw;
+  position: relative;
+  z-index: 10;
+  :after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #0c991250;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    transform: scale(0);
+    transform-origin: 0% 10%;
+    transition: 0.5s;
+  }
+  ${media.hover} {
+    :hover {
+      :after {
+        transform: scale(1);
+        transition: 0.5s;
+      }
+    }
+  }
   ${media.tablet} {
   }
   ${media.mobile} {
   }
 `;
-const Details = styled.button`
-  ${PrimaryButtonStyle};
-  padding: 0;
-  text-align: center;
-  border-color: #f5ed28;
-  margin-bottom: 1.4vw;
+// const Details = styled.button`
+//   ${PrimaryButtonStyle};
+//   padding: 0;
+//   text-align: center;
+//   border-color: #f5ed28;
+//   margin-bottom: 1.4vw;
 
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-`;
+//   ${media.tablet} {
+//   }
+//   ${media.mobile} {
+//   }
+// `;
 
 const Text = styled.div`
   ${Body1};
