@@ -1,5 +1,5 @@
 import { Body1 } from "./text";
-// import media from "./media";
+import media from "./media";
 // import colors from "./Colors";
 
 export const PrimaryButtonStyle = `
@@ -15,5 +15,10 @@ border-radius: 0.6vw;
 padding-left: 2.3vw; 
 text-align: left;
 cursor: pointer;
-
+${media.mobile} {
+    font-size: 4.3vw;
+    width: 29vw;
+    height: 9.7vw;
+    border-radius: 2.4vw;
+}
 `;

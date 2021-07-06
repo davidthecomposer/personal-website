@@ -28,7 +28,7 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
   const cta = useRef(null);
   const [playListEnter, setPlayListEnter] = useState(false);
   const [enter, setEnter] = useState(false);
-
+  const [mobileInfo, setMobileInfo] = useState(false);
   const [activeScreen, setActiveScreen] = useState(0);
   const [trackState, setTrackState] = useState(0);
 
@@ -170,8 +170,12 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
         activeScreen={activeScreen === i}
       >
         <ControlPanel>
-          <Story onClick={() => setTrackState(0)}>Story</Story>
-          <Music onClick={() => setTrackState(1)}>Music</Music>
+          <Story trackState={trackState === 0} onClick={() => setTrackState(0)}>
+            Story
+          </Story>
+          <Music trackState={trackState === 1} onClick={() => setTrackState(1)}>
+            Music
+          </Music>
           {/* <Details>Details</Details> */}
         </ControlPanel>
         <TextWrapper>
@@ -196,8 +200,26 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
         <Header ref={header}>Music for Media</Header>
         <HeaderLine ref={headerLine} />
       </HeaderWrapper>
-      <AudioPlayer introAni={playListEnter} setActiveScreen={setActiveScreen} />
-      <Screen ref={screen}>{allTracks}</Screen>
+
+      <MobileWrapper>
+        <MobileInner mobileInfo={mobileInfo}>
+          <AudioPlayer
+            introAni={playListEnter}
+            setActiveScreen={setActiveScreen}
+            setMobileInfo={setMobileInfo}
+            mobileInfo={mobileInfo}
+          />
+          {mobile && (
+            <Info
+              mobileInfo={mobileInfo}
+              onClick={() => setMobileInfo(!mobileInfo)}
+            >
+              Tracks
+            </Info>
+          )}
+          <Screen ref={screen}>{allTracks}</Screen>
+        </MobileInner>
+      </MobileWrapper>
       <CTA ref={cta}>
         <HeadLine>Have a Media Project?</HeadLine>
         <Text>
@@ -215,7 +237,11 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
           Get in Touch <Arrow />
         </GetInTouch>
       </CTA>
-      <ContactForm enter={enter} leftVal={"63.4vw"} topVal={"92.3vw"} />
+      <ContactForm
+        enter={enter}
+        leftVal={mobile ? "100%" : "63.4vw"}
+        topVal={mobile ? "0" : "92.3vw"}
+      />
     </Wrapper>
   );
 };
@@ -250,6 +276,26 @@ const Header = styled.h2`
   ${media.mobile} {
     transform: translate(8.5vw, 110%);
     font-size: 13.3vw;
+  }
+`;
+
+const Info = styled.button<{ mobileInfo: boolean }>`
+  ${PrimaryButtonStyle};
+  width: 29vw;
+  height: 9.7vw;
+  border-radius: 2.4vw;
+  border-color: white;
+  position: absolute;
+  z-index: 100;
+  left: 105vw;
+  top: 12vw;
+  opacity: ${(props) => (props.mobileInfo ? 1 : 0)};
+  transition: opacity 0.3s 0.4s;
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+  }
+  ${media.fullWidth} {
   }
 `;
 
@@ -288,6 +334,33 @@ const HeaderWrapper = styled.div`
   }
 `;
 
+const MobileWrapper = styled.div`
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+    position: relative;
+    display: flex;
+    width: 100vw;
+    overflow: hidden;
+    height: 145vw;
+    margin-top: 13vw;
+  }
+  ${media.fullWidth} {
+  }
+`;
+
+const MobileInner = styled.div<{ mobileInfo: boolean }>`
+  width: fit-content;
+  transform: translateX(${(props) => (props.mobileInfo ? "-100vw" : "0")});
+  transition: 0.5s;
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+  }
+  ${media.fullWidth} {
+  }
+`;
+
 const Screen = styled.div`
   position: absolute;
   width: 63vw;
@@ -311,6 +384,10 @@ const Screen = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    left: 100vw;
+    top: 0;
+    height: 100%;
+    width: 100vw;
   }
 `;
 
@@ -326,6 +403,8 @@ const ScreenWrapper = styled.div<{ activeScreen: boolean }>`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 97vw;
+    height: 120.8vw;
   }
 `;
 
@@ -339,7 +418,7 @@ const ControlPanel = styled.div`
   }
 `;
 
-const Story = styled.button`
+const Story = styled.button<{ trackState: boolean }>`
   ${PrimaryButtonStyle};
   padding: 0;
   text-align: center;
@@ -373,9 +452,19 @@ const Story = styled.button`
   ${media.tablet} {
   }
   ${media.mobile} {
+    position: absolute;
+    margin: 0;
+    left: 4.8vw;
+    width: 29vw;
+    height: 9.7vw;
+    border-radius: 2.4vw;
+    top: 1vw;
+    opacity: ${(props) => (props.trackState ? 0 : 1)};
+    transform: scale(${(props) => (props.trackState ? 0 : 1)});
+    z-index: 0;
   }
 `;
-const Music = styled.button`
+const Music = styled.button<{ trackState: boolean }>`
   ${PrimaryButtonStyle};
   padding: 0;
   text-align: center;
@@ -408,6 +497,14 @@ const Music = styled.button`
   ${media.tablet} {
   }
   ${media.mobile} {
+    position: absolute;
+    margin: 0;
+    left: 20px;
+    width: 29vw;
+    height: 9.7vw;
+    border-radius: 2.4vw;
+    opacity: ${(props) => (props.trackState ? 0 : 1)};
+    transform: scale(${(props) => (props.trackState ? 0 : 1)});
   }
 `;
 // const Details = styled.button`
@@ -430,6 +527,7 @@ const Text = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    font-size: 4.3vw;
   }
 `;
 
@@ -442,6 +540,9 @@ const TrackText = styled.p<{ visibleText?: boolean }>`
   ${media.tablet} {
   }
   ${media.mobile} {
+    font-size: 3.9vw;
+    width: 90.3vw;
+    left: 20px;
   }
 `;
 
@@ -453,6 +554,12 @@ const Title = styled.h3`
   ${media.tablet} {
   }
   ${media.mobile} {
+    font-size: 5.8vw;
+    bottom: auto;
+    top: 5.1vw;
+    right: 4.6vw;
+    width: 55.6vw;
+    text-align: right;
   }
 `;
 
@@ -473,6 +580,10 @@ const ImageWrapper = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 90.3vw;
+    height: 54.3vw;
+    left: 4.8vw;
+    top: 25.6vw;
   }
 `;
 
@@ -490,7 +601,11 @@ const CTA = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    top: 201vw;
+    width: 91.8vw;
+    left: 4.1vw;
   }
+
   ${media.fullWidth} {
   }
 `;
@@ -502,6 +617,7 @@ const HeadLine = styled.h3`
   ${media.tablet} {
   }
   ${media.mobile} {
+    font-size: 8.7vw;
   }
   ${media.fullWidth} {
   }
@@ -520,6 +636,9 @@ const Arrow = styled(ButtonArrowSVG)`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 9.7vw;
+    height: 3.9vw;
+    margin-left: 5vw;
   }
   ${media.fullWidth} {
   }
@@ -545,6 +664,11 @@ const GetInTouch = styled.button`
   ${media.tablet} {
   }
   ${media.mobile} {
+    position: relative;
+    width: 46.1vw;
+    height: 9.7vw;
+    border-radius: 2.4vw;
+    margin-top: 15.6vw;
   }
   ${media.fullWidth} {
   }
@@ -556,6 +680,8 @@ const TextWrapper = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    top: 85vw;
+    width: 90.3vw;
   }
   ${media.fullWidth} {
   }
