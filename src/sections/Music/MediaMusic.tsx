@@ -220,28 +220,32 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
           <Screen ref={screen}>{allTracks}</Screen>
         </MobileInner>
       </MobileWrapper>
-      <CTA ref={cta}>
-        <HeadLine>Have a Media Project?</HeadLine>
-        <Text>
-          Great music can add so much to any media production. I have access to
-          world-class virtual instruments and knowledge in order to add that
-          extra level of craft and realism to help promote your artistic vision.
-          For projects with a larger budget I am also able to incorporate live
-          musicians and have experience conduting choirs and orchestras.
-        </Text>
-        <GetInTouch
-          onClick={() => {
-            setEnter(true);
-          }}
-        >
-          Get in Touch <Arrow />
-        </GetInTouch>
-      </CTA>
-      <ContactForm
-        enter={enter}
-        leftVal={mobile ? "100%" : "63.4vw"}
-        topVal={mobile ? "0" : "92.3vw"}
-      />
+      <MobileWrapper1>
+        <CTA ref={cta} enter={enter}>
+          <HeadLine>Have a Media Project?</HeadLine>
+          <Text>
+            Great music can add so much to any media production. I have access
+            to world-class virtual instruments and knowledge in order to add
+            that extra level of craft and realism to help promote your artistic
+            vision. For projects with a larger budget I am also able to
+            incorporate live musicians and have experience conduting choirs and
+            orchestras.
+          </Text>
+          <GetInTouch
+            onClick={() => {
+              setEnter(mobile ? !enter : true);
+            }}
+          >
+            Get in Touch <Arrow />
+          </GetInTouch>
+        </CTA>
+        <ContactForm
+          enter={enter}
+          leftVal={mobile ? "100%" : "63.4vw"}
+          topVal={mobile ? "0" : "92.3vw"}
+          setEnter={setEnter}
+        />
+      </MobileWrapper1>
     </Wrapper>
   );
 };
@@ -259,23 +263,9 @@ const Wrapper = styled.section`
 
   ${media.mobile} {
     width: 100%;
-    height: 320.5vw;
+    height: 360.5vw;
     padding: 0;
     background-position: 50% 50%;
-  }
-`;
-
-const Header = styled.h2`
-  ${Heading1};
-  color: ${colors.brightPurple};
-  transform: translate(5.6vw, 100%);
-  position: absolute;
-  width: fit-content;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-    transform: translate(8.5vw, 110%);
-    font-size: 13.3vw;
   }
 `;
 
@@ -296,6 +286,20 @@ const Info = styled.button<{ mobileInfo: boolean }>`
   ${media.mobile} {
   }
   ${media.fullWidth} {
+  }
+`;
+
+const Header = styled.h2`
+  ${Heading1};
+  color: ${colors.brightPurple};
+  transform: translate(5.6vw, 100%);
+  position: absolute;
+  width: fit-content;
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+    transform: translate(8.5vw, 110%);
+    font-size: 13.3vw;
   }
 `;
 
@@ -344,6 +348,21 @@ const MobileWrapper = styled.div`
     overflow: hidden;
     height: 145vw;
     margin-top: 13vw;
+  }
+  ${media.fullWidth} {
+  }
+`;
+
+const MobileWrapper1 = styled.div`
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+    position: relative;
+    display: flex;
+    width: 100vw;
+    overflow: hidden;
+    height: 100vw;
+    margin-top: 16.4vw;
   }
   ${media.fullWidth} {
   }
@@ -462,6 +481,7 @@ const Story = styled.button<{ trackState: boolean }>`
     opacity: ${(props) => (props.trackState ? 0 : 1)};
     transform: scale(${(props) => (props.trackState ? 0 : 1)});
     z-index: 0;
+    transition: opacity 0.5s transform 0s 0.5s;
   }
 `;
 const Music = styled.button<{ trackState: boolean }>`
@@ -505,6 +525,7 @@ const Music = styled.button<{ trackState: boolean }>`
     border-radius: 2.4vw;
     opacity: ${(props) => (props.trackState ? 0 : 1)};
     transform: scale(${(props) => (props.trackState ? 0 : 1)});
+    transition: opacity 0.5s transform 0 0.5s;
   }
 `;
 // const Details = styled.button`
@@ -587,23 +608,24 @@ const ImageWrapper = styled.div`
   }
 `;
 
-const CTA = styled.div`
+const CTA = styled.div<{ enter: boolean }>`
   position: absolute;
   width: 46vw;
   height: 19.8vw;
   left: 6.3vw;
   top: 94.4vw;
   z-index: 3;
-
   ${Text} {
     width: 100%;
   }
   ${media.tablet} {
   }
   ${media.mobile} {
-    top: 201vw;
+    top: 0;
     width: 91.8vw;
-    left: 4.1vw;
+    left: ${(props) => (props.enter ? "-100vw" : "4.1vw")};
+    transition: 0.5s;
+    height: 100vw;
   }
 
   ${media.fullWidth} {

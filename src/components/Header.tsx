@@ -245,7 +245,9 @@ const Wrapper = styled.nav<{ willDisplay: boolean }>`
   padding: 0.5vw 2vw;
   z-index: 1000;
   right: 0;
-
+  ${media.mobile} {
+    height: 80px;
+  }
   ${media.fullWidth} {
     height: 108px;
     width: calc(100% - 72px);

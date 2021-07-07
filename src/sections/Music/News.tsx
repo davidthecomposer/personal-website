@@ -177,7 +177,7 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
             Back
           </Back>
           {!layout && (
-            <Row>
+            <RowNoLayout>
               <Half>
                 <MoreText>
                   {moreText1.map((text: string, i: any) => {
@@ -215,7 +215,7 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
                   })}
                 </Links>
               </Half1>
-            </Row>
+            </RowNoLayout>
           )}
           {layout === "full" && (
             <Row>
@@ -298,15 +298,14 @@ const Wrapper = styled.section`
 const Header = styled.h2`
   ${Heading1};
   color: ${colors.brightPurple};
-  width: 51.4vw;
   transform: translate(5.6vw, 100%);
   position: absolute;
   width: fit-content;
   ${media.tablet} {
   }
   ${media.mobile} {
-  }
-  ${media.fullWidth} {
+    transform: translate(8.5vw, 110%);
+    font-size: 13.3vw;
   }
 `;
 
@@ -324,8 +323,10 @@ const HeaderLine = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
-  }
-  ${media.fullWidth} {
+    height: 1vw;
+    border-radius: 1vw;
+    width: 82.1vw;
+    margin-left: 8.5vw;
   }
 `;
 
@@ -333,13 +334,13 @@ const HeaderWrapper = styled.div`
   position: relative;
   width: 90vw;
   height: 5vw;
+  margin-left: 5.6vw;
   overflow: hidden;
-  margin-bottom: 15.3vw;
+
   ${media.tablet} {
   }
   ${media.mobile} {
-  }
-  ${media.fullWidth} {
+    height: 14.9vw;
   }
 `;
 
@@ -353,6 +354,8 @@ const NewsCard = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 100%;
+    height: 146.1vw;
   }
   ${media.fullWidth} {
   }
@@ -368,6 +371,7 @@ const Front = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    height: 100%;
   }
   ${media.fullWidth} {
   }
@@ -410,6 +414,18 @@ const NewsTitle = styled.h3`
   ${media.tablet} {
   }
   ${media.mobile} {
+    font-size: 7.2vw;
+    :after {
+      content: "";
+      position: absolute;
+      width: 86.2vw;
+      height: 0.3vw;
+
+      top: 6.8vw;
+
+      background: #e5fcfa;
+      border-radius: 0.3vw;
+    }
   }
   ${media.fullWidth} {
   }
@@ -425,6 +441,7 @@ const TitleContainer = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    margin-bottom: 6vw;
   }
   ${media.fullWidth} {
   }
@@ -434,9 +451,13 @@ const NewsRow = styled.div`
   display: flex;
   height: 23.5vw;
   justify-content: space-between;
+
   ${media.tablet} {
   }
   ${media.mobile} {
+    flex-direction: column-reverse;
+    height: 100%;
+    justify-content: flex-end;
   }
   ${media.fullWidth} {
   }
@@ -450,6 +471,11 @@ const ButtonRow = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 9.7vw;
+    margin: 0;
   }
   ${media.fullWidth} {
   }
@@ -466,6 +492,8 @@ const Text = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 95.2vw;
+    font-size: 3.4vw;
   }
   ${media.fullWidth} {
   }
@@ -477,7 +505,9 @@ const MainImage = styled.img`
   ${media.tablet} {
   }
   ${media.mobile} {
-  }
+    width: 95.2vw;
+    height: auto;
+  
   ${media.fullWidth} {
   }
 `;
@@ -493,6 +523,8 @@ const Back = styled.button`
   ${media.tablet} {
   }
   ${media.mobile} {
+    top: 9.3vw;
+    left: 24.2vw;
   }
   ${media.fullWidth} {
   }
@@ -507,6 +539,22 @@ const MoreBtn = styled.button`
   ${media.tablet} {
   }
   ${media.mobile} {
+  }
+  ${media.fullWidth} {
+  }
+`;
+
+const RowNoLayout = styled.div`
+  position: relative;
+  display: flex;
+  height: 28.3vw;
+  width: 100%;
+  justify-content: space-between;
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+    width: 200%;
+    height: 100%;
   }
   ${media.fullWidth} {
   }
@@ -532,6 +580,8 @@ const MoreImage = styled.img`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 46.1vw;
+    height: 56.3vw;
   }
   ${media.fullWidth} {
   }
@@ -545,6 +595,9 @@ const MoreText = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    p {
+      font-size: 3.4vw;
+    }
   }
   ${media.fullWidth} {
   }
@@ -603,6 +656,9 @@ const NewsItemsWrapper = styled.div`
 
   ${NewsCard}:nth-child(odd) {
     margin-left: 5.7vw;
+    ${media.mobile} {
+      margin-left: 0;
+    }
     ${More} {
       ${NewsTitle} {
         text-align: left;
@@ -613,13 +669,22 @@ const NewsItemsWrapper = styled.div`
       ${Back} {
         left: auto;
         right: 0;
+        ${media.mobile} {
+          left: 50.5vw;
+        }
       }
     }
   }
 
   ${NewsCard}:nth-child(even) {
+    ${media.mobile} {
+      margin-left: 0;
+    }
     ${NewsRow} {
       flex-direction: row-reverse;
+      ${media.mobile} {
+        flex-direction: column-reverse;
+      }
     }
     ${NewsTitle} {
       text-align: left;
@@ -629,6 +694,10 @@ const NewsItemsWrapper = styled.div`
     }
     ${ButtonRow} {
       flex-direction: row-reverse;
+      ${media.mobile} {
+        right: 0;
+        left: auto;
+      }
     }
     ${MoreBtn} {
       text-align: right;
@@ -664,13 +733,10 @@ const NewsItemsWrapper = styled.div`
     }
   }
 
-  ${NewsCard}:nth-child(odd) {
-    margin-left: 5.7vw;
-  }
-
   ${media.tablet} {
   }
   ${media.mobile} {
+    margin-top: 16.9vw;
   }
   ${media.fullWidth} {
   }
@@ -690,10 +756,25 @@ const Half = styled.div`
     bottom: 0;
     border-color: ${colors.formSkinPurprle};
   }
-  ${media.tablet} {
-  }
   ${media.mobile} {
+    width: 95.2vw;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    ${MoreText} {
+      font-size: 3.4vw;
+      position: relative;
+      width: 100%;
+      top: auto;
+      left: auto;
+    }
+    ${Links} {
+      top: 20vw;
+      left: 50.5vw;
+      bottom: auto;
+    }
   }
+
   ${media.fullWidth} {
   }
 `;
@@ -735,6 +816,7 @@ const Half1 = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    float: none;
   }
   ${media.fullWidth} {
   }

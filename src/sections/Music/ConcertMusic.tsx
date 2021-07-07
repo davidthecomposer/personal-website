@@ -59,6 +59,25 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
     });
   }, []);
 
+  const allButtons = concertPieces.map((piece, index) => {
+    const { tabName } = piece;
+    if (index < concertPieces.length - 1) {
+      return (
+        <PageTab
+          key={`${tabName}-mobile-btn`}
+          activeTab={activePage === index}
+          className={`tab-${index}-front`}
+          onClick={() => {
+            handlePageTurn(index, concertPieces.length - index);
+          }}
+          yOffset={index}
+        >
+          {tabName}
+        </PageTab>
+      );
+    }
+  });
+
   const allConcert = concertPieces.map((genre, index) => {
     const { nexTitle, playList, allPieces, tabName } = genre;
 
@@ -111,7 +130,7 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
                 <Underline />
                 <Year>{year}</Year>
                 <Description>{description}</Description>
-                <Row>
+                <BigRow>
                   <Movements>
                     <SmallTitle>Movements: </SmallTitle>
                     {allMovements}
@@ -124,12 +143,12 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
                           <ScoreIcon />
                         </a>
                       </ScoreSample>
-                      <Duration>{duration}</Duration>
                     </Row>
                     <SmallTitle>Instrumentation: </SmallTitle>
                     <Instrumentation>{allInstrumentation}</Instrumentation>
                   </InfoColumn>
-                </Row>
+                  <Duration>{duration}</Duration>
+                </BigRow>
               </>
             )}
           </InfoWrapper>
@@ -153,7 +172,7 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
             <Genre>{nexTitle}</Genre>
             {allPlaylist}
           </TOCWrap>
-          {tabName && (
+          {tabName && !mobile && (
             <>
               <PageTab
                 activeTab={activePage === index}
@@ -233,7 +252,11 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
         0 + delay
       )
         .to(pageClass, { zIndex: z, duration: 0 }, 0.5 + delay)
-        .to(front, { opacity: turnBack ? 1 : 0, duration: 0.2 }, 0.2 + delay)
+        .to(
+          front,
+          { opacity: turnBack ? 1 : mobile ? 1 : 0, duration: 0.2 },
+          0.2 + delay
+        )
         .to(toc, { zIndex: turnBack ? 0 : 1, duration: 0 }, 0.3 + delay)
 
         .to(pi, { zIndex: turnBack ? 1 : 0, duration: 0 }, 0.3 + delay)
@@ -273,22 +296,32 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
         <Header ref={header}>Concert Music</Header>
         <HeaderLine ref={headerLine} />
       </HeaderWrapper>
-      <MusicBook ref={musicBook}>{allConcert}</MusicBook>
-      <CTA ref={cta}>
-        <HeadLine>Want to Collaborate?</HeadLine>
-        <Text>
-          More Copy about the kinds of things I have at my disposal for media
-          projects including sounds, conducting, styles, musicians, etc.
-        </Text>
-        <GetInTouch
-          onClick={() => {
-            setEnter(true);
-          }}
-        >
-          Get in Touch <Arrow />
-        </GetInTouch>
-      </CTA>
-      <ContactForm enter={enter} leftVal={"63.4vw"} topVal={"102.4vw"} />
+      {mobile && <MobileControls>{allButtons}</MobileControls>}
+      <MobileWrapper>
+        <MusicBook ref={musicBook}>{allConcert}</MusicBook>
+      </MobileWrapper>
+      <MobileWrapper1>
+        <CTA ref={cta} enter={enter}>
+          <HeadLine>Want to Collaborate?</HeadLine>
+          <Text>
+            More Copy about the kinds of things I have at my disposal for media
+            projects including sounds, conducting, styles, musicians, etc.
+          </Text>
+          <GetInTouch
+            onClick={() => {
+              setEnter(true);
+            }}
+          >
+            Get in Touch <Arrow />
+          </GetInTouch>
+        </CTA>
+        <ContactForm
+          setEnter={setEnter}
+          enter={enter}
+          leftVal={mobile ? "100%" : "63.4vw"}
+          topVal={mobile ? "0" : "102.4vw"}
+        />
+      </MobileWrapper1>
     </Wrapper>
   );
 };
@@ -323,6 +356,36 @@ const HeaderWrapper = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    height: 29.7vw;
+  }
+  ${media.fullWidth} {
+  }
+`;
+const MobileControls = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 89.4vw;
+  margin-left: 6.8vw;
+  justify-content: center;
+  margin-top: 24.2vw;
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+  }
+  ${media.fullWidth} {
+  }
+`;
+
+const MobileWrapper = styled.div`
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+    position: relative;
+    overflow: scroll;
+    height: 130.1vw;
+    width: 100%;
+    margin-top: 7vw;
+    padding-top: 1vw;
   }
   ${media.fullWidth} {
   }
@@ -338,6 +401,10 @@ const Header = styled.h2`
   ${media.tablet} {
   }
   ${media.mobile} {
+    transform: translate(8.5vw, 110%);
+    font-size: 13.3vw;
+    width: 59.9vw;
+    text-align: right;
   }
   ${media.fullWidth} {
   }
@@ -356,6 +423,10 @@ const HeaderLine = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    height: 1vw;
+    border-radius: 1vw;
+    width: 82.1vw;
+    margin-right: 8.5vw;
   }
   ${media.fullWidth} {
   }
@@ -368,12 +439,14 @@ const Text = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    font-size: 3.9vw;
+    width: 81.6vw;
   }
   ${media.fullWidth} {
   }
 `;
 
-const CTA = styled.div`
+const CTA = styled.div<{ enter: boolean }>`
   position: absolute;
   width: 46vw;
   height: 19.8vw;
@@ -387,6 +460,11 @@ const CTA = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    top: 0;
+    width: 82.1vw;
+    left: ${(props) => (props.enter ? "-100vw" : "4.1vw")};
+    transition: 0.5s;
+    height: 100vw;
   }
   ${media.fullWidth} {
   }
@@ -399,6 +477,7 @@ const HeadLine = styled.h3`
   ${media.tablet} {
   }
   ${media.mobile} {
+    font-size: 8.7vw;
   }
   ${media.fullWidth} {
   }
@@ -417,6 +496,24 @@ const Arrow = styled(ButtonArrowSVG)`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 9.7vw;
+    height: 3.9vw;
+    margin-left: 5vw;
+  }
+  ${media.fullWidth} {
+  }
+`;
+
+const MobileWrapper1 = styled.div`
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+    position: relative;
+    display: flex;
+    width: 100vw;
+    overflow: hidden;
+    height: 100vw;
+    margin-top: 16.4vw;
   }
   ${media.fullWidth} {
   }
@@ -442,6 +539,11 @@ const GetInTouch = styled.button`
   ${media.tablet} {
   }
   ${media.mobile} {
+    position: relative;
+    width: 46.1vw;
+    height: 9.7vw;
+    border-radius: 2.4vw;
+    margin-top: 15.6vw;
   }
   ${media.fullWidth} {
   }
@@ -478,6 +580,9 @@ const FrontAndBackPage = styled.div<{ z: number }>`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 87vw;
+    height: 127.1vw;
+    left: auto;
   }
   ${media.fullWidth} {
   }
@@ -508,6 +613,9 @@ const TableOfContents = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 87vw;
+    height: 127.1vw;
+    padding: 2.4vw 0 0 9.2vw;
   }
   ${media.fullWidth} {
   }
@@ -535,6 +643,9 @@ const PiecesInfo = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 100%;
+    height: 100%;
+    padding-left: 4.8vw;
   }
   ${media.fullWidth} {
   }
@@ -550,6 +661,12 @@ const MusicBook = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    position: relative;
+    top: 0;
+    left: 90.3vw;
+    width: 87vw;
+    height: 127.1vw;
+    margin-right: 7vw;
   }
   ${media.fullWidth} {
   }
@@ -575,6 +692,26 @@ const PageTab = styled.button<{ yOffset: number; activeTab: boolean }>`
   ${media.tablet} {
   }
   ${media.mobile} {
+    position: relative;
+    background: transparent;
+    appearance: none;
+    -webkit-appearance: none;
+    ${Body1};
+    border: 0.1vw solid white;
+    border-width: min(2px);
+    box-sizing: border-box;
+    border-radius: 0.6vw;
+    font-size: 4.3vw;
+    height: 9.7vw;
+    border-radius: 2.4vw;
+    width: 24.2vw;
+    box-shadow: none;
+    top: auto;
+    right: auto;
+    color: ${(props) => (props.activeTab ? "#f8ffce" : "#d6fff6")};
+    border-color: ${colors.activeTeal};
+    margin-right: 5.6vw;
+    margin-top: 4.8vw;
   }
   ${media.fullWidth} {
   }
@@ -621,6 +758,7 @@ const PageTabBack = styled.button<{ yOffset: number; activeTab: boolean }>`
   ${media.tablet} {
   }
   ${media.mobile} {
+    display: none;
   }
   ${media.fullWidth} {
   }
@@ -655,6 +793,7 @@ const Piece = styled.p`
   ${media.tablet} {
   }
   ${media.mobile} {
+    font-size: 3.4vw;
   }
   ${media.fullWidth} {
   }
@@ -674,11 +813,17 @@ const Genre = styled.h2`
 const InfoWrapper = styled.div<{ visible: boolean }>`
   position: absolute;
   opacity: ${(props) => (props.visible ? 1 : 0)};
+  z-index: ${(props) => (props.visible ? 10 : 0)};
   width: 27.5vw;
   height: 40.7vw;
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: calc(100% - 8.8vw);
+    height: 100%;
+    padding: 0 4.8vw 0 0;
+    top: 0;
+    overflow: scroll;
   }
   ${media.fullWidth} {
   }
@@ -690,6 +835,7 @@ const PieceTitle = styled.h3`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 74.2vw;
   }
   ${media.fullWidth} {
   }
@@ -707,6 +853,9 @@ const Underline = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 69.6vw;
+    height: 0.4vw;
+    margin-left: 4.6vw;
   }
   ${media.fullWidth} {
   }
@@ -721,6 +870,7 @@ const Year = styled.h4`
   ${media.tablet} {
   }
   ${media.mobile} {
+    margin-top: 2vw;
   }
   ${media.fullWidth} {
   }
@@ -732,6 +882,23 @@ const Description = styled.p`
   margin-bottom: 2.2vw;
   height: 10.6vw;
   color: #17161b95;
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+    height: auto;
+    font-size: 3.4vw;
+    margin-left: 4vw;
+    margin-bottom: 4.8vw;
+  }
+  ${media.fullWidth} {
+  }
+`;
+
+const BigRow = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4.8vw;
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -759,6 +926,10 @@ const Movements = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    position: relative;
+    width: 40vw;
+    font-size: 3.4vw;
+    margin-left: 4vw;
   }
   ${media.fullWidth} {
   }
@@ -770,6 +941,7 @@ const InfoColumn = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 38vw;
   }
   ${media.fullWidth} {
   }
@@ -780,6 +952,8 @@ const ScoreSample = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 38vw;
+    display: flex;
   }
   ${media.fullWidth} {
   }
@@ -796,6 +970,10 @@ const Duration = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    font-size: 4.3vw;
+
+    width: 100%;
+    text-align: right;
   }
   ${media.fullWidth} {
   }
@@ -823,6 +1001,9 @@ const Instrument = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    font-size: 2.9vw;
+    border-radius: 2.4vw;
+    padding: 0.8vw 1vw;
   }
   ${media.fullWidth} {
   }
@@ -834,6 +1015,9 @@ const ScoreIcon = styled(ScoreIconSVG)`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 6.8vw;
+    height: 6.8vw;
+    margin-left: 3.6vw;
   }
   ${media.fullWidth} {
   }
@@ -846,6 +1030,7 @@ const SmallTitle = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    font-size: 3.9vw;
   }
   ${media.fullWidth} {
   }
