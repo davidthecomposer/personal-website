@@ -157,15 +157,14 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
               More
             </MoreBtn>
             <Share>
-              {" "}
-              <span>Share </span>{" "}
+              <span>Share </span>
               {share.map((link, i) => {
                 return (
                   <a key={`share-${i}`} href={link.link}>
                     <img src={link.icon} alt="link name" />
                   </a>
                 );
-              })}{" "}
+              })}
             </Share>
           </ButtonRow>
         </Front>
@@ -185,7 +184,13 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
                   })}
                 </MoreText>
                 <MoreImage src={moreImage1} />
-
+                {mobile && (
+                  <MoreBtn
+                    onClick={() => handleMore(`.front-${i}`, `.more-${i}`)}
+                  >
+                    More
+                  </MoreBtn>
+                )}
                 <Links>
                   <span>Links</span>
                   {links1.map((link, i) => {
@@ -204,6 +209,11 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
                     return <p key={`text2-${i}`}>{text}</p>;
                   })}
                 </MoreText>
+                {mobile && (
+                  <Back onClick={() => handleBack(`.front-${i}`, `.more-${i}`)}>
+                    Back
+                  </Back>
+                )}
                 <Links>
                   <span>Links</span>
                   {links2.map((link, i) => {
@@ -334,7 +344,8 @@ const HeaderWrapper = styled.div`
   position: relative;
   width: 90vw;
   height: 5vw;
-  margin-left: 5.6vw;
+  margin-left: 0;
+  margin-bottom: 15.4vw;
   overflow: hidden;
 
   ${media.tablet} {
@@ -356,6 +367,7 @@ const NewsCard = styled.div`
   ${media.mobile} {
     width: 100%;
     height: 146.1vw;
+    margin-bottom: 30vw;
   }
   ${media.fullWidth} {
   }
@@ -773,6 +785,11 @@ const Half = styled.div`
       left: 50.5vw;
       bottom: auto;
     }
+    ${MoreBtn} {
+      position: absolute;
+      left: 50.5vw;
+      top: 10vw;
+    }
   }
 
   ${media.fullWidth} {
@@ -813,11 +830,37 @@ const Half1 = styled.div`
     shape-outside: padding-box;
     z-index: -1;
   }
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
-    float: none;
+    width: 95.2vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    ${MoreText} {
+      font-size: 3.4vw;
+      position: relative;
+      width: 100%;
+      top: auto;
+      left: auto;
+    }
+
+    ${MoreImage} {
+      float: none;
+      position: relative;
+      margin-top: 0;
+    }
+    ${Links} {
+      top: 10vw;
+      left: 50.5vw;
+      bottom: auto;
+    }
+    ${Back} {
+      position: absolute;
+      left: 50.5vw;
+      top: 0vw;
+    }
   }
+
   ${media.fullWidth} {
   }
 `;

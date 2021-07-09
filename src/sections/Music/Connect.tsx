@@ -1,9 +1,11 @@
-import React, { useReducer, useRef, useEffect } from "react";
+import React, { useReducer, useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Heading1, Body1, SubHeader, FormLabel } from "styles/text";
 import colors from "styles/Colors";
 import media from "styles/media";
 import connectBG from "assets/images/connectBG.jpg";
+import connectBGM from "assets/images/connectBGM.jpg";
+import ContactForm from "components/ContactForm";
 import gsap from "gsap";
 import { PrimaryButtonStyle } from "styles/Buttons";
 import { ReactComponent as ButtonArrowSVG } from "assets/svg/buttonArrow.svg";
@@ -13,6 +15,7 @@ const Connect: React.FC<{ mobile: boolean }> = ({ mobile }) => {
   const header = useRef(null);
   const headerLine = useRef(null);
   const collaborate = useRef(null);
+  const [enter, setEnter] = useState(false);
 
   const [formData, setFormData] = useReducer(
     (
@@ -41,7 +44,10 @@ const Connect: React.FC<{ mobile: boolean }> = ({ mobile }) => {
   }, []);
 
   useEffect(() => {
-    const tl = gsap.timeline({ scrollTrigger: headerLine.current });
+    const tl = gsap.timeline({
+      scrollTrigger: headerLine.current,
+      onComplete: () => (mobile ? setEnter(true) : setEnter(false)),
+    });
 
     tl.to(headerLine.current, {
       scale: 1,
@@ -50,7 +56,7 @@ const Connect: React.FC<{ mobile: boolean }> = ({ mobile }) => {
     })
       .to(header.current, { y: 0, duration: 0.6 }, 1)
       .to(header.current, { x: 0, duration: 0.6 }, 1.6);
-  }, []);
+  }, [mobile]);
 
   const updateFormState = (e: any) => {
     const name = e.target.name;
@@ -97,10 +103,20 @@ const Connect: React.FC<{ mobile: boolean }> = ({ mobile }) => {
           from repetition, injected humour, or non-characteristic words etc
         </Text>
       </Collaborate>
-      <FormModal>
-        {inputs}
-        <SendMessage>Send Message</SendMessage>
-      </FormModal>
+      {mobile ? (
+        <ContactForm
+          setEnter={setEnter}
+          enter={enter}
+          leftVal={mobile ? "100%" : "63.4vw"}
+          topVal={mobile ? "60vw" : "102.4vw"}
+          close={true}
+        />
+      ) : (
+        <FormModal>
+          {inputs}
+          <SendMessage>Send Message</SendMessage>
+        </FormModal>
+      )}
     </Wrapper>
   );
 };
@@ -112,16 +128,17 @@ const Wrapper = styled.section`
   position: relative;
   box-sizing: border-box;
   background-image: url(${connectBG});
-
+  overflow: hidden;
   /* -webkit-transform: translate3d(0, 0, 0);
   -webkit-transform-style: preserve-3d;
   -webkit-backface-visibility: hidden; */
 
   ${media.mobile} {
     width: 100%;
-    height: 279.5vw;
+    height: 310.6vw;
     padding: 0;
-    background-position: 50% 50%;
+    background-image: url(${connectBGM});
+    /* background-position: 50% 50%; */
   }
 `;
 
@@ -133,6 +150,7 @@ const Text = styled.p`
   ${media.tablet} {
   }
   ${media.mobile} {
+    font-size: 3.4vw;
   }
   ${media.fullWidth} {
   }
@@ -141,15 +159,14 @@ const Text = styled.p`
 const Header = styled.h2`
   ${Heading1};
   color: ${colors.brightPurple};
-  width: 51.4vw;
   transform: translate(5.6vw, 100%);
   position: absolute;
   width: fit-content;
   ${media.tablet} {
   }
   ${media.mobile} {
-  }
-  ${media.fullWidth} {
+    transform: translate(8.5vw, 110%);
+    font-size: 13.3vw;
   }
 `;
 
@@ -167,8 +184,10 @@ const HeaderLine = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
-  }
-  ${media.fullWidth} {
+    height: 1vw;
+    border-radius: 1vw;
+    width: 82.1vw;
+    margin-left: 8.5vw;
   }
 `;
 
@@ -176,14 +195,13 @@ const HeaderWrapper = styled.div`
   position: relative;
   width: 90vw;
   height: 5vw;
-
+  margin-left: 0;
   overflow: hidden;
 
   ${media.tablet} {
   }
   ${media.mobile} {
-  }
-  ${media.fullWidth} {
+    height: 14.9vw;
   }
 `;
 const Collaborate = styled.div`
@@ -195,6 +213,10 @@ const Collaborate = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 95.2vw;
+    height: 76.3vw;
+    left: 2.4vw;
+    top: 208.4vw;
   }
   ${media.fullWidth} {
   }
@@ -206,6 +228,7 @@ const SubTitle = styled.h3`
   ${media.tablet} {
   }
   ${media.mobile} {
+    font-size: 8.7vw;
   }
   ${media.fullWidth} {
   }

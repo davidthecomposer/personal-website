@@ -328,6 +328,7 @@ const HeaderWrapper = styled.div`
   position: relative;
   width: 90vw;
   height: 5vw;
+
   margin-left: 5.6vw;
   overflow: hidden;
 
@@ -369,12 +370,12 @@ const MobileWrapper1 = styled.div`
 `;
 
 const MobileInner = styled.div<{ mobileInfo: boolean }>`
-  width: fit-content;
-  transform: translateX(${(props) => (props.mobileInfo ? "-100vw" : "0")});
-  transition: 0.5s;
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: fit-content;
+    transform: translateX(${(props) => (props.mobileInfo ? "-100vw" : "0")});
+    transition: 0.5s;
   }
   ${media.fullWidth} {
   }

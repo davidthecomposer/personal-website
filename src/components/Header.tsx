@@ -1,15 +1,16 @@
-import React, { useEffect, useState, useRef } from "react";
-// import { DesktopContext, TabletContext } from "App";
+import React, { useEffect, useState, useRef, useContext } from "react";
+import { MobileContext } from "App";
 import styled from "styled-components";
 import media from "styles/media";
 import colors from "styles/Colors";
 import gsap from "gsap";
 import { Heading1 } from "styles/text";
 import { ReactComponent as DavidSigSVG } from "assets/svg/davidSig.svg";
+import { ReactComponent as DavidInitialsSVG } from "assets/svg/initials.svg";
 import { useHistory } from "react-router-dom";
 
 const Header: React.FC<{}> = () => {
-  // const desktop = useContext(DesktopContext);
+  const mobile = useContext(MobileContext);
   // const tablet = useContext(TabletContext);
   const history = useHistory().location;
   const [role, setRole] = useState("");
@@ -18,6 +19,7 @@ const Header: React.FC<{}> = () => {
   const line = useRef(null);
   const myRole = useRef(null);
   const navLinks = useRef(null);
+  const wrapper = useRef(null);
   const [display, setDisplay] = useState(true);
   const [navOpen, setNavOpen] = useState(true);
   const navIsOpen = useRef(true);
@@ -106,37 +108,61 @@ const Header: React.FC<{}> = () => {
         gsap.getTweensOf(".header__link").forEach((tween) => {
           tween.kill();
         });
+        gsap.getTweensOf(".titleWrapper").forEach((tween) => {
+          tween.kill();
+        });
       }
 
       if (navOpen) {
         if (!ready) {
           gsap.set(".music__nav-btn", { opacity: 1, zIndex: 10 });
           gsap.set(".header__link", { opacity: 0, zIndex: 0 });
+          gsap.set(wrapper.current, {
+            width: mobile ? "20vw" : "4vw",
+            duration: 0,
+          });
         }
         const tl = gsap.timeline();
 
-        tl.to(
-          ".music__nav-btn",
-          { opacity: 0, zIndex: 0, duration: 0.3 },
-          0
-        ).to(
-          ".header__link",
-          {
-            opacity: 1,
-            stagger: 0.1,
-            duration: 0.2,
-            reversed: true,
-            ease: "power1.inOut",
-            onComplete: () => {
-              gsap.set(".header__link", { zIndex: 10 });
+        tl.to(".music__nav-btn", { opacity: 0, zIndex: 0, duration: 0.3 }, 0)
+          .to(
+            wrapper.current,
+            {
+              width: "96vw",
+              duration: 0,
             },
-          },
-          0
-        );
+            0
+          )
+          .to(
+            ".titleWrapper",
+            {
+              width: "58vw",
+              duration: 0,
+            },
+            0
+          )
+          .to(
+            ".header__link",
+            {
+              opacity: 1,
+              stagger: 0.1,
+              duration: 0.2,
+              reversed: true,
+              ease: "power1.inOut",
+              onComplete: () => {
+                gsap.set(".header__link", { zIndex: 10 });
+              },
+            },
+            0
+          );
       } else {
         if (!ready) {
           gsap.set(".header__link", { opacity: 0, zIndex: 10 });
           gsap.to(".music__nav-btn", { opacity: 1, zIndex: 10, duration: 0.3 });
+          gsap.to(wrapper.current, {
+            width: mobile ? "20vw" : "4vw",
+            duration: 0,
+          });
         } else {
           if (pressed.current) {
             gsap.set(".header__link", { opacity: 0, zIndex: 10 });
@@ -144,6 +170,20 @@ const Header: React.FC<{}> = () => {
               opacity: 1,
               zIndex: 10,
               duration: 0.3,
+            });
+            gsap.to(".titleWrapper", {
+              width: "56vw",
+              duration: 0,
+            });
+            gsap.to(wrapper.current, {
+              width: mobile ? "20vw" : "4vw",
+              duration: 0,
+              delay: 0.4,
+            });
+            gsap.to(".titleWrapper", {
+              width: "0",
+              duration: 0,
+              delay: 0.4,
             });
             pressed.current = false;
           }
@@ -182,11 +222,24 @@ const Header: React.FC<{}> = () => {
                 ease: "power1.inOut",
               },
               0
+            )
+            .to(
+              wrapper.current,
+              { width: mobile ? "20vw" : "4vw", duration: 0 },
+              0.3
+            )
+            .to(
+              ".titleWrapper",
+              {
+                width: "0",
+                duration: 0,
+              },
+              0.3
             );
         }
       }
     }
-  }, [navOpen, initial]);
+  }, [navOpen, initial, mobile]);
 
   const handleClick = () => {
     setNavOpen(true);
@@ -195,8 +248,8 @@ const Header: React.FC<{}> = () => {
   };
 
   return (
-    <Wrapper willDisplay={display}>
-      <TitleWrapper>
+    <Wrapper ref={wrapper} willDisplay={display}>
+      <TitleWrapper className="titleWrapper">
         <TitleContainer open={navOpen && !pressed.current}>
           <Title ref={name}>David Campbell</Title>
         </TitleContainer>
@@ -225,10 +278,10 @@ const Header: React.FC<{}> = () => {
         <Link open={navOpen} className="header__link">
           Connect
         </Link>
-        <NavBtn className="music__nav-btn" onClick={handleClick}>
-          <DavidSig />
-        </NavBtn>
       </NavLinks>
+      <NavBtn className="music__nav-btn" onClick={handleClick}>
+        {!mobile ? <DavidSig /> : <DavidInitials />}
+      </NavBtn>
     </Wrapper>
   );
 };
@@ -245,10 +298,11 @@ const Wrapper = styled.nav<{ willDisplay: boolean }>`
   padding: 0.5vw 2vw;
   z-index: 1000;
   right: 0;
+
   ${media.mobile} {
     height: 80px;
   }
-  ${media.fullWidth} {
+  /* ${media.fullWidth} {
     height: 108px;
     width: calc(100% - 72px);
     display: ${(props) => (props.willDisplay ? "flex" : "none")};
@@ -257,7 +311,7 @@ const Wrapper = styled.nav<{ willDisplay: boolean }>`
     padding: 9px 36px;
     z-index: 1000;
     right: 0;
-  }
+  } */
 `;
 
 const TitleWrapper = styled.div`
@@ -389,18 +443,70 @@ const Link = styled.a<{ open: boolean }>`
   }
 `;
 
+const NavBtn = styled.button`
+  width: 6vw;
+  height: 6vw;
+  position: absolute;
+  right: 1vw;
+  top: 0.5vw;
+  z-index: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  border: 3px solid ${colors.dullerTeal};
+  border-radius: 100%;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 0;
+  color: ${colors.coolWhite};
+  transition: transform 0.4s;
+  svg {
+    path {
+      transition: 0.4s;
+    }
+  }
+
+  :hover {
+    color: ${colors.coolWhite};
+    transform: scale(1.2);
+    transform-origin: "0% 100%";
+    transition: 0.4s;
+    svg {
+      path {
+        stroke: currentColor;
+        transition: 0.4s;
+      }
+    }
+  }
+
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+    width: 15vw;
+    height: 15vw;
+    top: 3vw;
+    right: 1.5vw;
+  }
+  ${media.fullWidth} {
+  }
+`;
+
 const NavLinks = styled.div<{ open: boolean; initial: boolean }>`
   display: flex;
   width: 25vw;
   position: relative;
   transition: opacity 0.8s, width 0.3s 0.4s, border 0.6s;
-  transform-origin: right;
+  transform-origin: ${(props) => (!props.open ? "50% 50%" : "right")};
   height: 2.5vw;
   align-items: flex-end;
   overflow: hidden;
-
+  transition: 0.4s;
   padding: 0 0 1vw 1.3vw;
   margin-top: 1vw;
+
   ${Link}:nth-child(even) {
     :hover {
       transform: skew(5deg, -5deg);
@@ -415,80 +521,22 @@ const NavLinks = styled.div<{ open: boolean; initial: boolean }>`
       transition: 0.3s;
     }
   }
+
   ${media.tablet} {
   }
   ${media.mobile} {
   }
   ${media.fullWidth} {
-    width: 450px;
-    position: relative;
-
-    height: 45px;
-
-    padding: 0 0 18px 23px;
-    margin-top: 18px;
   }
 `;
 
-const NavBtn = styled.button`
-  width: 6vw;
-  height: 100%;
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 0;
-  appearance: none;
-  -webkit-appearance: none;
-  outline: none;
-  border: none;
-  border-radius: 10px;
-  opacity: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  padding: 0 0.5vw 0 0;
-  color: ${colors.coolWhite};
-  transition: transform 0.4s;
-  svg {
-    path {
-      transition: 0.4s;
-    }
-  }
-
-  :hover {
-    color: ${colors.coolWhite};
-    transform: scale(1.2);
-    transition: 0.4s;
-    svg {
-      path {
-        stroke: currentColor;
-        transition: 0.4s;
-      }
-    }
-  }
-
+const DavidInitials = styled(DavidInitialsSVG)`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 12vw;
+    height: 12vw;
   }
   ${media.fullWidth} {
-    width: 108px;
-    height: 100%;
-    position: absolute;
-    right: 0;
-    top: 0;
-    z-index: 0;
-    appearance: none;
-    -webkit-appearance: none;
-    outline: none;
-    border: none;
-    border-radius: 10px;
-    opacity: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    padding: 0 9px 0 0;
   }
 `;

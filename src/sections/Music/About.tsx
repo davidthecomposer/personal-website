@@ -4,7 +4,9 @@ import { Heading1, Body1 } from "styles/text";
 import colors from "styles/Colors";
 import media from "styles/media";
 import davidHuge from "assets/images/davidHuge.jpg";
+import davidHugeM from "assets/images/davidHugeM.jpg";
 import davidAbout from "assets/images/davidAbout.jpg";
+import davidAboutM from "assets/images/davidAboutM.jpg";
 // import { PrimaryButtonStyle } from "styles/Buttons";
 // import { ReactComponent as ButtonArrowSVG } from "assets/svg/buttonArrow.svg";
 // import { ReactComponent as ScoreIconSVG } from "assets/svg/scoreIcon.svg";
@@ -32,52 +34,95 @@ const About: React.FC<{ mobile: boolean }> = ({ mobile }) => {
       .to(header.current, { y: 0, duration: 0.6 }, 1)
       .to(header.current, { x: 0, duration: 0.6 }, 1.6)
       .to(".about-bg-cover", { opacity: 0, duration: 2 }, 1)
-      .to(".about-images", { opacity: 1, stagger: 0.5, duration: 4 }, 1)
+      .to(
+        ".about-images",
+        { opacity: 1, stagger: mobile ? 0.1 : 0.5, duration: mobile ? 0.3 : 4 },
+        mobile ? 0 : 1
+      )
       .to(".about-text", { opacity: 1, duration: 1.5 }, 1);
-  }, []);
+  }, [mobile]);
 
   useEffect(() => {
     const tl = gsap.timeline({
-      scrollTrigger: { trigger: davidImage.current, scrub: true },
-    });
-    tl.from(
-      ".about-text",
-      {
-        yPercent: 60,
-        xPercent: -3,
-        ease: "none",
+      scrollTrigger: {
+        trigger: mobile ? ".about-text" : davidImage.current,
+        scrub: true,
       },
-      0
-    )
-      .to(
-        teal.current,
+    });
+    if (!mobile) {
+      tl.from(
+        ".about-text",
         {
-          yPercent: 100,
-          xPercent: 20,
+          yPercent: 60,
+          xPercent: -3,
           ease: "none",
         },
         0
       )
-      .to(
-        grey.current,
-        {
-          yPercent: -20,
-          xPercent: -40,
-          ease: "none",
-        },
-        0
-      );
-  }, []);
+        .to(
+          teal.current,
+          {
+            yPercent: 100,
+            xPercent: 20,
+            ease: "none",
+          },
+          0
+        )
+        .to(
+          grey.current,
+          {
+            yPercent: -20,
+            xPercent: -40,
+            ease: "none",
+          },
+          0
+        );
+    } else {
+      tl.to(davidImage.current, { opacity: 0.02, duration: 2 }, 0)
+        .to(
+          grey.current,
+          {
+            y: "300vw",
+            x: "-=40%",
+            ease: "none",
+            duration: 7,
+          },
+          1.25
+        )
+        .to(
+          teal.current,
+          {
+            y: "470vw",
+            x: "+=10%",
+            ease: "none",
+            duration: 9.25,
+          },
+          0.5
+        )
+        .to(davidImage.current, { opacity: 1, x: "+=8%", duration: 3 }, 7)
+        .to(
+          grey.current,
+          {
+            y: "420vw",
+            ease: "none",
+            duration: 1.5,
+          },
+          8
+        );
+    }
+  }, [mobile]);
 
   return (
     <Wrapper id="about">
       <HeaderWrapper>
-        <Header ref={header} className="about-header">
-          About
-        </Header>
+        <Header ref={header}>About</Header>
         <HeaderLine ref={headerLine} />
       </HeaderWrapper>
-      <DavidImage src={davidAbout} className="about-images" ref={davidImage} />
+      <DavidImage
+        src={mobile ? davidAboutM : davidAbout}
+        className="about-images"
+        ref={davidImage}
+      />
       <Teal className="about-images" ref={teal} />
       <Grey className="about-images" ref={grey} />
 
@@ -146,11 +191,12 @@ const Wrapper = styled.section`
 
   ${media.mobile} {
     width: 100%;
-
-    padding: 0 2.4vw 72.5vw;
+    height: 650.8vw;
+    padding: 0 2.4vw 60vw;
+    background-image: url(${davidHugeM});
+    background-position: 50% 50%;
   }
 `;
-
 const HeaderWrapper = styled.div`
   position: relative;
   flex-direction: column;
@@ -161,6 +207,7 @@ const HeaderWrapper = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    height: 14vw;
   }
   ${media.fullWidth} {
   }
@@ -176,6 +223,10 @@ const Header = styled.h2`
   ${media.tablet} {
   }
   ${media.mobile} {
+    transform: translate(-8.5vw, 110%);
+    font-size: 13.3vw;
+    width: 59.9vw;
+    text-align: right;
   }
   ${media.fullWidth} {
   }
@@ -194,6 +245,10 @@ const HeaderLine = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    height: 1vw;
+    border-radius: 1vw;
+    width: 82.1vw;
+    margin-right: 8.5vw;
   }
   ${media.fullWidth} {
   }
@@ -211,6 +266,11 @@ const Text = styled.p`
   ${media.tablet} {
   }
   ${media.mobile} {
+    font-size: 3.9vw;
+    width: 95.2vw;
+    height: auto;
+    left: 3.9vw;
+    top: 168.8vw;
   }
   ${media.fullWidth} {
   }
@@ -228,6 +288,11 @@ const Teal = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    position: absolute;
+    width: 75.6vw;
+    height: 118.1vw;
+    left: 2.4vw;
+    top: 28vw;
   }
   ${media.fullWidth} {
   }
@@ -245,6 +310,10 @@ const Grey = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 65.2vw;
+    height: 107.5vw;
+    left: 29.2vw;
+    top: 61.6vw;
   }
   ${media.fullWidth} {
   }
@@ -262,6 +331,13 @@ const DavidImage = styled.img`
   ${media.tablet} {
   }
   ${media.mobile} {
+    position: sticky;
+    width: 54.1vw;
+    height: 86.7vw;
+    top: 60vw;
+    left: 15vw;
+    opacity: 1;
+    /* margin-top: 35vw; */
   }
   ${media.fullWidth} {
   }

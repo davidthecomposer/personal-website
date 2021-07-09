@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import styled from "styled-components";
 import {
   Heading1,
@@ -13,6 +13,7 @@ import colors from "styles/Colors";
 import media from "styles/media";
 import ContactForm from "components/ContactForm";
 import concertMusicBG from "assets/images/concertMusic.jpg";
+import concertMusicBGM from "assets/images/concertMusicM.jpg";
 import { PrimaryButtonStyle } from "styles/Buttons";
 import { ReactComponent as ButtonArrowSVG } from "assets/svg/buttonArrow.svg";
 import { ReactComponent as ScoreIconSVG } from "assets/svg/scoreIcon.svg";
@@ -29,6 +30,97 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
   const page = useRef(0);
   const [activePage, setActivePage] = useState(0);
   const [activePiece, setActivePiece] = useState(0);
+
+  const handlePageTurn = useCallback(
+    (num: number, z: number) => {
+      const turnBack = page.current > num || (num === 1 && page.current);
+      setActivePage(num);
+
+      let pages = [];
+      for (
+        let i = turnBack ? num + 1 : page.current;
+        i <= (turnBack ? page.current : num);
+        i++
+      ) {
+        pages.push({
+          page: `.page-${i}`,
+          toc: `.toc-${i}`,
+          pi: `.pieces__info-${i}`,
+          front: `.tab-${i}-front`,
+          tocWrap: `.toc-wrap-${i}`,
+          piWrap: `.pieces__info-wrap-${i}`,
+          z: turnBack ? concertPieces.length - i : i,
+        });
+      }
+
+      if (turnBack) {
+        pages = pages.reverse();
+      }
+
+      const turnPage = (
+        pageClass: string,
+        toc: string,
+        pi: string,
+        delay: number,
+        z: number,
+        front: string,
+        tocWrap: string,
+        piWrap: string
+      ) => {
+        const tl = gsap.timeline({
+          onComplete: () => {
+            page.current = num;
+          },
+        });
+        tl.to(
+          pageClass,
+          {
+            rotateY: turnBack ? 0 : 180,
+            duration: 0.8,
+
+            ease: "power1.inOut",
+          },
+          0 + delay
+        )
+          .to(pageClass, { zIndex: z, duration: 0 }, 0.5 + delay)
+          .to(
+            front,
+            { opacity: turnBack ? 1 : mobile ? 1 : 0, duration: 0.2 },
+            0.2 + delay
+          )
+          .to(toc, { zIndex: turnBack ? 0 : 1, duration: 0 }, 0.3 + delay)
+
+          .to(pi, { zIndex: turnBack ? 1 : 0, duration: 0 }, 0.3 + delay)
+          .to(
+            tocWrap,
+            { opacity: turnBack ? 0 : 1, duration: turnBack ? 0.6 : 0.6 },
+            0.2 + delay
+          )
+
+          .to(
+            piWrap,
+            { opacity: turnBack ? 1 : 0, duration: turnBack ? 0.6 : 0.6 },
+            0.2 + delay
+          );
+
+        return tl;
+      };
+
+      pages.forEach((animation, i) => {
+        turnPage(
+          animation.page,
+          animation.toc,
+          animation.pi,
+          0.3 * i,
+          animation.z,
+          animation.front,
+          animation.tocWrap,
+          animation.piWrap
+        );
+      });
+    },
+    [mobile]
+  );
 
   useEffect(() => {
     const tl = gsap.timeline({ scrollTrigger: headerLine.current });
@@ -57,7 +149,7 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
         handlePageTurn(0, concertPieces.length);
       },
     });
-  }, []);
+  }, [handlePageTurn]);
 
   const allButtons = concertPieces.map((piece, index) => {
     const { tabName } = piece;
@@ -75,6 +167,8 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
           {tabName}
         </PageTab>
       );
+    } else {
+      return null;
     }
   });
 
@@ -201,94 +295,6 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
     );
   });
 
-  const handlePageTurn = (num: number, z: number) => {
-    const turnBack = page.current > num || (num === 1 && page.current);
-    setActivePage(num);
-
-    let pages = [];
-    for (
-      let i = turnBack ? num + 1 : page.current;
-      i <= (turnBack ? page.current : num);
-      i++
-    ) {
-      pages.push({
-        page: `.page-${i}`,
-        toc: `.toc-${i}`,
-        pi: `.pieces__info-${i}`,
-        front: `.tab-${i}-front`,
-        tocWrap: `.toc-wrap-${i}`,
-        piWrap: `.pieces__info-wrap-${i}`,
-        z: turnBack ? concertPieces.length - i : i,
-      });
-    }
-
-    if (turnBack) {
-      pages = pages.reverse();
-    }
-
-    const turnPage = (
-      pageClass: string,
-      toc: string,
-      pi: string,
-      delay: number,
-      z: number,
-      front: string,
-      tocWrap: string,
-      piWrap: string
-    ) => {
-      const tl = gsap.timeline({
-        onComplete: () => {
-          page.current = num;
-        },
-      });
-      tl.to(
-        pageClass,
-        {
-          rotateY: turnBack ? 0 : 180,
-          duration: 0.8,
-
-          ease: "power1.inOut",
-        },
-        0 + delay
-      )
-        .to(pageClass, { zIndex: z, duration: 0 }, 0.5 + delay)
-        .to(
-          front,
-          { opacity: turnBack ? 1 : mobile ? 1 : 0, duration: 0.2 },
-          0.2 + delay
-        )
-        .to(toc, { zIndex: turnBack ? 0 : 1, duration: 0 }, 0.3 + delay)
-
-        .to(pi, { zIndex: turnBack ? 1 : 0, duration: 0 }, 0.3 + delay)
-        .to(
-          tocWrap,
-          { opacity: turnBack ? 0 : 1, duration: turnBack ? 0.6 : 0.6 },
-          0.2 + delay
-        )
-
-        .to(
-          piWrap,
-          { opacity: turnBack ? 1 : 0, duration: turnBack ? 0.6 : 0.6 },
-          0.2 + delay
-        );
-
-      return tl;
-    };
-
-    pages.forEach((animation, i) => {
-      turnPage(
-        animation.page,
-        animation.toc,
-        animation.pi,
-        0.3 * i,
-        animation.z,
-        animation.front,
-        animation.tocWrap,
-        animation.piWrap
-      );
-    });
-  };
-
   return (
     <Wrapper id="Concert Music">
       <TopFade />
@@ -340,9 +346,9 @@ const Wrapper = styled.section`
 
   ${media.mobile} {
     width: 100%;
-    height: 371vw;
+    height: 410.6vw;
     padding: 0;
-    background-position: 50% 50%;
+    background-image: url(${concertMusicBGM});
   }
 `;
 
@@ -353,10 +359,52 @@ const HeaderWrapper = styled.div`
   margin-left: 6.3vw;
   height: 5vw;
   overflow: hidden;
-  ${media.tablet} {
+  z-index: 5 ${media.tablet} {
+
   }
   ${media.mobile} {
     height: 29.7vw;
+  }
+  ${media.fullWidth} {
+  }
+`;
+
+const Header = styled.h2`
+  ${Heading1};
+  color: ${colors.brightPurple};
+  transform: translate(-5.6vw, 100%);
+  position: absolute;
+  width: fit-content;
+  right: 0;
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+    transform: translate(-8.5vw, 110%);
+    font-size: 13.3vw;
+    width: 59.9vw;
+    text-align: right;
+  }
+  ${media.fullWidth} {
+  }
+`;
+
+const HeaderLine = styled.div`
+  position: absolute;
+  width: 82.4vw;
+  height: 0.3vw;
+  right: 3.9vw;
+  bottom: 0;
+  background: ${colors.brightPurple};
+  transform: scaleX(0);
+  transform-origin: 0%;
+  border-radius: 0.3vw;
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+    height: 1vw;
+    border-radius: 1vw;
+    width: 82.1vw;
+    margin-right: 8.5vw;
   }
   ${media.fullWidth} {
   }
@@ -386,47 +434,6 @@ const MobileWrapper = styled.div`
     width: 100%;
     margin-top: 7vw;
     padding-top: 1vw;
-  }
-  ${media.fullWidth} {
-  }
-`;
-
-const Header = styled.h2`
-  ${Heading1};
-  color: ${colors.brightPurple};
-  transform: translate(-5.6vw, 100%);
-  position: absolute;
-  width: fit-content;
-  right: 0;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-    transform: translate(8.5vw, 110%);
-    font-size: 13.3vw;
-    width: 59.9vw;
-    text-align: right;
-  }
-  ${media.fullWidth} {
-  }
-`;
-
-const HeaderLine = styled.div`
-  position: absolute;
-  width: 82.4vw;
-  height: 0.3vw;
-  right: 3.9vw;
-  bottom: 0;
-  background: ${colors.brightPurple};
-  transform: scaleX(0);
-  transform-origin: 0%;
-  border-radius: 0.3vw;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-    height: 1vw;
-    border-radius: 1vw;
-    width: 82.1vw;
-    margin-right: 8.5vw;
   }
   ${media.fullWidth} {
   }
@@ -513,7 +520,7 @@ const MobileWrapper1 = styled.div`
     width: 100vw;
     overflow: hidden;
     height: 100vw;
-    margin-top: 16.4vw;
+    margin-top: 25.4vw;
   }
   ${media.fullWidth} {
   }
@@ -793,7 +800,8 @@ const Piece = styled.p`
   ${media.tablet} {
   }
   ${media.mobile} {
-    font-size: 3.4vw;
+    font-size: 3.9vw;
+    margin-bottom: 3vw;
   }
   ${media.fullWidth} {
   }
@@ -820,8 +828,8 @@ const InfoWrapper = styled.div<{ visible: boolean }>`
   }
   ${media.mobile} {
     width: calc(100% - 8.8vw);
-    height: 100%;
-    padding: 0 4.8vw 0 0;
+    height: calc(100% - 2vw);
+    padding: 2vw 4.8vw 0 0;
     top: 0;
     overflow: scroll;
   }
@@ -902,6 +910,7 @@ const BigRow = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    min-height: 33vw;
   }
   ${media.fullWidth} {
   }

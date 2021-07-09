@@ -548,8 +548,8 @@ const Card2 = styled(Card)`
 
   img:nth-child(1) {
     z-index: 1;
-    left: 253px;
-    top: 240px;
+    left: 29.2vw;
+    top: -6.2vw;
   }
   img:nth-child(2) {
     z-index: 3;

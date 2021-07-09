@@ -12,7 +12,8 @@ const ContactForm: React.FC<{
   topVal: string;
   leftVal: string;
   setEnter: any;
-}> = ({ enter, leftVal, topVal, setEnter }) => {
+  close?: boolean;
+}> = ({ enter, leftVal, topVal, setEnter, close }) => {
   const form = useRef(null);
   const mobile = useContext(MobileContext);
   const inputNames = ["Name", "Email", "Project"];
@@ -78,7 +79,7 @@ const ContactForm: React.FC<{
   return (
     <FormModal ref={form} leftVal={leftVal} topVal={topVal} enter={enter}>
       {inputs}
-      {mobile && <Close onClick={closeModal}>Close</Close>}
+      {mobile && !close && <Close onClick={closeModal}>Close</Close>}
       <SendMessage>Send Message</SendMessage>
     </FormModal>
   );
@@ -104,7 +105,7 @@ const FormModal = styled.form<{
   }
   ${media.mobile} {
     width: 83.3vw;
-    height: 99.5vw;
+    height: 80.5vw;
     transform: scale(1);
     left: ${(props) => (props.enter ? 0 : props.leftVal)};
     padding: 13.3vw 10.4vw 12.8vw 6.3vw;

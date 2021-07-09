@@ -9,6 +9,7 @@ const colors = {
   storyBlue: "#50CAFF",
   activeTeal: "#00FACD",
   dullTeal: "#00FACD60",
+  dullerTeal: "#00FACD20",
   skyBlue: "#73D1EF",
   formSkinPurprle:
     "linear-gradient(128.33deg, #2C354B 10.06%, rgba(42, 19, 90, 0.41) 90.48%);",
