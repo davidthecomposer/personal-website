@@ -1,9 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import styled from "styled-components";
 import { Body1 } from "styles/text";
 import colors from "styles/Colors";
 import media from "styles/media";
 import gsap from "gsap";
+import { PrimaryButtonStyle } from "styles/Buttons";
+import { MobileContext } from "App";
 import { ReactComponent as PlayButtonSVG } from "assets/svg/playButton.svg";
 import { ReactComponent as PauseButtonSVG } from "assets/svg/pauseButton.svg";
 import { ReactComponent as ProgressSVG } from "assets/svg/progress.svg";
@@ -22,6 +24,8 @@ const turningPointMP3 = require("assets/audio/turningPoint.mp3").default;
 type Props = {
   setActiveScreen: any;
   introAni: boolean;
+  setMobileInfo: any;
+  mobileInfo: any;
 };
 
 type AudioElementProps = {
@@ -134,11 +138,17 @@ const AudioElement: React.FC<AudioElementProps> = ({
   );
 };
 
-const AudioPlayer: React.FC<Props> = ({ setActiveScreen, introAni }) => {
+const AudioPlayer: React.FC<Props> = ({
+  setActiveScreen,
+  introAni,
+  setMobileInfo,
+  mobileInfo,
+}) => {
   const playList = useRef(null);
   const [playing, setPlaying] = useState(false);
   const [activeTrack, setActiveTrack] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState("0:00");
+  const mobile = useContext(MobileContext);
 
   const [autoPlay, setAutoPlay] = useState(false);
   const shouldAutoPlay = useRef(false);
@@ -318,6 +328,10 @@ const AudioPlayer: React.FC<Props> = ({ setActiveScreen, introAni }) => {
     }
   }, [autoPlay]);
 
+  const handleInfo = () => {
+    setMobileInfo(!mobileInfo);
+  };
+
   return (
     <Playlist ref={playList}>
       <PlayBack>
@@ -325,6 +339,7 @@ const AudioPlayer: React.FC<Props> = ({ setActiveScreen, introAni }) => {
           <PauseButton />
           <PlayButton />
         </Play>
+        {mobile && <Info onClick={handleInfo}>Info</Info>}
         <AutoPlay onClick={() => setAutoPlay(!autoPlay)} active={autoPlay}>
           <Text>Auto-play</Text>
         </AutoPlay>
@@ -359,6 +374,12 @@ const Playlist = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    position: absolute;
+    width: 94vw;
+    height: 145vw;
+    left: auto;
+    top: auto;
+    margin: 0 3vw;
   }
 `;
 
@@ -378,6 +399,28 @@ const Inner = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 77vw;
+    height: 102vw;
+    top: 28vw;
+    left: 3vw;
+    padding: 5vw;
+  }
+`;
+
+const Info = styled.button`
+  ${PrimaryButtonStyle};
+  width: 29vw;
+  height: 9.7vw;
+  border-radius: 2.4vw;
+  border-color: ${colors.formSkinPurprle};
+  position: absolute;
+  right: 4vw;
+  bottom: 1vw;
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+  }
+  ${media.fullWidth} {
   }
 `;
 
@@ -388,6 +431,7 @@ const Text = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    font-size: 4.3vw;
   }
 `;
 
@@ -406,6 +450,12 @@ const PlayBack = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 79vw;
+    height: 22.5vw;
+    left: 2.7vw;
+    top: 2.7vw;
+    padding: 0 4.1vw;
+    align-items: flex-start;
   }
 `;
 
@@ -418,6 +468,9 @@ const PlayButton = styled(PlayButtonSVG)`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 8vw;
+    height: 8vw;
+    margin-left: 1vw;
   }
 `;
 
@@ -432,6 +485,10 @@ const PauseButton = styled(PauseButtonSVG)`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 10vw;
+    height: 10vw;
+    left: 2vw;
+    top: 2vw;
   }
 `;
 const Play = styled.button<{ play: boolean }>`
@@ -465,6 +522,10 @@ const Play = styled.button<{ play: boolean }>`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 14.5vw;
+    height: 14.5vw;
+    margin-top: 4vw;
+    margin-left: 1vw;
   }
 `;
 
@@ -498,6 +559,17 @@ const AutoPlay = styled.button<{ active: boolean }>`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 29vw;
+    height: 9.7vw;
+    border-radius: 2.4vw;
+    margin-top: 0.5vw;
+    ${Text} {
+      line-height: 8vw;
+      border-radius: 2.4vw;
+      width: 94%;
+      height: 86%;
+      margin-left: 3%;
+    }
   }
 `;
 
@@ -519,6 +591,7 @@ const Track = styled.div<{ selected: boolean }>`
   ${media.tablet} {
   }
   ${media.mobile} {
+    height: 10vw;
   }
   ${media.fullWidth} {
   }

@@ -130,13 +130,8 @@ const AudioPlayerMinimal: React.FC<Props> = ({
         Math.floor(player.current.duration) -
         //@ts-ignore
         Math.floor(player.current.currentTime);
-
       const timeRemainingFormat = returnTimeString(time);
-
       setTimeRemaining(timeRemainingFormat);
-
-      // setPureTime(audioPlayer.current.currentTime);
-      // setPureDuration(audioPlayer.current.duration);
     }
   };
 
@@ -176,6 +171,7 @@ const Text = styled.div<{ playing: boolean }>`
   z-index: 0;
   color: ${(props) => (props.playing ? colors.coolWhite : "black")};
   ${media.tablet} {
+    font-size: 3.4vw;
   }
   ${media.mobile} {
   }
@@ -192,6 +188,7 @@ const TextTime = styled.div<{ playing: boolean }>`
   ${media.tablet} {
   }
   ${media.mobile} {
+    font-size: 3.4vw;
   }
 `;
 
@@ -202,6 +199,8 @@ const PlayButton = styled(PlayButtonSVG)`
   height: 0.7vw;
   margin-left: 0.1vw;
   ${media.tablet} {
+    width: 2.4vw;
+    height: 2.4vw;
   }
   ${media.mobile} {
   }
@@ -221,6 +220,7 @@ const Row1 = styled.div<{ playing: boolean }>`
   ${media.tablet} {
   }
   ${media.mobile} {
+    height: 8vw;
   }
   ${media.fullWidth} {
   }
@@ -260,8 +260,11 @@ const Play = styled.button<{ play: boolean }>`
   }
 
   ${media.tablet} {
+    width: 7vw;
+    height: 7vw;
   }
   ${media.mobile} {
+    left: ${(props) => (props.play ? "-1.5vw" : "calc(100% - 10vw)")};
   }
 `;
 

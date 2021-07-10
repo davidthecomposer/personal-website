@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useReducer } from "react";
+import React, { useEffect, useRef, useReducer, useContext } from "react";
 import styled from "styled-components";
 import { FormLabel } from "styles/text";
 import { PrimaryButtonStyle } from "styles/Buttons";
+import { MobileContext } from "App";
 import colors from "styles/Colors";
 import media from "styles/media";
 import gsap from "gsap";
@@ -10,8 +11,11 @@ const ContactForm: React.FC<{
   enter: boolean;
   topVal: string;
   leftVal: string;
-}> = ({ enter, leftVal, topVal }) => {
+  setEnter: any;
+  close?: boolean;
+}> = ({ enter, leftVal, topVal, setEnter, close }) => {
   const form = useRef(null);
+  const mobile = useContext(MobileContext);
   const inputNames = ["Name", "Email", "Project"];
   const [formData, setFormData] = useReducer(
     (
@@ -67,15 +71,25 @@ const ContactForm: React.FC<{
     }
   }, [enter]);
 
+  const closeModal = (e: any) => {
+    e.preventDefault();
+    setEnter(!enter);
+  };
+
   return (
-    <FormModal ref={form} leftVal={leftVal} topVal={topVal}>
+    <FormModal ref={form} leftVal={leftVal} topVal={topVal} enter={enter}>
       {inputs}
+      {mobile && !close && <Close onClick={closeModal}>Close</Close>}
       <SendMessage>Send Message</SendMessage>
     </FormModal>
   );
 };
 
-const FormModal = styled.form<{ leftVal: string; topVal: string }>`
+const FormModal = styled.form<{
+  leftVal: string;
+  topVal: string;
+  enter: boolean;
+}>`
   position: absolute;
   width: 24.7vw;
   height: 19vw;
@@ -85,11 +99,16 @@ const FormModal = styled.form<{ leftVal: string; topVal: string }>`
   background: ${colors.formSkinPurprle};
   border-radius: 0.5vw;
   opacity: 0;
-  transform: scale(0) translateY(100px);
+  transform: scale(0);
 
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 83.3vw;
+    height: 80.5vw;
+    transform: scale(1);
+    left: ${(props) => (props.enter ? 0 : props.leftVal)};
+    padding: 13.3vw 10.4vw 12.8vw 6.3vw;
   }
   ${media.fullWidth} {
   }
@@ -106,6 +125,8 @@ const FormRow = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    font-size: 4.8vw;
+    margin-bottom: 11.1vw;
   }
   ${media.fullWidth} {
   }
@@ -134,6 +155,8 @@ const TextInput = styled.input`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 60.4vw;
+    height: 9.7vw;
   }
   ${media.fullWidth} {
   }
@@ -150,6 +173,25 @@ const SendMessage = styled.button`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 48.3vw;
+    height: 9.7vw;
+    margin-left: 34vw;
+  }
+  ${media.fullWidth} {
+  }
+`;
+
+const Close = styled.button`
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+    ${PrimaryButtonStyle};
+    position: absolute;
+    width: 30.3vw;
+    height: 9.7vw;
+    /* bottom: 12.8vw;
+    left: 6.3vw; */
+    z-index: 5;
   }
   ${media.fullWidth} {
   }

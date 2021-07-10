@@ -89,6 +89,9 @@ font-size: 1.3vw;
 line-height: 100%;
 letter-spacing: -0.02em;
 color: black;
+${media.mobile} {
+    font-size: 3.4vw;
+}
 `;
 
 export const FormLabel = `
@@ -112,6 +115,10 @@ font-size: 1.1vw;
 line-height: 150%;
 letter-spacing: -0.02em;
 color: rgba(23, 22, 27, 0.7);
+
+${media.mobile} {
+    font-size: 3.4vw;
+}
 `;
 
 export const ConcertTitle = `
@@ -122,4 +129,8 @@ text-align: center;
 font-size: 3.1vw;
 line-height: 150%;
 letter-spacing: -0.02em;
-color: rgba(23, 22, 27, 0.7);`;
+color: rgba(23, 22, 27, 0.7);
+${media.mobile} {
+    font-size: 6.8vw;
+}
+`;

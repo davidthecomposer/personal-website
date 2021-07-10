@@ -165,6 +165,18 @@ const Wrapper = styled.footer`
     rgba(44, 47, 78, 0.895521) 23.42%,
     rgba(42, 19, 90, 0.41) 90.48%
   );
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+    /* height: 234.5vw; */
+    height: auto;
+    width: 95.2vw;
+    padding: 12.6vw 2.4vw 6vw;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  ${media.fullWidth} {
+  }
 `;
 
 const BuildColumn = styled.div`
@@ -173,6 +185,9 @@ const BuildColumn = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 87.2vw;
+    margin-left: 3vw;
+    margin-bottom: 16vw;
   }
   ${media.fullWidth} {
   }
@@ -184,6 +199,7 @@ const Title = styled.h3`
   ${media.tablet} {
   }
   ${media.mobile} {
+    font-size: 8.7vw;
   }
   ${media.fullWidth} {
   }
@@ -197,6 +213,8 @@ const Text = styled.p`
   ${media.tablet} {
   }
   ${media.mobile} {
+    font-size: 3.9vw;
+    width: 86vw;
   }
   ${media.fullWidth} {
   }
@@ -213,6 +231,7 @@ const Email = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    font-size: 3.9vw;
   }
   ${media.fullWidth} {
   }
@@ -225,6 +244,7 @@ const FooterSub = styled.h4`
   ${media.tablet} {
   }
   ${media.mobile} {
+    font-size: 7.2vw;
   }
   ${media.fullWidth} {
   }
@@ -253,6 +273,14 @@ const Socials = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    margin-bottom: 16vw;
+    a {
+      margin-right: 8.5vw;
+      img {
+        width: 7.7vw;
+        height: 7.7vw;
+      }
+    }
   }
   ${media.fullWidth} {
   }
@@ -269,6 +297,9 @@ const HeaderLine = styled.div`
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 91.3vw;
+    height: 0.5vw;
+    margin: 0.5vw 3.9vw 7.2vw 0;
   }
   ${media.fullWidth} {
   }
@@ -283,12 +314,13 @@ const SocialColumn = styled.div`
 
   ${HeaderLine}:nth-of-type(3) {
     margin-right: 0;
-    margin-left: 1.8vw;
+    margin-left: 3.9vw;
     color: white;
   }
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: 100%;
   }
   ${media.fullWidth} {
   }
@@ -318,6 +350,11 @@ const OutBoundLink = styled.a`
   ${media.tablet} {
   }
   ${media.mobile} {
+    font-size: 3.9vw;
+    margin-bottom: 4.8vw;
+    img {
+      width: 5.8vw;
+    }
   }
   ${media.fullWidth} {
   }

@@ -40,7 +40,12 @@ const App = () => {
   const [tablet, setTablet] = useState(
     window.innerWidth >= 767 && window.innerWidth <= 1024
   );
-  const [mobile, setMobile] = useState(window.innerWidth < 767);
+  const [mobile, setMobile] = useState(
+    window.innerWidth < 767 ||
+      (window.innerWidth >= 767 &&
+        window.innerWidth <= 1200 &&
+        window.innerHeight > window.innerWidth)
+  );
 
   useEffect(() => {
     window.addEventListener("resize", () => {
