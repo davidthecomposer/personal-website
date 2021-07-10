@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { PrimaryButtonStyle } from "styles/Buttons";
 import colors from "styles/Colors";
@@ -13,18 +13,19 @@ import facebook from "assets/svg/facebookIcon.svg";
 import liz2 from "assets/images/liz2.jpg";
 import mandiScarf from "assets/images/mandiScarf.jpg";
 import mandiDemo from "assets/images/mandiDemo.jpg";
+import { ReactComponent as SmallArrowSVG } from "assets/svg/smallArrow.svg";
 
 const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
   const header = useRef(null);
   const headerLine = useRef(null);
+  const [openLink, setOpenLink] = useState("");
   const newsItems = useRef([
     {
       title: "News Title Longer 1",
       mainImage: sampleNews,
       paragraph:
-        "In the works of Spelling, a predominant concept is the distinction between creation and destruction. Thus, many theories concerning the common ground between society and reality exist. In Models, Inc., Spelling reiterates modernist feminism; in The Heights he examines predialectic narrative. But the subject is contextualised into a semioticist paradigm of expression that includes truth as a reality. If modernist feminism holds, we have to choose between the subtextual paradigm of narrative and conceptualist deconstruction.",
-      paragraph1:
-        "In a sense, the subject is interpolated into a predialectic narrative that includes language as a whole. Several discourses concerning the semioticist paradigm of expression may be found.",
+        "In the works of Spelling, and destruction. ground between society and reality exist. In Models, Inc., Spelling reiterates modernist feminism; in The Heights he examines predialectic narrative. But the subject is contextualised into a semioticist paradigm of expression that includes truth as a reality. If modernist feminism holds, we have to choose between the subtextual paradigm of narrative and conceptualist deconstruction. Spelling reiterates modernist feminism; in The Heights he examines predialectic narrative. But the subject is contextualised",
+      paragraph1: "",
       share: [
         { icon: twitter, link: "" },
         { icon: facebook, link: "" },
@@ -46,8 +47,8 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
       moreTitle: "Meet them",
       moreImage1: mandiScarf,
       moreText1: [
-        "In the works of Spelling, and destruction. ground between society and reality exist. In Models, Inc., Spelling reiterates modernist feminism; in The Heights he examines predialectic narrative. But the subject is contextualised into a semioticist paradigm of expression that includes truth as a reality. If modernist feminism holds, we have to choose between the subtextual paradigm of narrative and conceptualist deconstruction.",
-        "In a sense, the subject is interpolated into a predialectic narrative that includes language as a whole. Several discourses concerning the semioticist paradigm of expression may be found.",
+        "In the works of Spelling, a predominant concept is the distinction between creation and destruction. Thus, many theories concerning the common ground between society and reality exist. In Models, Inc., Spellin reiterates modernist feminism; in The Heights he examines predialectic narrative. But the subject is contextualised into a semioticist of expression that includes truth a reality. If modernist feminism holds, we have to choose between the subtextual paradigm of narrative andconceptualist deconstruction.",
+        "But the subject is contextualised into a semioticist of expression that includes truth a reality.",
       ],
       moreText2: [
         "In the works of Spelling, and destruction. ground between society and reality exist. In Models, Inc., Spelling reiterates modernist feminism; in The Heights he examines predialectic narrative. But the subject is contextualised into a semioticist paradigm of expression that includes truth as a reality. If modernist feminism holds, we have to choose between the subtextual paradigm of narrative and conceptualist deconstruction.",
@@ -60,9 +61,8 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
       title: "News Title 2",
       mainImage: sampleNews,
       paragraph:
-        "In the works of Spelling, a predominant concept is the distinction between creation and destruction. Thus, many theories concerning the common ground between society and reality exist. In Models, Inc., Spelling reiterates modernist feminism; in The Heights he examines predialectic narrative. But the subject is contextualised into a semioticist paradigm of expression that includes truth as a reality. If modernist feminism holds, we have to choose between the subtextual paradigm of narrative and conceptualist deconstruction.",
-      paragraph1:
-        "In a sense, the subject is interpolated into a predialectic narrative that includes language as a whole. Several discourses concerning the semioticist paradigm of expression may be found.",
+        "In the works of Spelling, and destruction. ground between society and reality exist. In Models, Inc., Spelling reiterates modernist feminism; in The Heights he examines predialectic narrative. But the subject is contextualised into a semioticist paradigm of expression that includes truth as a reality. If modernist feminism holds, we have to choose between the subtextual paradigm of narrative and conceptualist deconstruction. Spelling reiterates modernist feminism; in The Heights he examines predialectic narrative. But the subject is contextualised",
+      paragraph1: "",
       share: [
         { icon: twitter, link: "" },
         { icon: facebook, link: "" },
@@ -87,9 +87,8 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
       moreImage1: mandiDemo,
       moreImage2: "",
       moreText1: [
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        "Ac ut consequat semper viverra. Porta non pulvinar neque laoreet suspendisse interdum consectetur libero id. Tortor condimentum lacinia quis vel eros donec. Pulvinar pellentesque habitant morbi tristique. Gravida rutrum quisque non tellus orci ac. Enim nulla aliquet porttitor lacus. Elit scelerisque mauris pellentesque pulvinar pellentesque habitant. Et tortor at risus viverra adipiscing at. Etiam sit amet nisl purus in. Nibh tortor id aliquet lectus. Neque viverra justo nec ultrices dui sapien eget mi proin. Integer feugiat scelerisque varius morbi. Magna ac placerat vestibulum lectus mauris ultrices eros. Id ornare arcu odio ut sem.",
-        "Ac ut consequat semper viverra. Porta non pulvinar neque laoreet suspendisse interdum consectetur libero id. Tortor condimentum lacinia quis vel eros donec. Pulvinar pellentesque habitant morbi tristique. Gravida rutrum quisque non tellus orci ac. Enim nulla aliquet porttitor lacus.",
+        "In the works of Spelling, a predominant concept is the distinction between creation and destruction. Thus, many theories concerning the common ground between society and reality exist. In Models, Inc., Spellin reiterates modernist feminism; in The Heights he examines predialectic narrative. But the subject is contextualised into a semioticist of expression that includes truth a reality. ",
+        "If modernist feminism holds, we have to choose between the subtextual paradigm of narrative andconceptualist deconstruction. But the subject is contextualised into a semioticist of expression that includes truth a reality.",
       ],
       moreText2: [],
     },
@@ -154,9 +153,15 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
           </NewsRow>
           <ButtonRow>
             <MoreBtn onClick={() => handleMore(`.front-${i}`, `.more-${i}`)}>
-              More
+              <span>More</span>
+              <SmallArrow />
             </MoreBtn>
-            <Share>
+            <Share
+              onClick={() =>
+                setOpenLink(openLink === `share-${i}` ? "" : `share-${i}`)
+              }
+              open={openLink === `share-${i}`}
+            >
               <span>Share </span>
               {share.map((link, i) => {
                 return (
@@ -172,8 +177,12 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
           <TitleContainer>
             <NewsTitle>{moreTitle}</NewsTitle>
           </TitleContainer>
-          <Back onClick={() => handleBack(`.front-${i}`, `.more-${i}`)}>
-            Back
+          <Back
+            onClick={() => handleBack(`.front-${i}`, `.more-${i}`)}
+            layout={layout === "full"}
+          >
+            <SmallArrow />
+            <span>Back</span>
           </Back>
           {!layout && (
             <RowNoLayout>
@@ -188,10 +197,16 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
                   <MoreBtn
                     onClick={() => handleMore(`.front-${i}`, `.more-${i}`)}
                   >
-                    More
+                    <span>More</span>
+                    <SmallArrow />
                   </MoreBtn>
                 )}
-                <Links>
+                <Links
+                  onClick={() =>
+                    setOpenLink(openLink === `link-${i}` ? "" : `link-${i}`)
+                  }
+                  open={openLink === `link-${i}`}
+                >
                   <span>Links</span>
                   {links1.map((link, i) => {
                     return (
@@ -203,6 +218,11 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
                 </Links>
               </Half>
               <Half1>
+                {mobile && (
+                  <TitleContainer>
+                    <NewsTitle>{moreTitle}</NewsTitle>
+                  </TitleContainer>
+                )}
                 <MoreImage src={moreImage2} />
                 <MoreText>
                   {moreText2.map((text: string, i: any) => {
@@ -211,10 +231,16 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
                 </MoreText>
                 {mobile && (
                   <Back onClick={() => handleBack(`.front-${i}`, `.more-${i}`)}>
-                    Back
+                    <SmallArrow />
+                    <span>Back</span>
                   </Back>
                 )}
-                <Links>
+                <Links
+                  onClick={() =>
+                    setOpenLink(openLink === `link-${i}` ? "" : `link-${i}`)
+                  }
+                  open={openLink === `link-${i}`}
+                >
                   <span>Links</span>
                   {links2.map((link, i) => {
                     return (
@@ -236,7 +262,12 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
                     return <p key={`text1-full${i}`}>{text}</p>;
                   })}
                 </MoreText>
-                <Links>
+                <Links
+                  onClick={() =>
+                    setOpenLink(openLink === `link-${i}` ? "" : `link-${i}`)
+                  }
+                  open={openLink === `link-${i}`}
+                >
                   <span>Links</span>
                   {links1.map((link, i) => {
                     return (
@@ -335,8 +366,8 @@ const HeaderLine = styled.div`
   ${media.mobile} {
     height: 1vw;
     border-radius: 1vw;
-    width: 82.1vw;
-    margin-left: 8.5vw;
+    width: 82vw;
+    margin-left: 5vw;
   }
 `;
 
@@ -498,6 +529,7 @@ const Text = styled.div`
   flex-direction: column;
   width: 40.5vw;
   ${Body1};
+  font-size: 1.3vw;
   p:nth-child(1) {
     margin-bottom: 1.3vw;
   }
@@ -505,7 +537,11 @@ const Text = styled.div`
   }
   ${media.mobile} {
     width: 95.2vw;
-    font-size: 3.4vw;
+    font-size: 3.9vw;
+    height: 53vw;
+    overflow: hidden;
+    padding-top: 3vw;
+    padding-bottom: 10vw;
   }
   ${media.fullWidth} {
   }
@@ -519,24 +555,44 @@ const MainImage = styled.img`
   ${media.mobile} {
     width: 95.2vw;
     height: auto;
-  
+  }
+`;
+
+const SmallArrow = styled(SmallArrowSVG)`
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+    position: relative;
+    width: 6.8vw;
+    height: 2.2vw;
+    margin-left: 0.7vw;
+  }
   ${media.fullWidth} {
   }
 `;
 
-const Back = styled.button`
+const Back = styled.button<{ layout?: boolean }>`
   ${PrimaryButtonStyle};
-  padding-left: 0.7vw;
+  padding: 0 0.7vw;
   width: 11.9vw;
   border-color: #73d1ef;
   z-index: 5;
   position: absolute;
   top: 0.5vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  span {
+    width: fit-content;
+  }
   ${media.tablet} {
   }
   ${media.mobile} {
     top: 9.3vw;
-    left: 24.2vw;
+    left: auto;
+    right: 3vw;
+    width: 29vw;
+    text-align: right;
   }
   ${media.fullWidth} {
   }
@@ -548,9 +604,25 @@ const MoreBtn = styled.button`
   width: 11.9vw;
   margin-right: 1.3vw;
   border-color: #ffcef8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  ${SmallArrow} {
+    transform: rotate(180deg);
+  }
   ${media.tablet} {
   }
   ${media.mobile} {
+    padding: 0 1vw;
+    left: 0;
+    margin-right: 0;
+    position: absolute;
+    ${SmallArrow} {
+      margin-right: 1vw;
+    }
+    span {
+      margin-left: 1vw;
+    }
   }
   ${media.fullWidth} {
   }
@@ -601,6 +673,7 @@ const MoreImage = styled.img`
 
 const MoreText = styled.div`
   ${Body1};
+
   p {
     margin-bottom: 0.6vw;
   }
@@ -608,14 +681,14 @@ const MoreText = styled.div`
   }
   ${media.mobile} {
     p {
-      font-size: 3.4vw;
+      font-size: 3.9vw;
     }
   }
   ${media.fullWidth} {
   }
 `;
 
-const Links = styled.div`
+const Links = styled.div<{ open: boolean }>`
   ${PrimaryButtonStyle};
   height: 2.5vw;
   padding: 0.2vw 0 0.3vw 0.7vw;
@@ -636,30 +709,44 @@ const Links = styled.div`
     margin-right: 0.6vw;
     opacity: 0;
     z-index: -1;
-    :hover {
-      transform: rotateZ(360deg);
-      transition: 0.3s;
+    ${media.hover} {
+      :hover {
+        transform: rotateZ(360deg);
+        transition: 0.3s;
+      }
     }
   }
-  :hover {
-    width: 18vw;
-    opacity: 0.5s;
-    a {
-      opacity: 1;
-      z-index: 2;
-      transition: opacity 0.4s z-index 0.4s 0.4s;
+  ${media.hover} {
+    :hover {
+      width: 20vw;
+      opacity: 0.5s;
+      a {
+        opacity: 1;
+        z-index: 2;
+        transition: opacity 0.4s z-index 0.4s 0.4s;
+      }
     }
   }
   ${media.tablet} {
   }
   ${media.mobile} {
+    width: ${(props) => (props.open ? "50vw" : "30vw")};
+    a {
+      opacity: ${(props) => (props.open ? 1 : 0)};
+      z-index: ${(props) => (props.open ? 2 : -1)};
+    }
   }
   ${media.fullWidth} {
   }
 `;
 
-const Share = styled(Links)`
+const Share = styled(Links)<{ open: boolean }>`
   border-color: #73d1ef;
+  ${media.mobile} {
+    span {
+      margin-right: 1.2vw;
+    }
+  }
 `;
 
 const NewsItemsWrapper = styled.div`
@@ -670,19 +757,17 @@ const NewsItemsWrapper = styled.div`
     margin-left: 5.7vw;
     ${media.mobile} {
       margin-left: 0;
+
+      ${Share} {
+        margin-left: 33vw;
+      }
     }
+
     ${More} {
       ${NewsTitle} {
         text-align: left;
         ::after {
           left: 3vw;
-        }
-      }
-      ${Back} {
-        left: auto;
-        right: 0;
-        ${media.mobile} {
-          left: 50.5vw;
         }
       }
     }
@@ -691,6 +776,14 @@ const NewsItemsWrapper = styled.div`
   ${NewsCard}:nth-child(even) {
     ${media.mobile} {
       margin-left: 0;
+      ${Share} {
+        margin-left: auto;
+        margin-right: 33vw;
+      }
+      ${MoreBtn} {
+        right: 0;
+        left: auto;
+      }
     }
     ${NewsRow} {
       flex-direction: row-reverse;
@@ -757,6 +850,7 @@ const NewsItemsWrapper = styled.div`
 const Half = styled.div`
   width: 38.7vw;
   height: 100%;
+  position: relative;
   ${MoreText} {
     position: absolute;
     left: 17.6vw;
@@ -773,22 +867,32 @@ const Half = styled.div`
     display: flex;
     flex-direction: column-reverse;
     justify-content: flex-end;
+    ${MoreImage} {
+      width: 33.3vw;
+      height: 47.3vw;
+    }
     ${MoreText} {
-      font-size: 3.4vw;
+      p {
+        font-size: 3.9vw;
+        line-height: 150%;
+      }
       position: relative;
-      width: 100%;
+      width: 93vw;
       top: auto;
       left: auto;
+      height: 74.6vw;
+      padding-bottom: 10vw;
+      padding-top: 2.4vw;
     }
     ${Links} {
-      top: 20vw;
-      left: 50.5vw;
+      top: 38vw;
+      left: 35vw;
       bottom: auto;
     }
     ${MoreBtn} {
-      position: absolute;
-      left: 50.5vw;
-      top: 10vw;
+      left: auto;
+      right: 3vw;
+      top: 12vw;
     }
   }
 
@@ -836,28 +940,43 @@ const Half1 = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    ${TitleContainer} {
+      position: absolute;
+      top: -10vw;
+      left: 0;
+    }
     ${MoreText} {
-      font-size: 3.4vw;
+      p {
+        font-size: 3.9vw;
+        line-height: 150%;
+      }
       position: relative;
-      width: 100%;
+      width: 93vw;
       top: auto;
       left: auto;
+      height: 74.6vw;
+      padding-bottom: 10vw;
+      padding-top: 2.4vw;
     }
 
     ${MoreImage} {
       float: none;
       position: relative;
       margin-top: 0;
+
+      width: 33.3vw;
+      height: 47.3vw;
     }
     ${Links} {
-      top: 10vw;
-      left: 50.5vw;
+      top: 38vw;
+      left: 35vw;
       bottom: auto;
     }
     ${Back} {
       position: absolute;
-      left: 50.5vw;
-      top: 0vw;
+      left: auto;
+      right: 3vw;
+      top: 0;
     }
   }
 
@@ -869,9 +988,10 @@ const Full = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+  position: relative;
   ${MoreImage} {
-    width: 29.3vw;
-    height: 23.8vw;
+    width: 39.1vw;
+    height: 24.9vw;
     margin-right: 2.5vw;
   }
 
@@ -881,12 +1001,46 @@ const Full = styled.div`
     left: 0;
   }
   ${MoreText} {
-    width: 46.9vw;
+    width: 25.3vw;
+    font-size: 1.1vw;
+    p {
+      font-size: 1.1vw;
+    }
   }
 
   ${media.tablet} {
   }
   ${media.mobile} {
+    flex-direction: column;
+
+    height: 144.9vw;
+
+    ${MoreImage} {
+      width: 59.9vw;
+      height: 38.2vw;
+      margin-right: 0;
+      margin-bottom: 12.1vw;
+    }
+    ${MoreText} {
+      font-size: 3.9vw;
+      position: relative;
+      width: 87vw;
+      height: 67.4vw;
+
+      padding-bottom: 10vw;
+      padding-top: 2.4vw;
+      top: auto;
+      left: auto;
+      p {
+        font-size: 3.9vw;
+        line-height: 150%;
+      }
+    }
+    ${Links} {
+      position: absolute;
+      top: 41vw;
+      left: 0;
+    }
   }
   ${media.fullWidth} {
   }

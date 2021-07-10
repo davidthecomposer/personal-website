@@ -130,13 +130,8 @@ const AudioPlayerMinimal: React.FC<Props> = ({
         Math.floor(player.current.duration) -
         //@ts-ignore
         Math.floor(player.current.currentTime);
-
       const timeRemainingFormat = returnTimeString(time);
-
       setTimeRemaining(timeRemainingFormat);
-
-      // setPureTime(audioPlayer.current.currentTime);
-      // setPureDuration(audioPlayer.current.duration);
     }
   };
 

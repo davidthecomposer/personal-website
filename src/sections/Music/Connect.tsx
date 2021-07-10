@@ -150,7 +150,7 @@ const Text = styled.p`
   ${media.tablet} {
   }
   ${media.mobile} {
-    font-size: 3.4vw;
+    font-size: 3.9vw;
   }
   ${media.fullWidth} {
   }
@@ -186,8 +186,8 @@ const HeaderLine = styled.div`
   ${media.mobile} {
     height: 1vw;
     border-radius: 1vw;
-    width: 82.1vw;
-    margin-left: 8.5vw;
+    width: 82vw;
+    margin-left: 5vw;
   }
 `;
 
@@ -229,6 +229,7 @@ const SubTitle = styled.h3`
   }
   ${media.mobile} {
     font-size: 8.7vw;
+    text-align: right;
   }
   ${media.fullWidth} {
   }

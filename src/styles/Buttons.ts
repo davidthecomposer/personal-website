@@ -19,6 +19,6 @@ ${media.mobile} {
     font-size: 4.3vw;
     width: 29vw;
     height: 9.7vw;
-    border-radius: 2.4vw;
+    border-radius: 1.5vw;
 }
 `;

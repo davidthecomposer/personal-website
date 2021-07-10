@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useContext } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 // import { ButtonRegularStyles } from "components/Buttons";
 import { SlideHeading, MetroHeading32 } from "styles/text";
@@ -369,7 +369,6 @@ const Wrapper = styled.section`
     padding: 15vw 0 58.1vw 0;
   }
   ${media.fullWidth} {
-    padding: 162px 0 0 0;
   }
 `;
 
@@ -664,8 +663,8 @@ const Card3 = styled(Card)`
       z-index: 1;
       width: 56.5vw;
       height: 56.5vw;
-      left: 90px;
-      top: 105px;
+      left: 21.7vw;
+      top: 25.4vw;
     }
     img:nth-child(3) {
       z-index: 2;

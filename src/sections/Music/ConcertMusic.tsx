@@ -151,6 +151,18 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
     });
   }, [handlePageTurn]);
 
+  useEffect(() => {
+    if (mobile) {
+      gsap.to(".mobile__wrapper", { duration: 0.6, scrollTo: { x: "max" } });
+    }
+  }, [mobile, activePiece]);
+
+  useEffect(() => {
+    if (mobile) {
+      gsap.to(".mobile__wrapper", { duration: 0.6, scrollTo: { x: "0" } });
+    }
+  }, [mobile, activePage]);
+
   const allButtons = concertPieces.map((piece, index) => {
     const { tabName } = piece;
     if (index < concertPieces.length - 1) {
@@ -303,7 +315,7 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
         <HeaderLine ref={headerLine} />
       </HeaderWrapper>
       {mobile && <MobileControls>{allButtons}</MobileControls>}
-      <MobileWrapper>
+      <MobileWrapper className="mobile__wrapper">
         <MusicBook ref={musicBook}>{allConcert}</MusicBook>
       </MobileWrapper>
       <MobileWrapper1>
@@ -376,6 +388,7 @@ const Header = styled.h2`
   position: absolute;
   width: fit-content;
   right: 0;
+  z-index: 2;
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -403,8 +416,8 @@ const HeaderLine = styled.div`
   ${media.mobile} {
     height: 1vw;
     border-radius: 1vw;
-    width: 82.1vw;
-    margin-right: 8.5vw;
+    width: 88vw;
+    margin-right: 2vw;
   }
   ${media.fullWidth} {
   }
@@ -535,12 +548,13 @@ const GetInTouch = styled.button`
   width: 12.5vw;
 
   padding-left: 0.8vw;
+  ${media.hover} {
+    :hover {
+      ${Arrow} {
+        transform: translateX(0.4vw);
 
-  :hover {
-    ${Arrow} {
-      transform: translateX(0.4vw);
-
-      transition: 0.5s;
+        transition: 0.5s;
+      }
     }
   }
   ${media.tablet} {
@@ -801,7 +815,8 @@ const Piece = styled.p`
   }
   ${media.mobile} {
     font-size: 3.9vw;
-    margin-bottom: 3vw;
+    padding-bottom: 4vw;
+    margin-bottom: 0;
   }
   ${media.fullWidth} {
   }
@@ -853,7 +868,7 @@ const Underline = styled.div`
   width: 25.7vw;
   height: 0.1vw;
   min-height: 2px;
-  margin-left: 28px;
+  margin-left: 1.8vw;
   background: #272737;
   opacity: 0.75;
   border-radius: 0.1vw;
@@ -894,7 +909,7 @@ const Description = styled.p`
   }
   ${media.mobile} {
     height: auto;
-    font-size: 3.4vw;
+    font-size: 3.9vw;
     margin-left: 4vw;
     margin-bottom: 4.8vw;
   }
@@ -937,7 +952,7 @@ const Movements = styled.div`
   ${media.mobile} {
     position: relative;
     width: 40vw;
-    font-size: 3.4vw;
+    font-size: 3.9vw;
     margin-left: 4vw;
   }
   ${media.fullWidth} {

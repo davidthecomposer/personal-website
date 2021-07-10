@@ -247,8 +247,8 @@ const HeaderLine = styled.div`
   ${media.mobile} {
     height: 1vw;
     border-radius: 1vw;
-    width: 82.1vw;
-    margin-right: 8.5vw;
+    width: 88vw;
+    margin-right: 2vw;
   }
   ${media.fullWidth} {
   }

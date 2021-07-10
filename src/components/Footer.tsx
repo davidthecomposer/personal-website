@@ -186,7 +186,7 @@ const BuildColumn = styled.div`
   }
   ${media.mobile} {
     width: 87.2vw;
-    margin-left: 8.7vw;
+    margin-left: 3vw;
     margin-bottom: 16vw;
   }
   ${media.fullWidth} {

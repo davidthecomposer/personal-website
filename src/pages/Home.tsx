@@ -1,13 +1,9 @@
-import React, { useContext } from "react";
-//  const mobile = useContext(MobileContext);
+import React from "react";
+
 import styled from "styled-components";
 import colors from "styles/Colors";
 
-// import { DesktopContext } from "App";
-
 const IndexPage: React.FC = () => {
-  // const mobile = useContext(MobileContext);
-
   return <Wrapper></Wrapper>;
 };
 

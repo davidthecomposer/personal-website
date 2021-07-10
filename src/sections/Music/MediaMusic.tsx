@@ -319,8 +319,8 @@ const HeaderLine = styled.div`
   ${media.mobile} {
     height: 1vw;
     border-radius: 1vw;
-    width: 82.1vw;
-    margin-left: 8.5vw;
+    width: 82vw;
+    margin-left: 5vw;
   }
 `;
 
@@ -520,7 +520,7 @@ const Music = styled.button<{ trackState: boolean }>`
   ${media.mobile} {
     position: absolute;
     margin: 0;
-    left: 20px;
+    left: 4.8vw;
     width: 29vw;
     height: 9.7vw;
     border-radius: 2.4vw;
@@ -564,7 +564,7 @@ const TrackText = styled.p<{ visibleText?: boolean }>`
   ${media.mobile} {
     font-size: 3.9vw;
     width: 90.3vw;
-    left: 20px;
+    left: 4.8vw;
   }
 `;
 
