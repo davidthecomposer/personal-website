@@ -32,9 +32,9 @@ const ContactForm: React.FC<{
       newState: { name: string; email: string; project: string }
     ) => ({ ...state, ...newState }),
     {
-      name: "",
-      email: "",
-      project: "",
+      name: "Name",
+      email: "email",
+      project: "project",
     }
   );
 
@@ -51,7 +51,7 @@ const ContactForm: React.FC<{
         <FormText>{input} :</FormText>
         <TextInput
           type={"text"}
-          id={`#${input.toLowerCase()}`}
+          id={`${input.toLowerCase()}`}
           name={input.toLowerCase()}
           //@ts-ignore
           value={formData[input]}
@@ -97,9 +97,9 @@ const ContactForm: React.FC<{
       })
         .then(() => {
           setFormData({
-            name: "",
-            email: "",
-            project: "",
+            name: "Name",
+            email: "email",
+            project: "project",
           });
           setSuccess(true);
         })
