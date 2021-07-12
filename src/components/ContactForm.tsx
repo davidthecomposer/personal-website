@@ -11,9 +11,11 @@ const ContactForm: React.FC<{
   enter: boolean;
   topVal: string;
   leftVal: string;
+  leftValT: string;
+  topValT: string;
   setEnter: any;
   close?: boolean;
-}> = ({ enter, leftVal, topVal, setEnter, close }) => {
+}> = ({ enter, leftVal, topVal, setEnter, close, leftValT, topValT }) => {
   const form = useRef(null);
   const mobile = useContext(MobileContext);
   const inputNames = ["Name", "Email", "Project"];
@@ -77,7 +79,14 @@ const ContactForm: React.FC<{
   };
 
   return (
-    <FormModal ref={form} leftVal={leftVal} topVal={topVal} enter={enter}>
+    <FormModal
+      ref={form}
+      topValT={topValT}
+      leftValT={leftValT}
+      leftVal={leftVal}
+      topVal={topVal}
+      enter={enter}
+    >
       {inputs}
       {mobile && !close && <Close onClick={closeModal}>Close</Close>}
       <SendMessage>Send Message</SendMessage>
@@ -87,7 +96,9 @@ const ContactForm: React.FC<{
 
 const FormModal = styled.form<{
   leftVal: string;
+  leftValT: string;
   topVal: string;
+  topValT: string;
   enter: boolean;
 }>`
   position: absolute;
@@ -101,8 +112,6 @@ const FormModal = styled.form<{
   opacity: 0;
   transform: scale(0);
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     width: 83.3vw;
     height: 80.5vw;
@@ -110,7 +119,12 @@ const FormModal = styled.form<{
     left: ${(props) => (props.enter ? 0 : props.leftVal)};
     padding: 13.3vw 10.4vw 12.8vw 6.3vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 345px;
+    height: 333px;
+    left: ${(props) => props.leftValT};
+    top: ${(props) => props.topValT};
+    padding: 55px 43px 53px 26px;
   }
 `;
 
@@ -122,13 +136,14 @@ const FormRow = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2.9vw;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     font-size: 4.8vw;
     margin-bottom: 11.1vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    font-size: 20px;
+    margin-bottom: 46px;
   }
 `;
 
@@ -158,7 +173,9 @@ const TextInput = styled.input`
     width: 60.4vw;
     height: 9.7vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 250px;
+    height: 40px;
   }
 `;
 
@@ -170,14 +187,18 @@ const SendMessage = styled.button`
   padding-left: 0.8vw;
   position: relative;
   margin-left: 12.1vw;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     width: 48.3vw;
     height: 9.7vw;
     margin-left: 34vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    font-size: 18px;
+    width: 200px;
+    height: 40px;
+    margin-left: 141px;
+    border-radius: 6px;
   }
 `;
 
@@ -193,7 +214,10 @@ const Close = styled.button`
     left: 6.3vw; */
     z-index: 5;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    font-size: 18px;
+    width: 125px;
+    height: 40px;
   }
 `;
 

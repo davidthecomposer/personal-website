@@ -7,7 +7,7 @@ const media = {
   fullWidth: "@media screen and (min-width: 1600px)",
   hover: "@media (hover: hover) ",
   tabletPortrait:
-    "@media screen and (max-width: 1200px) and (orientation: portrait)",
+    "@media screen and (max-width: 1200px) and (min-width: 768px) and (orientation: portrait)",
 };
 
 export default media;

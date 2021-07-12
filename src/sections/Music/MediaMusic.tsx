@@ -244,6 +244,8 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
           leftVal={mobile ? "100%" : "63.4vw"}
           topVal={mobile ? "0" : "92.3vw"}
           setEnter={setEnter}
+          leftValT={"33%"}
+          topValT={"0"}
         />
       </MobileWrapper1>
     </Wrapper>
@@ -257,15 +259,16 @@ const Wrapper = styled.section`
   background-size: cover;
   position: relative;
   box-sizing: border-box;
-  /* -webkit-transform: translate3d(0, 0, 0);
-  -webkit-transform-style: preserve-3d;
-  -webkit-backface-visibility: hidden; */
 
   ${media.mobile} {
     width: 100%;
     height: 360.5vw;
     padding: 0;
     background-position: 50% 50%;
+  }
+  ${media.tabletPortrait} {
+    width: 100%;
+    height: 1865px;
   }
 `;
 
@@ -281,9 +284,14 @@ const Info = styled.button<{ mobileInfo: boolean }>`
   top: 12vw;
   opacity: ${(props) => (props.mobileInfo ? 1 : 0)};
   transition: opacity 0.3s 0.4s;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
+
+  ${media.tabletPortrait} {
+    font-size: 22px;
+    width: 150px;
+    height: 50px;
+    border-radius: 8px;
+    left: 544px;
+    top: 70px;
   }
   ${media.fullWidth} {
   }
@@ -295,11 +303,14 @@ const Header = styled.h2`
   transform: translate(5.6vw, 100%);
   position: absolute;
   width: fit-content;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     transform: translate(8.5vw, 110%);
     font-size: 13.3vw;
+  }
+  ${media.tabletPortrait} {
+    transform: translate(44px, 110%);
+    font-size: 69px;
   }
 `;
 
@@ -314,13 +325,17 @@ const HeaderLine = styled.div`
   transform-origin: 100%;
   border-radius: 0.3vw;
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     height: 1vw;
     border-radius: 1vw;
     width: 82vw;
     margin-left: 5vw;
+  }
+  ${media.tabletPortrait} {
+    height: 5px;
+    border-radius: 5px;
+    width: calc(100% - 26px);
+    margin-left: 26px;
   }
 `;
 
@@ -332,16 +347,16 @@ const HeaderWrapper = styled.div`
   margin-left: 5.6vw;
   overflow: hidden;
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     height: 29.7vw;
+  }
+  ${media.tabletPortrait} {
+    margin-left: 15px;
+    height: 75px;
   }
 `;
 
 const MobileWrapper = styled.div`
-  ${media.tablet} {
-  }
   ${media.mobile} {
     position: relative;
     display: flex;
@@ -350,7 +365,11 @@ const MobileWrapper = styled.div`
     height: 145vw;
     margin-top: 13vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 517px;
+    height: 750px;
+    margin-top: 67px;
+    left: 180px;
   }
 `;
 
@@ -365,19 +384,23 @@ const MobileWrapper1 = styled.div`
     height: 100vw;
     margin-top: 16.4vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 90%;
+    height: 875px;
+    margin-top: 150px;
   }
 `;
 
 const MobileInner = styled.div<{ mobileInfo: boolean }>`
-  ${media.tablet} {
-  }
   ${media.mobile} {
     width: fit-content;
     transform: translateX(${(props) => (props.mobileInfo ? "-100vw" : "0")});
     transition: 0.5s;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: fit-content;
+    transform: translateX(${(props) => (props.mobileInfo ? "-517px" : "0")});
+    transition: 0.5s;
   }
 `;
 
@@ -409,6 +432,10 @@ const Screen = styled.div`
     height: 100%;
     width: 100vw;
   }
+  ${media.tabletPortrait} {
+    left: 517px;
+    width: 517px;
+  }
 `;
 
 const ScreenWrapper = styled.div<{ activeScreen: boolean }>`
@@ -426,16 +453,16 @@ const ScreenWrapper = styled.div<{ activeScreen: boolean }>`
     width: 97vw;
     height: 120.8vw;
   }
+  ${media.tabletPortrait} {
+    width: 502px;
+    height: 625px;
+  }
 `;
 
 const ControlPanel = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 20vw;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
 `;
 
 const Story = styled.button<{ trackState: boolean }>`
@@ -469,8 +496,6 @@ const Story = styled.button<{ trackState: boolean }>`
     }
   }
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     position: absolute;
     margin: 0;
@@ -483,6 +508,13 @@ const Story = styled.button<{ trackState: boolean }>`
     transform: scale(${(props) => (props.trackState ? 0 : 1)});
     z-index: 0;
     transition: opacity 0.5s transform 0s 0.5s;
+  }
+  ${media.tabletPortrait} {
+    left: 25px;
+    width: 150px;
+    height: 50px;
+    border-radius: 12px;
+    top: 5px;
   }
 `;
 const Music = styled.button<{ trackState: boolean }>`
@@ -515,8 +547,7 @@ const Music = styled.button<{ trackState: boolean }>`
       }
     }
   }
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     position: absolute;
     margin: 0;
@@ -527,6 +558,13 @@ const Music = styled.button<{ trackState: boolean }>`
     opacity: ${(props) => (props.trackState ? 0 : 1)};
     transform: scale(${(props) => (props.trackState ? 0 : 1)});
     transition: opacity 0.5s transform 0 0.5s;
+  }
+  ${media.tabletPortrait} {
+    font-size: 22px;
+    left: 25px;
+    width: 150px;
+    height: 50px;
+    border-radius: 8px;
   }
 `;
 // const Details = styled.button`
@@ -546,10 +584,11 @@ const Text = styled.div`
   ${Body1};
   width: 19.3vw;
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     font-size: 4.3vw;
+  }
+  ${media.tabletPortrait} {
+    font-size: 22px;
   }
 `;
 
@@ -559,12 +598,16 @@ const TrackText = styled.p<{ visibleText?: boolean }>`
   opacity: ${(props) => (props.visibleText ? 1 : 0)};
   position: absolute;
   top: 0;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     font-size: 3.9vw;
     width: 90.3vw;
     left: 4.8vw;
+  }
+  ${media.tabletPortrait} {
+    font-size: 20px;
+    width: 467px;
+    left: 25px;
   }
 `;
 
@@ -573,8 +616,7 @@ const Title = styled.h3`
   position: absolute;
   right: 1.5vw;
   bottom: 1.5vw;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     font-size: 5.8vw;
     bottom: auto;
@@ -582,6 +624,12 @@ const Title = styled.h3`
     right: 4.6vw;
     width: 55.6vw;
     text-align: right;
+  }
+  ${media.tabletPortrait} {
+    font-size: 30px;
+    top: 26px;
+    right: 24px;
+    width: 287px;
   }
 `;
 
@@ -599,13 +647,18 @@ const ImageWrapper = styled.div`
     width: 100%;
     height: 100%;
   }
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     width: 90.3vw;
     height: 54.3vw;
     left: 4.8vw;
     top: 25.6vw;
+  }
+  ${media.tabletPortrait} {
+    width: 467px;
+    height: 281px;
+    left: 25px;
+    top: 132px;
   }
 `;
 
@@ -619,8 +672,7 @@ const CTA = styled.div<{ enter: boolean }>`
   ${Text} {
     width: 100%;
   }
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     top: 0;
     width: 91.8vw;
@@ -629,7 +681,11 @@ const CTA = styled.div<{ enter: boolean }>`
     height: 100vw;
   }
 
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 475px;
+    left: ${(props) => (props.enter ? "-517px" : "21px")};
+
+    height: 517px;
   }
 `;
 
@@ -642,7 +698,8 @@ const HeadLine = styled.h3`
   ${media.mobile} {
     font-size: 8.7vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    font-size: 36px;
   }
 `;
 
@@ -656,14 +713,16 @@ const Arrow = styled(ButtonArrowSVG)`
   path {
     fill: currentColor;
   }
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     width: 9.7vw;
     height: 3.9vw;
     margin-left: 5vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 50px;
+    height: 20px;
+    margin-left: 26px;
   }
 `;
 
@@ -690,10 +749,15 @@ const GetInTouch = styled.button`
     position: relative;
     width: 46.1vw;
     height: 9.7vw;
-    border-radius: 2.4vw;
+
     margin-top: 15.6vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    font-size: 22px;
+    width: 239px;
+    height: 50px;
+    border-radius: 8px;
+    margin-top: 81px;
   }
 `;
 
@@ -706,7 +770,9 @@ const TextWrapper = styled.div`
     top: 85vw;
     width: 90.3vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    top: 440px;
+    width: 467px;
   }
 `;
 

@@ -371,8 +371,7 @@ const Playlist = styled.div`
   border-radius: 5px;
   box-shadow: 0.6vw 0.6vw 1.9vw 0.8vw rgba(0, 0, 0, 0.25);
   border-radius: 0.3vw;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     position: absolute;
     width: 94vw;
@@ -380,6 +379,12 @@ const Playlist = styled.div`
     left: auto;
     top: auto;
     margin: 0 3vw;
+  }
+  ${media.tabletPortrait} {
+    width: 486px;
+    height: 750px;
+
+    margin: 0 15px;
   }
 `;
 
@@ -405,6 +410,13 @@ const Inner = styled.div`
     left: 3vw;
     padding: 5vw;
   }
+  ${media.tabletPortrait} {
+    width: 399px;
+    height: 527px;
+    top: 145px;
+    left: 15px;
+    padding: 26px;
+  }
 `;
 
 const Info = styled.button`
@@ -416,11 +428,14 @@ const Info = styled.button`
   position: absolute;
   right: 4vw;
   bottom: 1vw;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
+
+  ${media.tabletPortrait} {
+    font-size: 22px;
+    width: 150px;
+    height: 50px;
+    border-radius: 8px;
+    right: 21px;
+    bottom: 5px;
   }
 `;
 
@@ -428,10 +443,11 @@ const Text = styled.div`
   ${Body1};
   width: 19.3vw;
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     font-size: 4.3vw;
+  }
+  ${media.tabletPortrait} {
+    font-size: 22px;
   }
 `;
 
@@ -447,8 +463,7 @@ const PlayBack = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0 1vw;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     width: 79vw;
     height: 22.5vw;
@@ -456,6 +471,13 @@ const PlayBack = styled.div`
     top: 2.7vw;
     padding: 0 4.1vw;
     align-items: flex-start;
+  }
+  ${media.tabletPortrait} {
+    width: 409px;
+    height: 116px;
+    left: 14px;
+    top: 14px;
+    padding: 0 21px;
   }
 `;
 
@@ -471,6 +493,11 @@ const PlayButton = styled(PlayButtonSVG)`
     width: 8vw;
     height: 8vw;
     margin-left: 1vw;
+  }
+  ${media.tabletPortrait} {
+    width: 41px;
+    height: 41px;
+    margin-left: 5px;
   }
 `;
 
@@ -489,6 +516,12 @@ const PauseButton = styled(PauseButtonSVG)`
     height: 10vw;
     left: 2vw;
     top: 2vw;
+  }
+  ${media.tabletPortrait} {
+    width: 51px;
+    height: 51px;
+    left: 10px;
+    top: 10px;
   }
 `;
 const Play = styled.button<{ play: boolean }>`
@@ -519,13 +552,17 @@ const Play = styled.button<{ play: boolean }>`
     opacity: ${(props) => (props.play ? 1 : 0)};
   }
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     width: 14.5vw;
     height: 14.5vw;
     margin-top: 4vw;
     margin-left: 1vw;
+  }
+  ${media.tabletPortrait} {
+    width: 75px;
+    height: 75px;
+    margin-top: 21px;
+    margin-left: 5px;
   }
 `;
 
@@ -556,19 +593,27 @@ const AutoPlay = styled.button<{ active: boolean }>`
     transition: 0.4s;
   }
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     width: 29vw;
     height: 9.7vw;
-    border-radius: 2.4vw;
+    border-radius: 1.4vw;
     margin-top: 0.5vw;
     ${Text} {
       line-height: 8vw;
-      border-radius: 2.4vw;
+
       width: 94%;
       height: 86%;
       margin-left: 3%;
+    }
+  }
+  ${media.tabletPortrait} {
+    width: 150px;
+    height: 50px;
+    border-radius: 8px;
+    margin-top: 2px;
+    ${Text} {
+      line-height: 41px;
+      border-radius: 6px;
     }
   }
 `;
@@ -588,12 +633,11 @@ const Track = styled.div<{ selected: boolean }>`
     }
   }
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     height: 10vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    height: 51px;
   }
 `;
 
@@ -608,13 +652,6 @@ const Row1 = styled.div<{ active: boolean }>`
     color: ${(props) =>
       props.active ? colors.coolWhite : colors.coolWhiteLight};
   }
-
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
 `;
 
 const Progress = styled.div`
@@ -624,12 +661,13 @@ const Progress = styled.div`
   left: 0vw;
   top: 0.7vw;
   z-index: 0;
-
-  ${media.tablet} {
-  }
   ${media.mobile} {
+    height: 5vw;
+    top: 2vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    height: 26px;
+    top: 10px;
   }
 `;
 
@@ -639,24 +677,11 @@ const Player = styled.audio`
   position: relative;
   padding: 0;
   display: none;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
 `;
 
 const ProgressInner = styled(ProgressSVG)`
   width: 100%;
   height: 100%;
-
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
 `;
 
 export default AudioPlayer;

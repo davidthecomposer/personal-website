@@ -14,6 +14,11 @@ import liz2 from "assets/images/liz2.jpg";
 import mandiScarf from "assets/images/mandiScarf.jpg";
 import mandiDemo from "assets/images/mandiDemo.jpg";
 import { ReactComponent as SmallArrowSVG } from "assets/svg/smallArrow.svg";
+// import {
+//   FacebookShareButton,
+//   TwitterShareButton,
+//   LinkedinShareButton,
+// } from "react-share";
 
 const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
   const header = useRef(null);
@@ -173,7 +178,7 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
             </Share>
           </ButtonRow>
         </Front>
-        <More className={`more-${i}`}>
+        <More className={`more-${i}`} layout={layout === "full"}>
           <TitleContainer>
             <NewsTitle>{moreTitle}</NewsTitle>
           </TitleContainer>
@@ -325,14 +330,14 @@ const Wrapper = styled.section`
   position: relative;
   box-sizing: border-box;
   width: 87.4vw;
-  /* -webkit-transform: translate3d(0, 0, 0);
-  -webkit-transform-style: preserve-3d;
-  -webkit-backface-visibility: hidden; */
 
   ${media.mobile} {
     width: 100%;
-
     padding: 0 2.4vw 52.2vw 2.4vw;
+  }
+  ${media.tabletPortrait} {
+    width: 100%;
+    padding: 0 12px 270px 12px;
   }
 `;
 
@@ -342,11 +347,14 @@ const Header = styled.h2`
   transform: translate(5.6vw, 100%);
   position: absolute;
   width: fit-content;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     transform: translate(8.5vw, 110%);
     font-size: 13.3vw;
+  }
+  ${media.tabletPortrait} {
+    transform: translate(44px, 110%);
+    font-size: 69px;
   }
 `;
 
@@ -361,13 +369,17 @@ const HeaderLine = styled.div`
   transform-origin: 100%;
   border-radius: 0.3vw;
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     height: 1vw;
     border-radius: 1vw;
     width: 82vw;
     margin-left: 5vw;
+  }
+  ${media.tabletPortrait} {
+    height: 5px;
+    border-radius: 5px;
+    width: calc(100% - 26px);
+    margin-left: 26px;
   }
 `;
 
@@ -379,10 +391,11 @@ const HeaderWrapper = styled.div`
   margin-bottom: 15.4vw;
   overflow: hidden;
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     height: 14.9vw;
+  }
+  ${media.tabletPortrait} {
+    height: 75px;
   }
 `;
 
@@ -393,14 +406,16 @@ const NewsCard = styled.div`
   height: 38vw;
 
   margin-bottom: 11.3vw;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     width: 100%;
     height: 146.1vw;
     margin-bottom: 30vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 517px;
+    height: 756px;
+    margin-bottom: 155px;
   }
 `;
 
@@ -411,27 +426,8 @@ const Front = styled.div`
   left: 0;
   top: 0;
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     height: 100%;
-  }
-  ${media.fullWidth} {
-  }
-`;
-
-const More = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 100%;
-  top: 0;
-
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
   }
 `;
 
@@ -450,12 +446,10 @@ const NewsTitle = styled.h3`
     height: 0.1vw;
     left: 0;
     top: 3vw;
-
     background: #e5fcfa;
     border-radius: 0.2vw;
   }
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     font-size: 7.2vw;
     :after {
@@ -470,7 +464,17 @@ const NewsTitle = styled.h3`
       border-radius: 0.3vw;
     }
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    font-size: 37px;
+    :after {
+      content: "";
+      position: absolute;
+      width: 446px;
+      height: 2px;
+      top: 35px;
+      background: #e5fcfa;
+      border-radius: 1px;
+    }
   }
 `;
 
@@ -481,12 +485,11 @@ const TitleContainer = styled.div`
   margin-top: 0.3vw;
   margin-bottom: 1.9vw;
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     margin-bottom: 6vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    margin-bottom: 31px;
   }
 `;
 
@@ -495,14 +498,10 @@ const NewsRow = styled.div`
   height: 23.5vw;
   justify-content: space-between;
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     flex-direction: column-reverse;
     height: 100%;
     justify-content: flex-end;
-  }
-  ${media.fullWidth} {
   }
 `;
 
@@ -511,8 +510,7 @@ const ButtonRow = styled.div`
   position: relative;
   margin-top: 0.6vw;
   display: flex;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     position: absolute;
     bottom: 0;
@@ -520,7 +518,8 @@ const ButtonRow = styled.div`
     height: 9.7vw;
     margin: 0;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    height: 50px;
   }
 `;
 
@@ -533,8 +532,7 @@ const Text = styled.div`
   p:nth-child(1) {
     margin-bottom: 1.3vw;
   }
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     width: 95.2vw;
     font-size: 3.9vw;
@@ -543,31 +541,39 @@ const Text = styled.div`
     padding-top: 3vw;
     padding-bottom: 10vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 492px;
+    font-size: 20px;
+    height: 274px;
+    padding-top: 15px;
+    padding-bottom: 51px;
   }
 `;
 
 const MainImage = styled.img`
   width: 38.9vw;
   height: 23.5vw;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     width: 95.2vw;
     height: auto;
   }
+  ${media.tabletPortrait} {
+    width: 492px;
+  }
 `;
 
 const SmallArrow = styled(SmallArrowSVG)`
-  ${media.tablet} {
-  }
   ${media.mobile} {
     position: relative;
     width: 6.8vw;
     height: 2.2vw;
     margin-left: 0.7vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 35px;
+    height: 11px;
+    margin-left: 4px;
   }
 `;
 
@@ -585,8 +591,7 @@ const Back = styled.button<{ layout?: boolean }>`
   span {
     width: fit-content;
   }
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     top: 9.3vw;
     left: auto;
@@ -594,7 +599,33 @@ const Back = styled.button<{ layout?: boolean }>`
     width: 29vw;
     text-align: right;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    top: 49px;
+    width: 150px;
+    height: 50px;
+    font-size: 22px;
+    right: 40px;
+  }
+`;
+
+const More = styled.div<{ layout: boolean }>`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 100%;
+  top: 0;
+  ${Back} {
+    right: ${(props) => (props.layout ? "auto" : "0")};
+  }
+  ${media.mobile} {
+    ${Back} {
+      right: 3vw;
+    }
+  }
+  ${media.tabletPortrait} {
+    ${Back} {
+      right: 40px;
+    }
   }
 `;
 
@@ -610,7 +641,10 @@ const MoreBtn = styled.button`
   ${SmallArrow} {
     transform: rotate(180deg);
   }
-  ${media.tablet} {
+  padding-right: 0.7vw;
+  span {
+    margin-left: 1vw;
+    margin-right: 1vw;
   }
   ${media.mobile} {
     padding: 0 1vw;
@@ -624,7 +658,19 @@ const MoreBtn = styled.button`
       margin-left: 1vw;
     }
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 150px;
+    height: 50px;
+    font-size: 22px;
+    padding: 0 5px;
+    left: 0;
+    margin-right: 0;
+    ${SmallArrow} {
+      margin-right: 5px;
+    }
+    span {
+      margin-left: 5px;
+    }
   }
 `;
 
@@ -634,13 +680,10 @@ const RowNoLayout = styled.div`
   height: 28.3vw;
   width: 100%;
   justify-content: space-between;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     width: 200%;
     height: 100%;
-  }
-  ${media.fullWidth} {
   }
 `;
 
@@ -650,24 +693,19 @@ const Row = styled.div`
   height: 28.3vw;
   width: 100%;
   justify-content: space-between;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
 `;
 
 const MoreImage = styled.img`
   width: 16.1vw;
   height: 23.8vw;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     width: 46.1vw;
     height: 56.3vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 239px;
+    height: 291px;
   }
 `;
 
@@ -677,14 +715,16 @@ const MoreText = styled.div`
   p {
     margin-bottom: 0.6vw;
   }
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     p {
       font-size: 3.9vw;
     }
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    p {
+      font-size: 20px;
+    }
   }
 `;
 
@@ -727,8 +767,7 @@ const Links = styled.div<{ open: boolean }>`
       }
     }
   }
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     width: ${(props) => (props.open ? "50vw" : "30vw")};
     a {
@@ -736,7 +775,10 @@ const Links = styled.div<{ open: boolean }>`
       z-index: ${(props) => (props.open ? 2 : -1)};
     }
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: ${(props) => (props.open ? "259px" : "155px")};
+    height: 50px;
+    font-size: 22px;
   }
 `;
 
@@ -745,6 +787,11 @@ const Share = styled(Links)<{ open: boolean }>`
   ${media.mobile} {
     span {
       margin-right: 1.2vw;
+    }
+  }
+  ${media.tabletPortrait} {
+    span {
+      margin-right: 6px;
     }
   }
 `;
@@ -760,6 +807,12 @@ const NewsItemsWrapper = styled.div`
 
       ${Share} {
         margin-left: 33vw;
+      }
+    }
+    ${media.tabletPortrait} {
+      margin-left: 173px;
+      ${Share} {
+        margin-left: 171px;
       }
     }
 
@@ -783,6 +836,12 @@ const NewsItemsWrapper = styled.div`
       ${MoreBtn} {
         right: 0;
         left: auto;
+      }
+    }
+    ${media.tabletPortrait} {
+      margin-left: 30px;
+      ${Share} {
+        margin-right: 171px;
       }
     }
     ${NewsRow} {
@@ -838,12 +897,11 @@ const NewsItemsWrapper = styled.div`
     }
   }
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     margin-top: 16.9vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    margin-top: 87px;
   }
 `;
 
@@ -895,8 +953,32 @@ const Half = styled.div`
       top: 12vw;
     }
   }
-
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 492px;
+    ${MoreImage} {
+      width: 172px;
+      height: 245px;
+    }
+    ${MoreText} {
+      p {
+        font-size: 20px;
+      }
+      width: 481px;
+      height: 386px;
+      padding-bottom: 51px;
+      padding-top: 12px;
+    }
+    ${Links} {
+      top: 196px;
+      left: 181px;
+    }
+    ${MoreBtn} {
+      right: 15px;
+      top: 62px;
+    }
+    ${Back} {
+      right: 60px;
+    }
   }
 `;
 const Half1 = styled.div`
@@ -979,8 +1061,36 @@ const Half1 = styled.div`
       top: 0;
     }
   }
+  ${media.tabletPortrait} {
+    width: 492px;
 
-  ${media.fullWidth} {
+    ${TitleContainer} {
+      position: absolute;
+      top: -51px;
+    }
+    ${MoreText} {
+      p {
+        font-size: 20px;
+      }
+
+      width: 481px;
+
+      height: 386px;
+      padding-bottom: 51px;
+      padding-top: 12px;
+    }
+
+    ${MoreImage} {
+      width: 172px;
+      height: 245px;
+    }
+    ${Links} {
+      top: 196px;
+      left: 181px;
+    }
+    ${Back} {
+      right: 15px;
+    }
   }
 `;
 
@@ -1008,8 +1118,6 @@ const Full = styled.div`
     }
   }
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     flex-direction: column;
 
@@ -1042,7 +1150,30 @@ const Full = styled.div`
       left: 0;
     }
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    height: 750px;
+
+    ${MoreImage} {
+      width: 310px;
+      height: 197px;
+      margin-bottom: 62px;
+    }
+    ${MoreText} {
+      font-size: 20px;
+      width: 450px;
+      height: 349px;
+      padding-bottom: 51px;
+      padding-top: 12px;
+      p {
+        font-size: 20px;
+      }
+    }
+    ${Links} {
+      top: 212px;
+    }
+    ${Back} {
+      right: 15px;
+    }
   }
 `;
 

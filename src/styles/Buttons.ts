@@ -11,7 +11,7 @@ ${Body1};
 border: 0.1vw solid white;
 border-width: min(2px);
 box-sizing: border-box;
-border-radius: 0.6vw;
+border-radius: 0.5vw;
 padding-left: 2.3vw; 
 text-align: left;
 cursor: pointer;
@@ -19,6 +19,10 @@ ${media.mobile} {
     font-size: 4.3vw;
     width: 29vw;
     height: 9.7vw;
-    border-radius: 1.5vw;
+    border-radius: 1.4vw;
+}
+${media.tabletPortrait} {
+   
+    border-radius: 8px;
 }
 `;
