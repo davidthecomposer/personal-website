@@ -8,17 +8,18 @@ import media from "styles/media";
 import gsap from "gsap";
 import twitter from "assets/svg/twitterIcon.svg";
 import instagram from "assets/svg/instagramIcon.svg";
+import linkedin from "assets/svg/linkedIcon.svg";
 import web from "assets/svg/webIcon.svg";
 import facebook from "assets/svg/facebookIcon.svg";
 import liz2 from "assets/images/liz2.jpg";
 import mandiScarf from "assets/images/mandiScarf.jpg";
 import mandiDemo from "assets/images/mandiDemo.jpg";
 import { ReactComponent as SmallArrowSVG } from "assets/svg/smallArrow.svg";
-// import {
-//   FacebookShareButton,
-//   TwitterShareButton,
-//   LinkedinShareButton,
-// } from "react-share";
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  LinkedinShareButton,
+} from "react-share";
 
 const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
   const header = useRef(null);
@@ -31,12 +32,7 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
       paragraph:
         "In the works of Spelling, and destruction. ground between society and reality exist. In Models, Inc., Spelling reiterates modernist feminism; in The Heights he examines predialectic narrative. But the subject is contextualised into a semioticist paradigm of expression that includes truth as a reality. If modernist feminism holds, we have to choose between the subtextual paradigm of narrative and conceptualist deconstruction. Spelling reiterates modernist feminism; in The Heights he examines predialectic narrative. But the subject is contextualised",
       paragraph1: "",
-      share: [
-        { icon: twitter, link: "" },
-        { icon: facebook, link: "" },
-        { icon: instagram, link: "" },
-        { icon: web, link: "" },
-      ],
+      share: "News Item 1 short synopsis",
       links1: [
         { icon: twitter, link: "" },
         { icon: facebook, link: "" },
@@ -68,17 +64,11 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
       paragraph:
         "In the works of Spelling, and destruction. ground between society and reality exist. In Models, Inc., Spelling reiterates modernist feminism; in The Heights he examines predialectic narrative. But the subject is contextualised into a semioticist paradigm of expression that includes truth as a reality. If modernist feminism holds, we have to choose between the subtextual paradigm of narrative and conceptualist deconstruction. Spelling reiterates modernist feminism; in The Heights he examines predialectic narrative. But the subject is contextualised",
       paragraph1: "",
-      share: [
-        { icon: twitter, link: "" },
-        { icon: facebook, link: "" },
-        { icon: instagram, link: "" },
-        { icon: web, link: "" },
-      ],
+      share: "News Item 2 short synopsis",
 
       links1: [
         { icon: twitter, link: "" },
         { icon: facebook, link: "" },
-        { icon: instagram, link: "" },
         { icon: web, link: "" },
       ],
       links2: [
@@ -168,13 +158,28 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
               open={openLink === `share-${i}`}
             >
               <span>Share </span>
-              {share.map((link, i) => {
-                return (
-                  <a key={`share-${i}`} href={link.link}>
-                    <img src={link.icon} alt="link name" />
-                  </a>
-                );
-              })}
+              <FacebookShareButton
+                url={"https://www.davidhalcampbell.com/music#news"}
+                quote={share}
+                className="share_links"
+              >
+                <img src={facebook} alt="facebook" />
+              </FacebookShareButton>
+              <TwitterShareButton
+                url={"https://www.davidhalcampbell.com/music#news"}
+                title={share}
+                className="share_links"
+              >
+                <img src={twitter} alt="twitter" />
+              </TwitterShareButton>
+              <LinkedinShareButton
+                url={"https://www.davidhalcampbell.com/music#news"}
+                source={"https://www.davidhalcampbell.com/music#news"}
+                summary={share}
+                className="share_links"
+              >
+                <img src={linkedin} alt="linkedin" />
+              </LinkedinShareButton>
             </Share>
           </ButtonRow>
         </Front>
@@ -215,7 +220,11 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
                   <span>Links</span>
                   {links1.map((link, i) => {
                     return (
-                      <a key={`half-link-${i}`} href={link.link}>
+                      <a
+                        key={`half-link-${i}`}
+                        href={link.link}
+                        className="share_links"
+                      >
                         <img src={link.icon} alt="link name" />
                       </a>
                     );
@@ -249,7 +258,11 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
                   <span>Links</span>
                   {links2.map((link, i) => {
                     return (
-                      <a key={`half1-link-${i}`} href={link.link}>
+                      <a
+                        key={`half1-link-${i}`}
+                        href={link.link}
+                        className="share_links"
+                      >
                         <img src={link.icon} alt="link name" />
                       </a>
                     );
@@ -276,7 +289,11 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
                   <span>Links</span>
                   {links1.map((link, i) => {
                     return (
-                      <a key={`link-full-link-${i}`} href={link.link}>
+                      <a
+                        key={`link-full-link-${i}`}
+                        href={link.link}
+                        className="share_links"
+                      >
                         <img src={link.icon} alt="link name" />
                       </a>
                     );
@@ -744,7 +761,7 @@ const Links = styled.div<{ open: boolean }>`
     margin-right: 4vw;
   }
   transition: 0.5s;
-  a {
+  .share_links {
     position: relative;
     margin-right: 0.6vw;
     opacity: 0;
@@ -760,7 +777,7 @@ const Links = styled.div<{ open: boolean }>`
     :hover {
       width: 20vw;
       opacity: 0.5s;
-      a {
+      .share_links {
         opacity: 1;
         z-index: 2;
         transition: opacity 0.4s z-index 0.4s 0.4s;
@@ -770,7 +787,7 @@ const Links = styled.div<{ open: boolean }>`
 
   ${media.mobile} {
     width: ${(props) => (props.open ? "50vw" : "30vw")};
-    a {
+    .share_links {
       opacity: ${(props) => (props.open ? 1 : 0)};
       z-index: ${(props) => (props.open ? 2 : -1)};
     }
@@ -784,6 +801,18 @@ const Links = styled.div<{ open: boolean }>`
 
 const Share = styled(Links)<{ open: boolean }>`
   border-color: #73d1ef;
+
+  ${media.hover} {
+    :hover {
+      width: 15vw;
+      opacity: 0.5s;
+      .share_links {
+        opacity: 1;
+        z-index: 2;
+        transition: opacity 0.4s z-index 0.4s 0.4s;
+      }
+    }
+  }
   ${media.mobile} {
     span {
       margin-right: 1.2vw;

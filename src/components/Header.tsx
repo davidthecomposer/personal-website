@@ -490,7 +490,7 @@ const TitleContainer = styled.div<{ open: boolean }>`
   position: relative;
   overflow: hidden;
   padding-right: 1.3vw;
-  width: 40vw;
+  width: 35vw;
   height: 4.3vw;
   transform: scaleY(${(props) => (props.open ? 1 : 0)});
   opacity: ${(props) => (props.open ? 1 : 0)};
