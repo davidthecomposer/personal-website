@@ -1,6 +1,12 @@
-import React, { useEffect, useRef, useReducer, useContext } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useReducer,
+  useContext,
+  useState,
+} from "react";
 import styled from "styled-components";
-import { FormLabel } from "styles/text";
+import { FormLabel, SubHeader2 } from "styles/text";
 import { PrimaryButtonStyle } from "styles/Buttons";
 import { MobileContext } from "App";
 import colors from "styles/Colors";
@@ -11,11 +17,14 @@ const ContactForm: React.FC<{
   enter: boolean;
   topVal: string;
   leftVal: string;
+  leftValT: string;
+  topValT: string;
   setEnter: any;
   close?: boolean;
-}> = ({ enter, leftVal, topVal, setEnter, close }) => {
-  const form = useRef(null);
+}> = ({ enter, leftVal, topVal, setEnter, close, leftValT, topValT }) => {
+  const form = useRef<HTMLFormElement>(null);
   const mobile = useContext(MobileContext);
+  const [success, setSuccess] = useState(false);
   const inputNames = ["Name", "Email", "Project"];
   const [formData, setFormData] = useReducer(
     (
@@ -76,18 +85,59 @@ const ContactForm: React.FC<{
     setEnter(!enter);
   };
 
+  const handleSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    if (form.current) {
+      // let formData = new FormData(form.current);
+      fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+
+        body: new URLSearchParams(formData).toString(),
+      })
+        .then(() => {
+          setFormData({
+            name: "",
+            email: "",
+            project: "",
+          });
+          setSuccess(true);
+        })
+        .catch((error) => alert(error));
+    }
+  };
+
   return (
-    <FormModal ref={form} leftVal={leftVal} topVal={topVal} enter={enter}>
-      {inputs}
-      {mobile && !close && <Close onClick={closeModal}>Close</Close>}
-      <SendMessage>Send Message</SendMessage>
+    <FormModal
+      ref={form}
+      topValT={topValT}
+      leftValT={leftValT}
+      leftVal={leftVal}
+      topVal={topVal}
+      enter={enter}
+      data-netlify="true"
+      name="connect-form"
+      id="connect-form"
+      onSubmit={handleSubmit}
+    >
+      <Wrapper success={success}>
+        {inputs}
+        {mobile && !close && <Close onClick={closeModal}>Close</Close>}
+        <input type="hidden" name="form-name" value="connect-form" />
+        <SendMessage>Send Message</SendMessage>
+      </Wrapper>
+      <SuccessMessage success={success}>
+        Thanks for reaching out. <br /> I'll be in touch soon.
+      </SuccessMessage>
     </FormModal>
   );
 };
 
 const FormModal = styled.form<{
   leftVal: string;
+  leftValT: string;
   topVal: string;
+  topValT: string;
   enter: boolean;
 }>`
   position: absolute;
@@ -101,8 +151,6 @@ const FormModal = styled.form<{
   opacity: 0;
   transform: scale(0);
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     width: 83.3vw;
     height: 80.5vw;
@@ -110,7 +158,12 @@ const FormModal = styled.form<{
     left: ${(props) => (props.enter ? 0 : props.leftVal)};
     padding: 13.3vw 10.4vw 12.8vw 6.3vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 345px;
+    height: 333px;
+    left: ${(props) => props.leftValT};
+    top: ${(props) => props.topValT};
+    padding: 55px 43px 53px 26px;
   }
 `;
 
@@ -122,13 +175,14 @@ const FormRow = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2.9vw;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     font-size: 4.8vw;
     margin-bottom: 11.1vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    font-size: 20px;
+    margin-bottom: 46px;
   }
 `;
 
@@ -158,7 +212,9 @@ const TextInput = styled.input`
     width: 60.4vw;
     height: 9.7vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 250px;
+    height: 40px;
   }
 `;
 
@@ -170,14 +226,18 @@ const SendMessage = styled.button`
   padding-left: 0.8vw;
   position: relative;
   margin-left: 12.1vw;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     width: 48.3vw;
     height: 9.7vw;
     margin-left: 34vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    font-size: 18px;
+    width: 200px;
+    height: 40px;
+    margin-left: 141px;
+    border-radius: 6px;
   }
 `;
 
@@ -193,8 +253,27 @@ const Close = styled.button`
     left: 6.3vw; */
     z-index: 5;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    font-size: 18px;
+    width: 125px;
+    height: 40px;
   }
+`;
+
+const SuccessMessage = styled.div<{ success: boolean }>`
+  ${SubHeader2}
+
+  position: absolute;
+  transform: scale(${(props) => (props.success ? 1 : 0)});
+  opacity: (${(props) => (props.success ? 1 : 0)});
+`;
+
+const Wrapper = styled.div<{ success: boolean }>`
+  ${SubHeader2}
+
+  position: absolute;
+  transform: scale(${(props) => (props.success ? 0 : 1)});
+  opacity: (${(props) => (props.success ? 0 : 1)});
 `;
 
 export default ContactForm;

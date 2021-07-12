@@ -109,6 +109,8 @@ const Connect: React.FC<{ mobile: boolean }> = ({ mobile }) => {
           enter={enter}
           leftVal={mobile ? "100%" : "63.4vw"}
           topVal={mobile ? "60vw" : "102.4vw"}
+          leftValT={"40%"}
+          topValT={"248px"}
           close={true}
         />
       ) : (
@@ -129,16 +131,17 @@ const Wrapper = styled.section`
   box-sizing: border-box;
   background-image: url(${connectBG});
   overflow: hidden;
-  /* -webkit-transform: translate3d(0, 0, 0);
-  -webkit-transform-style: preserve-3d;
-  -webkit-backface-visibility: hidden; */
 
   ${media.mobile} {
     width: 100%;
     height: 310.6vw;
     padding: 0;
     background-image: url(${connectBGM});
-    /* background-position: 50% 50%; */
+  }
+
+  ${media.tabletPortrait} {
+    width: 100%;
+    height: 1607px;
   }
 `;
 
@@ -147,12 +150,11 @@ const Text = styled.p`
   position: relative;
   width: 100%;
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     font-size: 3.9vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    font-size: 20px;
   }
 `;
 
@@ -162,11 +164,13 @@ const Header = styled.h2`
   transform: translate(5.6vw, 100%);
   position: absolute;
   width: fit-content;
-  ${media.tablet} {
-  }
   ${media.mobile} {
     transform: translate(8.5vw, 110%);
     font-size: 13.3vw;
+  }
+  ${media.tabletPortrait} {
+    transform: translate(44px, 110%);
+    font-size: 69px;
   }
 `;
 
@@ -181,13 +185,17 @@ const HeaderLine = styled.div`
   transform-origin: 100%;
   border-radius: 0.3vw;
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     height: 1vw;
     border-radius: 1vw;
     width: 82vw;
     margin-left: 5vw;
+  }
+  ${media.tabletPortrait} {
+    height: 5px;
+    border-radius: 5px;
+    width: calc(100% - 26px);
+    margin-left: 26px;
   }
 `;
 
@@ -198,10 +206,12 @@ const HeaderWrapper = styled.div`
   margin-left: 0;
   overflow: hidden;
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     height: 14.9vw;
+  }
+  ${media.tabletPortrait} {
+    margin-left: 3vw;
+    height: 75px;
   }
 `;
 const Collaborate = styled.div`
@@ -210,28 +220,31 @@ const Collaborate = styled.div`
   height: 31.4vw;
   left: 55.4vw;
   top: 26.5vw;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     width: 95.2vw;
     height: 76.3vw;
     left: 2.4vw;
     top: 208.4vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 492px;
+    height: 395px;
+    left: 30px;
+    top: 900px;
   }
 `;
 
 const SubTitle = styled.h3`
   ${SubHeader};
   margin-bottom: 1.9vw;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     font-size: 8.7vw;
     text-align: right;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    font-size: 45px;
   }
 `;
 
@@ -246,12 +259,6 @@ const FormModal = styled.form`
   padding: 3.4vw;
   background: ${colors.formSkinPurprle};
   border-radius: 0.5vw;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
 `;
 
 const FormRow = styled.div`
@@ -262,22 +269,9 @@ const FormRow = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2.9vw;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
 `;
 
-const FormText = styled.p`
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
+const FormText = styled.p``;
 
 const TextInput = styled.input`
   height: 2.5vw;
@@ -290,12 +284,6 @@ const TextInput = styled.input`
   box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 0.3vw;
   padding-left: 1vw;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
 `;
 
 const Arrow = styled(ButtonArrowSVG)`
@@ -304,12 +292,6 @@ const Arrow = styled(ButtonArrowSVG)`
   margin-left: 1.5vw;
   z-index: 3;
   transition: 0.5s;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
 `;
 
 const GetInTouch = styled.button`
@@ -329,23 +311,11 @@ const GetInTouch = styled.button`
       transition: 0.5s;
     }
   }
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
 `;
 
 const SendMessage = styled(GetInTouch)`
   position: relative;
   margin-left: 12.1vw;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
 `;
 
 export default Connect;

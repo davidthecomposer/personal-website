@@ -170,10 +170,12 @@ const Text = styled.div<{ playing: boolean }>`
   margin-left: 2.5%;
   z-index: 0;
   color: ${(props) => (props.playing ? colors.coolWhite : "black")};
-  ${media.tablet} {
+
+  ${media.mobile} {
     font-size: 3.4vw;
   }
-  ${media.mobile} {
+  ${media.tabletPortrait} {
+    font-size: 17px;
   }
 `;
 
@@ -185,10 +187,12 @@ const TextTime = styled.div<{ playing: boolean }>`
   transition: opacity 0.4s;
   z-index: 0;
   color: ${colors.coolWhite};
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     font-size: 3.4vw;
+  }
+  ${media.tabletPortrait} {
+    font-size: 17px;
   }
 `;
 
@@ -199,10 +203,14 @@ const PlayButton = styled(PlayButtonSVG)`
   height: 0.7vw;
   margin-left: 0.1vw;
   ${media.tablet} {
+  }
+  ${media.mobile} {
     width: 2.4vw;
     height: 2.4vw;
   }
-  ${media.mobile} {
+  ${media.tabletPortrait} {
+    width: 12px;
+    height: 12px;
   }
 `;
 
@@ -217,12 +225,11 @@ const Row1 = styled.div<{ playing: boolean }>`
   background: ${(props) => (props.playing ? "#00000095" : "none")};
   align-items: center;
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     height: 8vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    height: 41px;
   }
 `;
 
@@ -234,7 +241,7 @@ const PauseButton = styled(PauseButtonSVG)`
 
   ${media.tablet} {
   }
-  ${media.mobile} {
+  ${media.tabletPortrait} {
   }
 `;
 const Play = styled.button<{ play: boolean }>`
@@ -258,13 +265,15 @@ const Play = styled.button<{ play: boolean }>`
   ${PauseButton} {
     opacity: ${(props) => (props.play ? 1 : 0)};
   }
-
-  ${media.tablet} {
+  ${media.mobile} {
     width: 7vw;
     height: 7vw;
-  }
-  ${media.mobile} {
     left: ${(props) => (props.play ? "-1.5vw" : "calc(100% - 10vw)")};
+  }
+  ${media.tabletPortrait} {
+    width: 36px;
+    height: 36px;
+    left: ${(props) => (props.play ? "-7px" : "calc(100% - 51px)")};
   }
 `;
 
@@ -282,30 +291,16 @@ const Track = styled.div`
       }
     }
   }
-
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
 `;
 
 const Progress = styled.div<{ playing: boolean }>`
   position: absolute;
   width: 100%;
   height: 100%;
-  left: 0vw;
+  left: 0;
   top: 0;
   z-index: 0;
   opacity: ${(props) => (props.playing ? 1 : 0)};
-
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
 `;
 
 const Player = styled.audio`
@@ -314,12 +309,6 @@ const Player = styled.audio`
   position: relative;
   padding: 0;
   display: none;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
 `;
 
 export default AudioPlayerMinimal;

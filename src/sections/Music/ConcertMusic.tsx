@@ -338,6 +338,8 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
           enter={enter}
           leftVal={mobile ? "100%" : "63.4vw"}
           topVal={mobile ? "0" : "102.4vw"}
+          leftValT={"40%"}
+          topValT={"0"}
         />
       </MobileWrapper1>
     </Wrapper>
@@ -362,6 +364,12 @@ const Wrapper = styled.section`
     padding: 0;
     background-image: url(${concertMusicBGM});
   }
+  ${media.tabletPortrait} {
+    width: 100%;
+    height: 2125px;
+    padding: 0;
+    background-image: url(${concertMusicBGM});
+  }
 `;
 
 const HeaderWrapper = styled.div`
@@ -371,13 +379,13 @@ const HeaderWrapper = styled.div`
   margin-left: 6.3vw;
   height: 5vw;
   overflow: hidden;
-  z-index: 5 ${media.tablet} {
+  z-index: 5;
 
-  }
   ${media.mobile} {
     height: 29.7vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    height: 75px;
   }
 `;
 
@@ -397,7 +405,10 @@ const Header = styled.h2`
     width: 59.9vw;
     text-align: right;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    transform: translate(-44px, 110%);
+    font-size: 69px;
+    width: 625px;
   }
 `;
 
@@ -419,27 +430,31 @@ const HeaderLine = styled.div`
     width: 88vw;
     margin-right: 2vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    height: 5px;
+    border-radius: 5px;
+    width: calc(100% - 10px);
+    margin-right: 10px;
   }
 `;
 const MobileControls = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  width: 89.4vw;
-  margin-left: 6.8vw;
-  justify-content: center;
-  margin-top: 24.2vw;
-  ${media.tablet} {
-  }
   ${media.mobile} {
+    display: flex;
+    flex-wrap: wrap;
+    width: 89.4vw;
+    margin-left: 6.8vw;
+    justify-content: center;
+    margin-top: 24.2vw;
   }
-  ${media.fullWidth} {
+
+  ${media.tabletPortrait} {
+    width: 462px;
+    margin-left: 35px;
+    margin-top: 125px;
   }
 `;
 
 const MobileWrapper = styled.div`
-  ${media.tablet} {
-  }
   ${media.mobile} {
     position: relative;
     overflow: scroll;
@@ -448,7 +463,11 @@ const MobileWrapper = styled.div`
     margin-top: 7vw;
     padding-top: 1vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    height: 674px;
+    width: 100%;
+    margin-top: 36px;
+    padding-top: 5px;
   }
 `;
 
@@ -456,13 +475,13 @@ const Text = styled.div`
   ${Body1};
   width: 19.3vw;
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     font-size: 3.9vw;
     width: 81.6vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    font-size: 20px;
+    width: 422px;
   }
 `;
 
@@ -477,8 +496,6 @@ const CTA = styled.div<{ enter: boolean }>`
   ${Text} {
     width: 100%;
   }
-  ${media.tablet} {
-  }
   ${media.mobile} {
     top: 0;
     width: 82.1vw;
@@ -486,7 +503,11 @@ const CTA = styled.div<{ enter: boolean }>`
     transition: 0.5s;
     height: 100vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 425px;
+    left: ${(props) => (props.enter ? "-517px" : "21px")};
+
+    height: 517px;
   }
 `;
 
@@ -499,7 +520,8 @@ const HeadLine = styled.h3`
   ${media.mobile} {
     font-size: 8.7vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    font-size: 45px;
   }
 `;
 
@@ -520,7 +542,10 @@ const Arrow = styled(ButtonArrowSVG)`
     height: 3.9vw;
     margin-left: 5vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 50px;
+    height: 20px;
+    margin-left: 26px;
   }
 `;
 
@@ -535,7 +560,10 @@ const MobileWrapper1 = styled.div`
     height: 100vw;
     margin-top: 25.4vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 750px;
+    height: 517px;
+    margin-top: 131px;
   }
 `;
 
@@ -563,10 +591,14 @@ const GetInTouch = styled.button`
     position: relative;
     width: 46.1vw;
     height: 9.7vw;
-    border-radius: 2.4vw;
     margin-top: 15.6vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    font-size: 22px;
+    width: 239px;
+    height: 50px;
+    border-radius: 8px;
+    margin-top: 81px;
   }
 `;
 
@@ -578,12 +610,6 @@ const TopFade = styled.div`
   background: linear-gradient(180deg, #040101 0%, rgba(4, 1, 1, 0) 100%);
   height: 25vw;
   z-index: 2;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
 `;
 
 const FrontAndBackPage = styled.div<{ z: number }>`
@@ -605,7 +631,9 @@ const FrontAndBackPage = styled.div<{ z: number }>`
     height: 127.1vw;
     left: auto;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 450px;
+    height: 657px;
   }
 `;
 
@@ -638,7 +666,10 @@ const TableOfContents = styled.div`
     height: 127.1vw;
     padding: 2.4vw 0 0 9.2vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 450px;
+    height: 657px;
+    padding: 12px 0 0 47px;
   }
 `;
 
@@ -660,15 +691,13 @@ const PiecesInfo = styled.div`
   border: 0 solid #f0f0f0;
   box-sizing: border-box;
   padding: 3.6vw 2.3vw 2.3vw 2.4vw;
-
-  ${media.tablet} {
-  }
   ${media.mobile} {
     width: 100%;
     height: 100%;
     padding-left: 4.8vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    padding-left: 25px;
   }
 `;
 
@@ -679,8 +708,6 @@ const MusicBook = styled.div`
   left: 14.3vw;
   top: 40.3vw;
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     position: relative;
     top: 0;
@@ -689,7 +716,11 @@ const MusicBook = styled.div`
     height: 127.1vw;
     margin-right: 7vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    left: 467px;
+    width: 450px;
+    height: 657px;
+    margin-right: 36px;
   }
 `;
 
@@ -721,11 +752,10 @@ const PageTab = styled.button<{ yOffset: number; activeTab: boolean }>`
     border: 0.1vw solid white;
     border-width: min(2px);
     box-sizing: border-box;
-    border-radius: 0.6vw;
     font-size: 4.3vw;
     height: 9.7vw;
-    border-radius: 2.4vw;
     width: 24.2vw;
+    border-radius: 1.4vw;
     box-shadow: none;
     top: auto;
     right: auto;
@@ -734,7 +764,19 @@ const PageTab = styled.button<{ yOffset: number; activeTab: boolean }>`
     margin-right: 5.6vw;
     margin-top: 4.8vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    ${Body1};
+    border: 2px solid white;
+    border-width: min(2px);
+
+    border-radius: 2px;
+    font-size: 22px;
+    height: 50px;
+    border-radius: 8px;
+    width: 125px;
+
+    margin-right: 29px;
+    margin-top: 25px;
   }
 `;
 
@@ -775,13 +817,8 @@ const PageTabBack = styled.button<{ yOffset: number; activeTab: boolean }>`
     -webkit-box-shadow: 0.6vw -0.5vw 0.8vw -0.4vw rgba(0, 0, 0, 0.25);
     border-radius: 0 15% 15% 10% / 10% 48% 40% 10%;
   }
-
-  ${media.tablet} {
-  }
   ${media.mobile} {
     display: none;
-  }
-  ${media.fullWidth} {
   }
 `;
 
@@ -790,22 +827,9 @@ const TOCWrap = styled.div`
   transform-origin: "50% 50%";
   position: absolute;
   right: 4.9vw;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
 `;
 
-const PiecesInfoWrap = styled.div`
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
-`;
+const PiecesInfoWrap = styled.div``;
 
 const Piece = styled.p`
   ${Playlist};
@@ -818,19 +842,16 @@ const Piece = styled.p`
     padding-bottom: 4vw;
     margin-bottom: 0;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    font-size: 20px;
+    padding-bottom: 21px;
+    margin-bottom: 0;
   }
 `;
 
 const Genre = styled.h2`
   ${ConcertTitle};
   margin-bottom: 2.1vw;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
 `;
 
 const InfoWrapper = styled.div<{ visible: boolean }>`
@@ -848,7 +869,12 @@ const InfoWrapper = styled.div<{ visible: boolean }>`
     top: 0;
     overflow: scroll;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: calc(100% - 45px);
+    height: calc(100% - 10px);
+    padding: 10px 25px 0 0;
+    top: 0;
+    overflow: scroll;
   }
 `;
 const PieceTitle = styled.h3`
@@ -860,7 +886,9 @@ const PieceTitle = styled.h3`
   ${media.mobile} {
     width: 74.2vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    font-size: 37px;
+    width: 384px;
   }
 `;
 
@@ -873,14 +901,15 @@ const Underline = styled.div`
   opacity: 0.75;
   border-radius: 0.1vw;
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     width: 69.6vw;
     height: 0.4vw;
     margin-left: 4.6vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 360px;
+    height: 2px;
+    margin-left: 24px;
   }
 `;
 
@@ -895,7 +924,9 @@ const Year = styled.h4`
   ${media.mobile} {
     margin-top: 2vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    margin-top: 10px;
+    font-size: 20px;
   }
 `;
 
@@ -913,7 +944,11 @@ const Description = styled.p`
     margin-left: 4vw;
     margin-bottom: 4.8vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    height: auto;
+    font-size: 20px;
+    margin-left: 21px;
+    margin-bottom: 25px;
   }
 `;
 
@@ -927,19 +962,14 @@ const BigRow = styled.div`
   ${media.mobile} {
     min-height: 33vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    min-height: 171px;
   }
 `;
 
 const Row = styled.div`
   display: flex;
   justify-content: space-between;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
 `;
 
 const Movements = styled.div`
@@ -955,7 +985,10 @@ const Movements = styled.div`
     font-size: 3.9vw;
     margin-left: 4vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 207px;
+    font-size: 20px;
+    margin-left: 21px;
   }
 `;
 
@@ -967,7 +1000,8 @@ const InfoColumn = styled.div`
   ${media.mobile} {
     width: 38vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 196px;
   }
 `;
 const ScoreSample = styled.div`
@@ -979,7 +1013,8 @@ const ScoreSample = styled.div`
     width: 38vw;
     display: flex;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 196px;
   }
 `;
 
@@ -999,19 +1034,17 @@ const Duration = styled.div`
     width: 100%;
     text-align: right;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    font-size: 22px;
+
+    width: 100%;
+    text-align: right;
   }
 `;
 
 const Instrumentation = styled.div`
   display: flex;
   flex-wrap: wrap;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
 `;
 
 const Instrument = styled.div`
@@ -1029,7 +1062,10 @@ const Instrument = styled.div`
     border-radius: 2.4vw;
     padding: 0.8vw 1vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    font-size: 15px;
+    border-radius: 8px;
+    padding: 4px 5px;
   }
 `;
 
@@ -1043,7 +1079,10 @@ const ScoreIcon = styled(ScoreIconSVG)`
     height: 6.8vw;
     margin-left: 3.6vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 35px;
+    height: 35px;
+    margin-left: 19px;
   }
 `;
 
@@ -1056,7 +1095,8 @@ const SmallTitle = styled.div`
   ${media.mobile} {
     font-size: 3.9vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    font-size: 20px;
   }
 `;
 

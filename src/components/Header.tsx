@@ -12,7 +12,7 @@ import colors from "styles/Colors";
 import gsap from "gsap";
 import { Heading1 } from "styles/text";
 import { ReactComponent as DavidSigSVG } from "assets/svg/davidSig.svg";
-import { ReactComponent as DavidInitialsSVG } from "assets/svg/initials.svg";
+import { ReactComponent as DavidInitialsSVG } from "assets/svg/logoT.svg";
 import { useHistory } from "react-router-dom";
 
 const Header: React.FC<{}> = () => {
@@ -434,6 +434,10 @@ const Wrapper = styled.nav<{ willDisplay: boolean; open: boolean }>`
     height: 19.3vw;
     width: 96vw;
   }
+
+  ${media.tabletPortrait} {
+    height: 100px;
+  }
 `;
 
 const TitleWrapper = styled.div`
@@ -450,6 +454,11 @@ const TitleWrapper = styled.div`
     font-size: 7vw;
     height: 100%;
     width: 90vw;
+  }
+  ${media.tabletPortrait} {
+    position: absolute;
+    font-size: 54px;
+    width: 691px;
   }
 `;
 
@@ -470,13 +479,18 @@ const Line = styled.div<{ open: boolean; initial: boolean }>`
     margin-top: 1vw;
     width: 0.6vw;
   }
+  ${media.tabletPortrait} {
+    height: 33px;
+    margin-top: 4px;
+    width: 2px;
+  }
 `;
 
 const TitleContainer = styled.div<{ open: boolean }>`
   position: relative;
   overflow: hidden;
   padding-right: 1.3vw;
-  width: 38vw;
+  width: 35vw;
   height: 4.3vw;
   transform: scaleY(${(props) => (props.open ? 1 : 0)});
   opacity: ${(props) => (props.open ? 1 : 0)};
@@ -484,12 +498,16 @@ const TitleContainer = styled.div<{ open: boolean }>`
   display: flex;
   flex-direction: column;
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     transform: none;
     height: 7vw;
     width: 55vw;
+  }
+
+  ${media.tabletPortrait} {
+    transform: none;
+    height: 54px;
+    width: 400px;
   }
 `;
 
@@ -511,12 +529,16 @@ const RoleContainer = styled.div<{ open: boolean }>`
   transform: scaleY(${(props) => (props.open ? 1 : 0)});
   opacity: ${(props) => (props.open ? 1 : 0)};
   transition: transform 0.3s 0.2s, opacity 0.5s;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     height: 4vw;
     width: 20vw;
     padding-left: 2vw;
+  }
+  ${media.tabletPortrait} {
+    height: 17px;
+    width: 83px;
+    padding-left: 8px;
   }
 `;
 
@@ -528,17 +550,14 @@ const Role = styled.span`
   ${media.mobile} {
     font-size: 4vw;
   }
+  ${media.tabletPortrait} {
+    font-size: 17px;
+  }
 `;
 
 const DavidSig = styled(DavidSigSVG)`
   width: 100%;
   height: 100%;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
 `;
 
 const Link = styled.a<{ open: boolean }>`
@@ -548,10 +567,15 @@ const Link = styled.a<{ open: boolean }>`
   margin-right: 1.3vw;
   cursor: pointer;
   opacity: 0;
-  ${media.tablet} {
+  ${media.fullWidth} {
+    font-size: 1.1vw;
   }
   ${media.mobile} {
     font-size: 3.9vw;
+    opacity: 0;
+  }
+  ${media.tabletPortrait} {
+    font-size: 16px;
     opacity: 0;
   }
 `;
@@ -596,8 +620,6 @@ const NavBtn = styled.button<{ open: boolean }>`
     }
   }
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     width: 15vw;
     height: 15vw;
@@ -605,7 +627,11 @@ const NavBtn = styled.button<{ open: boolean }>`
     right: 0.5vw;
     opacity: ${(props) => (props.open ? 0 : 1)};
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 77px;
+    height: 77px;
+    top: 10px;
+    right: 2px;
   }
 `;
 
@@ -654,6 +680,8 @@ const DavidInitials = styled(DavidInitialsSVG)`
     width: 12vw;
     height: 12vw;
   }
-  ${media.fullWidth} {
+  ${media.mobile} {
+    width: 50px;
+    height: 50px;
   }
 `;

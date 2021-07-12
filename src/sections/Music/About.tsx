@@ -78,11 +78,16 @@ const About: React.FC<{ mobile: boolean }> = ({ mobile }) => {
           0
         );
     } else {
+      const tabletPortrait =
+        window.innerWidth > 767 &&
+        window.innerWidth <= 1200 &&
+        window.innerHeight > window.innerWidth;
+
       tl.to(davidImage.current, { opacity: 0.02, duration: 2 }, 0)
         .to(
           grey.current,
           {
-            y: "300vw",
+            y: tabletPortrait ? "1552px" : "300vw",
             x: "-=40%",
             ease: "none",
             duration: 7,
@@ -92,7 +97,7 @@ const About: React.FC<{ mobile: boolean }> = ({ mobile }) => {
         .to(
           teal.current,
           {
-            y: "470vw",
+            y: tabletPortrait ? "2432px" : "470vw",
             x: "+=10%",
             ease: "none",
             duration: 9.25,
@@ -103,7 +108,7 @@ const About: React.FC<{ mobile: boolean }> = ({ mobile }) => {
         .to(
           grey.current,
           {
-            y: "420vw",
+            y: tabletPortrait ? "2174px" : "420vw",
             ease: "none",
             duration: 1.5,
           },
@@ -185,16 +190,17 @@ const Wrapper = styled.section`
   box-sizing: border-box;
   background-image: url(${davidHuge});
 
-  /* -webkit-transform: translate3d(0, 0, 0);
-  -webkit-transform-style: preserve-3d;
-  -webkit-backface-visibility: hidden; */
-
   ${media.mobile} {
     width: 100%;
     height: 650.8vw;
     padding: 0 2.4vw 60vw;
     background-image: url(${davidHugeM});
     background-position: 50% 50%;
+  }
+  ${media.tabletPortrait} {
+    width: 100%;
+    height: 3367px;
+    padding: 0 12px 310px;
   }
 `;
 const HeaderWrapper = styled.div`
@@ -204,12 +210,12 @@ const HeaderWrapper = styled.div`
   margin-left: 6.3vw;
   height: 5vw;
   overflow: hidden;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     height: 14vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    height: 75px;
   }
 `;
 
@@ -228,7 +234,10 @@ const Header = styled.h2`
     width: 59.9vw;
     text-align: right;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    transform: translate(-44px, 110%);
+    font-size: 69px;
+    width: 625px;
   }
 `;
 
@@ -250,7 +259,11 @@ const HeaderLine = styled.div`
     width: 88vw;
     margin-right: 2vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    height: 5px;
+    border-radius: 5px;
+    width: calc(100% - 10px);
+    margin-right: 10px;
   }
 `;
 
@@ -272,7 +285,12 @@ const Text = styled.p`
     left: 3.9vw;
     top: 168.8vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    font-size: 20px;
+    width: 492px;
+    height: auto;
+    left: 20px;
+    top: 874px;
   }
 `;
 
@@ -294,7 +312,11 @@ const Teal = styled.div`
     left: 2.4vw;
     top: 28vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 391px;
+    height: 611px;
+    left: 12px;
+    top: 145px;
   }
 `;
 
@@ -307,15 +329,18 @@ const Grey = styled.div`
   opacity: 0;
   background: #1f1f20;
   z-index: 2;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     width: 65.2vw;
     height: 107.5vw;
     left: 29.2vw;
     top: 61.6vw;
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 337px;
+    height: 556px;
+    left: 151px;
+    top: 319px;
   }
 `;
 
@@ -337,9 +362,12 @@ const DavidImage = styled.img`
     top: 60vw;
     left: 15vw;
     opacity: 1;
-    /* margin-top: 35vw; */
   }
-  ${media.fullWidth} {
+  ${media.tabletPortrait} {
+    width: 280px;
+    height: 449px;
+    top: 310px;
+    left: 77px;
   }
 `;
 
@@ -351,13 +379,6 @@ const CoverDiv = styled.div`
   height: 100%;
   z-index: -1;
   background: black;
-
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
 `;
 
 export default About;

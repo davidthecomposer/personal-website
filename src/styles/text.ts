@@ -12,9 +12,7 @@ font-size: 4.4vw;
 line-height: 100%;
 letter-spacing: -0.02em;
 color: #E5FCFA;
-${media.fullWidth} {
-    font-size: 79px;
-}
+
 `;
 
 export const MetroHeading32 = `
@@ -25,9 +23,7 @@ font-size: 2vw;
 line-height: 100%;
 letter-spacing: -0.02em;
 color: #E5FCFA;
-${media.fullWidth} {
-    font-size: 36px;
-}
+
 `;
 
 export const Body1 = `
@@ -132,5 +128,8 @@ letter-spacing: -0.02em;
 color: rgba(23, 22, 27, 0.7);
 ${media.mobile} {
     font-size: 6.8vw;
+}
+${media.tabletPortrait} {
+    font-size: 30px;
 }
 `;
