@@ -51,7 +51,7 @@ const ContactForm: React.FC<{
         <FormText htmlFor={`${input.toLowerCase()}`}>{input} :</FormText>
         <TextInput
           type={"text"}
-          id={`${input.toLowerCase()}`}
+          id={input.toLowerCase()}
           name={input.toLowerCase()}
           //@ts-ignore
           value={formData[input]}
@@ -117,7 +117,7 @@ const ContactForm: React.FC<{
       enter={enter}
       data-netlify="true"
       name="connect-form"
-      id="connect-form"
+      id="music-form"
       onSubmit={handleSubmit}
     >
       <Wrapper success={success}>
