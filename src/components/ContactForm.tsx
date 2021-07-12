@@ -48,7 +48,7 @@ const ContactForm: React.FC<{
   const inputs = inputNames.map((input, i) => {
     return (
       <FormRow key={i}>
-        <FormText>{input} :</FormText>
+        <FormText htmlFor={`${input.toLowerCase()}`}>{input} :</FormText>
         <TextInput
           type={"text"}
           id={`${input.toLowerCase()}`}
@@ -186,7 +186,7 @@ const FormRow = styled.div`
   }
 `;
 
-const FormText = styled.p`
+const FormText = styled.label`
   ${media.tablet} {
   }
   ${media.mobile} {
