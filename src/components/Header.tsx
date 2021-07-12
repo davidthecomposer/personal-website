@@ -12,7 +12,7 @@ import colors from "styles/Colors";
 import gsap from "gsap";
 import { Heading1 } from "styles/text";
 import { ReactComponent as DavidSigSVG } from "assets/svg/davidSig.svg";
-import { ReactComponent as DavidInitialsSVG } from "assets/svg/initials.svg";
+import { ReactComponent as DavidInitialsSVG } from "assets/svg/logoT.svg";
 import { useHistory } from "react-router-dom";
 
 const Header: React.FC<{}> = () => {
