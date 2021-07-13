@@ -602,7 +602,7 @@ const Card2 = styled(Card)`
   ${media.fullWidth} {
     ${Header} {
       width: 576px;
-      bottom: 0;
+      bottom: -40px;
       left: 90px;
     }
 
@@ -749,7 +749,7 @@ const Card3 = styled(Card)`
     ${Header} {
       width: 566px;
       right: auto;
-      bottom: 0;
+      bottom: -40px;
       right: 45px;
     }
 
@@ -892,7 +892,7 @@ const Card4 = styled(Card)`
   ${media.fullWidth} {
     ${Header} {
       left: 80px;
-      top: 131px;
+      top: 200px;
     }
 
     ${Metro36} {

@@ -474,25 +474,12 @@ const Story = styled.button<{ trackState: boolean }>`
   margin-right: 1.9vw;
   position: relative;
   z-index: 10;
-  :after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #01d5fa1f;
-    top: 0;
-    left: 0;
-    z-index: 0;
-    transform: scale(0);
-    transform-origin: 0% 10%;
-    transition: 0.5s;
-  }
+  transition: 0.2s;
   ${media.hover} {
     :hover {
-      :after {
-        transform: scale(1);
-        transition: 0.5s;
-      }
+      transform: scale(1.03);
+      transition-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+      transition: 0.2s;
     }
   }
 
@@ -521,30 +508,17 @@ const Music = styled.button<{ trackState: boolean }>`
   ${PrimaryButtonStyle};
   padding: 0;
   text-align: center;
-  border-color: #0c9912;
+  border-color: ${colors.activeTeal};
   border-radius: 0.6vw;
   margin-bottom: 1.4vw;
   position: relative;
   z-index: 10;
-  :after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #0c991250;
-    top: 0;
-    left: 0;
-    z-index: 0;
-    transform: scale(0);
-    transform-origin: 0% 10%;
-    transition: 0.5s;
-  }
+  transition: 0.2s;
   ${media.hover} {
     :hover {
-      :after {
-        transform: scale(1);
-        transition: 0.5s;
-      }
+      transform: scale(1.03);
+      transition-timing-function: cubic-bezier(0.95, 0.05, 0.795, 0.035);
+      transition: 0.2s;
     }
   }
 

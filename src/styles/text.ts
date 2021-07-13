@@ -95,13 +95,16 @@ font-family: Metrophobic;
 font-style: normal;
 font-weight: normal;
 font-size: 1.3vw;
-font-size: max(18px);
+
 line-height: 200%;
 /* identical to box height, or 40px */
 
 letter-spacing: -0.02em;
 
 color: #FFCEF8;
+${media.fullWidth} {
+    font-size: max(24px);
+}
 `;
 
 export const Playlist = `
