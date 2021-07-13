@@ -121,31 +121,40 @@ const ContactForm: React.FC<{
       onSubmit={handleSubmit}
     >
       <Wrapper success={success}>
-        <TextInput
-          type="text"
-          id="name"
-          name="name"
-          //@ts-ignore
+        <FormRow>
+          <FormText htmlFor="name">Name :</FormText>
+          <TextInput
+            type="text"
+            id="name"
+            name="name"
+            //@ts-ignore
 
-          value={formData.name}
-          onChange={(e: any) => updateFormState(e)}
-        />
-        <TextInput
-          type="email"
-          id="email"
-          name="email"
-          //@ts-ignore
-          value={formData.email}
-          onChange={(e: any) => updateFormState(e)}
-        />
-        <TextInput
-          type="text"
-          id="project"
-          name="project"
-          //@ts-ignore
-          value={formData.project}
-          onChange={(e: any) => updateFormState(e)}
-        />
+            value={formData.name}
+            onChange={(e: any) => updateFormState(e)}
+          />
+        </FormRow>
+        <FormRow>
+          <FormText htmlFor="email">Email :</FormText>
+          <TextInput
+            type="email"
+            id="email"
+            name="email"
+            //@ts-ignore
+            value={formData.email}
+            onChange={(e: any) => updateFormState(e)}
+          />
+        </FormRow>
+        <FormRow>
+          <FormText htmlFor="project">Project :</FormText>
+          <TextInput
+            type="text"
+            id="project"
+            name="project"
+            //@ts-ignore
+            value={formData.project}
+            onChange={(e: any) => updateFormState(e)}
+          />
+        </FormRow>
         {mobile && !close && <Close onClick={closeModal}>Close</Close>}
         <input type="hidden" name="form-name" value="connect-form" />
         <SendMessage>Send Message</SendMessage>
