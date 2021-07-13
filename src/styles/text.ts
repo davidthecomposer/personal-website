@@ -1,9 +1,9 @@
 import media from "./media";
 import colors from "./Colors";
 
-export const Heading1 = `font-family: "Julius Sans One"; font-size: 5vw; ${media.fullWidth} {
-    font-size: 90px;
-}  `;
+export const Heading1 = `font-family: "Julius Sans One";
+ font-size: 5vw;
+  `;
 export const SlideHeading = `
 font-family: Julius Sans One;
 font-style: normal;

@@ -397,8 +397,7 @@ const Header = styled.h2`
   width: fit-content;
   right: 0;
   z-index: 2;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     transform: translate(-8.5vw, 110%);
     font-size: 13.3vw;
@@ -422,8 +421,7 @@ const HeaderLine = styled.div`
   transform: scaleX(0);
   transform-origin: 0%;
   border-radius: 0.3vw;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     height: 1vw;
     border-radius: 1vw;
@@ -515,8 +513,7 @@ const HeadLine = styled.h3`
   ${SubHeader};
   width: 100%;
   margin-bottom: 1.7vw;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     font-size: 8.7vw;
   }
@@ -535,8 +532,7 @@ const Arrow = styled(ButtonArrowSVG)`
   path {
     fill: currentColor;
   }
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     width: 9.7vw;
     height: 3.9vw;
@@ -550,8 +546,6 @@ const Arrow = styled(ButtonArrowSVG)`
 `;
 
 const MobileWrapper1 = styled.div`
-  ${media.tablet} {
-  }
   ${media.mobile} {
     position: relative;
     display: flex;
@@ -585,8 +579,7 @@ const GetInTouch = styled.button`
       }
     }
   }
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     position: relative;
     width: 46.1vw;
@@ -624,8 +617,7 @@ const FrontAndBackPage = styled.div<{ z: number }>`
   height: 46.6vw;
   z-index: ${(props) => props.z};
   border: none;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     width: 87vw;
     height: 127.1vw;
@@ -659,8 +651,6 @@ const TableOfContents = styled.div`
   box-sizing: border-box;
   padding: 2.5vw 0 0 3.1vw;
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     width: 87vw;
     height: 127.1vw;
@@ -741,8 +731,7 @@ const PageTab = styled.button<{ yOffset: number; activeTab: boolean }>`
   opacity: 1;
   box-shadow: 0px 0.5vw 0.3vw rgba(0, 0, 0, 0.25);
   z-index: 1;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     position: relative;
     background: transparent;
@@ -835,8 +824,7 @@ const Piece = styled.p`
   ${Playlist};
   margin-bottom: 2vw;
   cursor: pointer;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     font-size: 3.9vw;
     padding-bottom: 4vw;
@@ -860,8 +848,7 @@ const InfoWrapper = styled.div<{ visible: boolean }>`
   z-index: ${(props) => (props.visible ? 10 : 0)};
   width: 27.5vw;
   height: 40.7vw;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     width: calc(100% - 8.8vw);
     height: calc(100% - 2vw);
@@ -881,8 +868,7 @@ const PieceTitle = styled.h3`
   ${ConcertTitle};
   font-size: 2.4vw;
   text-align: left;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     width: 74.2vw;
   }
@@ -919,8 +905,7 @@ const Year = styled.h4`
   text-align: right;
   margin-top: 0.2vw;
   margin-bottom: 2vw;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     margin-top: 2vw;
   }
@@ -936,8 +921,7 @@ const Description = styled.p`
   margin-bottom: 2.2vw;
   height: 10.6vw;
   color: #17161b95;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     height: auto;
     font-size: 3.9vw;
@@ -957,8 +941,7 @@ const BigRow = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 4.8vw;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     min-height: 33vw;
   }
@@ -977,8 +960,7 @@ const Movements = styled.div`
 
   width: 13vw;
   margin-left: 1.8vw;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     position: relative;
     width: 40vw;
@@ -995,8 +977,6 @@ const Movements = styled.div`
 const InfoColumn = styled.div`
   width: 14vw;
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     width: 38vw;
   }
@@ -1007,8 +987,7 @@ const InfoColumn = styled.div`
 const ScoreSample = styled.div`
   width: 7.5vw;
   margin-bottom: 2.1vw;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     width: 38vw;
     display: flex;
@@ -1026,8 +1005,6 @@ const Duration = styled.div`
   right: 0;
   bottom: 0;
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     font-size: 4.3vw;
 
@@ -1055,8 +1032,7 @@ const Instrument = styled.div`
   background: ${colors.deepPurple};
   border-radius: 0.5vw;
   padding: 0.1vw 0.4vw;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     font-size: 2.9vw;
     border-radius: 2.4vw;
@@ -1072,8 +1048,7 @@ const Instrument = styled.div`
 const ScoreIcon = styled(ScoreIconSVG)`
   width: 2.4vw;
   height: 2.4vw;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     width: 6.8vw;
     height: 6.8vw;
@@ -1090,8 +1065,7 @@ const SmallTitle = styled.div`
   ${Playlist};
   color: black;
   margin-bottom: 0.8vw;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     font-size: 3.9vw;
   }

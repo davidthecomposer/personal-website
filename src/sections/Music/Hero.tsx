@@ -362,7 +362,9 @@ const Wrapper = styled.section`
   padding: 9vw 0 0 0;
   position: relative;
   box-sizing: border-box;
-
+  ${media.fullWidth} {
+    padding-top: 180px;
+  }
   ${media.mobile} {
     width: 100%;
     overflow: hidden;
@@ -416,12 +418,6 @@ const Header = styled.h2`
   ${SlideHeading};
   position: absolute;
   opacity: 0;
-  ${media.tablet} {
-  }
-  ${media.mobile} {
-  }
-  ${media.fullWidth} {
-  }
 `;
 
 const Counter = styled.div`
@@ -448,7 +444,7 @@ const Counter = styled.div`
     left: 3.4vw;
   }
   ${media.fullWidth} {
-    bottom: 142px;
+    top: max(70vh, 1000px);
     left: 147px;
   }
 `;
@@ -553,13 +549,13 @@ const Card = styled.div`
     z-index: 1;
     ${Header} {
       width: fit-content;
-      bottom: -59px;
+      /* bottom: -59px; */
       font-size: 70px;
       right: 110px;
     }
 
     ${Metro36} {
-      right: 190px;
+      right: 215px;
       bottom: 115px;
       font-size: 32px;
       width: fit-content;
@@ -606,7 +602,7 @@ const Card2 = styled(Card)`
   ${media.fullWidth} {
     ${Header} {
       width: 576px;
-      bottom: 50px;
+      bottom: 0;
       left: 90px;
     }
 
@@ -753,12 +749,12 @@ const Card3 = styled(Card)`
     ${Header} {
       width: 566px;
       right: auto;
-      bottom: 34px;
+      bottom: 0;
       right: 45px;
     }
 
     ${Metro36} {
-      right: 125px;
+      right: 140px;
       top: 67px;
     }
 
@@ -997,6 +993,7 @@ const SlideWrapper = styled.div`
     width: 1600px;
     left: 50%;
     transform: translateX(-50%);
+    margin-top: 150px;
   }
   ${media.mobile} {
     width: 100%;
