@@ -1,12 +1,24 @@
-const jupiter = require("assets/audio/Jupiter.mp3").default;
-const neptune = require("assets/audio/Neptune.mp3").default;
-const uranus = require("assets/audio/Uranus.mp3").default;
-const mars = require("assets/audio/Mars.mp3").default;
-const mercury = require("assets/audio/Mercury.mp3").default;
-const pluto = require("assets/audio/Pluto.mp3").default;
-const saturn = require("assets/audio/Saturn.mp3").default;
-const venus = require("assets/audio/Venus.mp3").default;
-const earth = require("assets/audio/Earth.mp3").default;
+const copernicusPdf =
+  require("assets/scores/Solo/Copernicus-Etudes.pdf").default;
+
+const jupiter =
+  require("assets/audio/concert-music/Solo/Copernicus/Jupiter.mp3").default;
+const neptune =
+  require("assets/audio/concert-music/Solo/Copernicus/Neptune.mp3").default;
+const uranus =
+  require("assets/audio/concert-music/Solo/Copernicus/Uranus.mp3").default;
+const mars =
+  require("assets/audio/concert-music/Solo/Copernicus/Mars.mp3").default;
+const mercury =
+  require("assets/audio/concert-music/Solo/Copernicus/Mercury.mp3").default;
+const pluto =
+  require("assets/audio/concert-music/Solo/Copernicus/Pluto.mp3").default;
+const saturn =
+  require("assets/audio/concert-music/Solo/Copernicus/Saturn.mp3").default;
+const venus =
+  require("assets/audio/concert-music/Solo/Copernicus/Venus.mp3").default;
+const earth =
+  require("assets/audio/concert-music/Solo/Copernicus/Earth.mp3").default;
 
 export const concertPieces = [
   {
@@ -51,7 +63,7 @@ export const concertPieces = [
           { name: "Earth", audio: earth, initialTime: "3:45" },
         ],
         instrumentation: ["Solo Piano"],
-        scoreSample: "",
+        scoreSample: copernicusPdf,
         duration: "28'",
       },
       {
