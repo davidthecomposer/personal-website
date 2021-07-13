@@ -32,9 +32,9 @@ const ContactForm: React.FC<{
       newState: { name: string; email: string; project: string }
     ) => ({ ...state, ...newState }),
     {
-      name: "Name",
-      email: "email",
-      project: "project",
+      name: "",
+      email: "",
+      project: "",
     }
   );
 
@@ -98,13 +98,15 @@ const ContactForm: React.FC<{
         body: new URLSearchParams(formData).toString(),
       })
         .then((response) => {
-          console.log(response);
-          setFormData({
-            name: "Name",
-            email: "email",
-            project: "project",
-          });
-          setSuccess(true);
+          if (response.ok) {
+            setFormData({
+              name: "",
+              email: "",
+              project: "",
+            });
+            setSuccess(true);
+          } else {
+          }
         })
         .catch((error) => alert(error));
     }
@@ -130,6 +132,7 @@ const ContactForm: React.FC<{
             type="text"
             id="name"
             name="name"
+            placeholder="name"
             //@ts-ignore
 
             value={formData.name}
@@ -144,15 +147,16 @@ const ContactForm: React.FC<{
             name="email"
             //@ts-ignore
             value={formData.email}
+            placeholder="email"
             onChange={(e: any) => updateFormState(e)}
           />
         </FormRow>
         <FormRow>
           <FormText htmlFor="project">Project :</FormText>
-          <TextInput
-            type="text"
+          <TextArea
             id="project"
             name="project"
+            placeholder="project"
             //@ts-ignore
             value={formData.project}
             onChange={(e: any) => updateFormState(e)}
@@ -210,7 +214,7 @@ const FormRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2.9vw;
+  margin-bottom: 1vw;
 
   ${media.mobile} {
     font-size: 4.8vw;
@@ -242,6 +246,32 @@ const TextInput = styled.input`
   box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 0.3vw;
   padding-left: 1vw;
+
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+    width: 60.4vw;
+    height: 9.7vw;
+  }
+  ${media.tabletPortrait} {
+    width: 250px;
+    height: 40px;
+  }
+`;
+
+const TextArea = styled.textarea`
+  height: 7.5vw;
+  width: 16.5vw;
+  background: linear-gradient(
+    90.38deg,
+    #89c1b4 2.99%,
+    rgba(124, 146, 140, 0.81) 99.88%
+  );
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 0.3vw;
+  padding-left: 1vw;
+  ${FormLabel};
+  color: black;
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -275,6 +305,16 @@ const SendMessage = styled.button`
     margin-left: 141px;
     border-radius: 6px;
   }
+  transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transition: 0.3s;
+
+  ${media.hover} {
+    :hover {
+      transform: scale(0.9);
+      transition-timing-function: ease-in-out;
+      transition: 0.3s;
+    }
+  }
 `;
 
 const Close = styled.button`
@@ -302,6 +342,7 @@ const SuccessMessage = styled.div<{ success: boolean }>`
   position: absolute;
   transform: scale(${(props) => (props.success ? 1 : 0)});
   opacity: (${(props) => (props.success ? 1 : 0)});
+  transition: 0.5s;
 `;
 
 const Wrapper = styled.div<{ success: boolean }>`
@@ -310,6 +351,7 @@ const Wrapper = styled.div<{ success: boolean }>`
   position: absolute;
   transform: scale(${(props) => (props.success ? 0 : 1)});
   opacity: (${(props) => (props.success ? 0 : 1)});
+  transition: 0.5s;
 `;
 
 export default ContactForm;

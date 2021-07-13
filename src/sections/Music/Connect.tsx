@@ -1,33 +1,18 @@
-import React, { useReducer, useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
-import { Heading1, Body1, SubHeader, FormLabel } from "styles/text";
+import { Heading1, Body1, SubHeader } from "styles/text";
 import colors from "styles/Colors";
 import media from "styles/media";
 import connectBG from "assets/images/connectBG.jpg";
 import connectBGM from "assets/images/connectBGM.jpg";
 import ContactForm from "components/ContactForm";
 import gsap from "gsap";
-import { PrimaryButtonStyle } from "styles/Buttons";
-import { ReactComponent as ButtonArrowSVG } from "assets/svg/buttonArrow.svg";
 
 const Connect: React.FC<{ mobile: boolean }> = ({ mobile }) => {
-  const inputNames = ["Name", "Email", "Project"];
   const header = useRef(null);
   const headerLine = useRef(null);
   const collaborate = useRef(null);
   const [enter, setEnter] = useState(false);
-
-  const [formData, setFormData] = useReducer(
-    (
-      state: { name: string; email: string; project: string },
-      newState: { name: string; email: string; project: string }
-    ) => ({ ...state, ...newState }),
-    {
-      name: "",
-      email: "",
-      project: "",
-    }
-  );
 
   useEffect(() => {
     const tl = gsap.timeline({
@@ -46,7 +31,7 @@ const Connect: React.FC<{ mobile: boolean }> = ({ mobile }) => {
   useEffect(() => {
     const tl = gsap.timeline({
       scrollTrigger: headerLine.current,
-      onComplete: () => (mobile ? setEnter(true) : setEnter(false)),
+      onComplete: () => setEnter(true),
     });
 
     tl.to(headerLine.current, {
@@ -57,29 +42,6 @@ const Connect: React.FC<{ mobile: boolean }> = ({ mobile }) => {
       .to(header.current, { y: 0, duration: 0.6 }, 1)
       .to(header.current, { x: 0, duration: 0.6 }, 1.6);
   }, [mobile]);
-
-  const updateFormState = (e: any) => {
-    const name = e.target.name;
-    let newValue = e.target.value;
-    //@ts-ignore
-    setFormData({ [name]: newValue });
-  };
-
-  const inputs = inputNames.map((input, i) => {
-    return (
-      <FormRow key={i}>
-        <FormText>{input} :</FormText>
-        <TextInput
-          type={"text"}
-          id={`#${input.toLowerCase()}`}
-          name={input.toLowerCase()}
-          //@ts-ignore
-          value={formData[input]}
-          onChange={(e: any) => updateFormState(e)}
-        />
-      </FormRow>
-    );
-  });
 
   return (
     <Wrapper id="connect">
@@ -103,22 +65,15 @@ const Connect: React.FC<{ mobile: boolean }> = ({ mobile }) => {
           from repetition, injected humour, or non-characteristic words etc
         </Text>
       </Collaborate>
-      {mobile ? (
-        <ContactForm
-          setEnter={setEnter}
-          enter={enter}
-          leftVal={mobile ? "100%" : "63.4vw"}
-          topVal={mobile ? "60vw" : "102.4vw"}
-          leftValT={"40%"}
-          topValT={"248px"}
-          close={true}
-        />
-      ) : (
-        <FormModal>
-          {inputs}
-          <SendMessage>Send Message</SendMessage>
-        </FormModal>
-      )}
+      <ContactForm
+        setEnter={setEnter}
+        enter={enter}
+        leftVal={mobile ? "100%" : "12.8vw"}
+        topVal={mobile ? "60vw" : "43.1vw"}
+        leftValT={"40%"}
+        topValT={"248px"}
+        close={true}
+      />
     </Wrapper>
   );
 };
@@ -246,76 +201,6 @@ const SubTitle = styled.h3`
   ${media.tabletPortrait} {
     font-size: 45px;
   }
-`;
-
-const FormModal = styled.form`
-  position: absolute;
-  width: 24.7vw;
-  height: 19vw;
-
-  left: 12.8vw;
-  top: 43.1vw;
-
-  padding: 3.4vw;
-  background: ${colors.formSkinPurprle};
-  border-radius: 0.5vw;
-`;
-
-const FormRow = styled.div`
-  display: flex;
-  ${FormLabel};
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2.9vw;
-`;
-
-const FormText = styled.p``;
-
-const TextInput = styled.input`
-  height: 2.5vw;
-  width: 16.5vw;
-  background: linear-gradient(
-    90.38deg,
-    #89c1b4 2.99%,
-    rgba(124, 146, 140, 0.81) 99.88%
-  );
-  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 0.3vw;
-  padding-left: 1vw;
-`;
-
-const Arrow = styled(ButtonArrowSVG)`
-  width: 2.5vw;
-  height: 1vw;
-  margin-left: 1.5vw;
-  z-index: 3;
-  transition: 0.5s;
-`;
-
-const GetInTouch = styled.button`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  ${PrimaryButtonStyle};
-  border-color: ${colors.activeTeal};
-  width: 12.5vw;
-
-  padding-left: 0.8vw;
-
-  :hover {
-    ${Arrow} {
-      transform: translateX(0.4vw);
-
-      transition: 0.5s;
-    }
-  }
-`;
-
-const SendMessage = styled(GetInTouch)`
-  position: relative;
-  margin-left: 12.1vw;
 `;
 
 export default Connect;
