@@ -1,9 +1,9 @@
 import media from "./media";
 import colors from "./Colors";
 
-export const Heading1 = `font-family: "Julius Sans One"; font-size: 5vw; ${media.fullWidth} {
-    font-size: 90px;
-}  `;
+export const Heading1 = `font-family: "Julius Sans One";
+ font-size: 5vw;
+  `;
 export const SlideHeading = `
 font-family: Julius Sans One;
 font-style: normal;
@@ -95,13 +95,16 @@ font-family: Metrophobic;
 font-style: normal;
 font-weight: normal;
 font-size: 1.3vw;
-font-size: max(18px);
+
 line-height: 200%;
 /* identical to box height, or 40px */
 
 letter-spacing: -0.02em;
 
 color: #FFCEF8;
+${media.fullWidth} {
+    font-size: max(24px);
+}
 `;
 
 export const Playlist = `

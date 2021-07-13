@@ -447,8 +447,7 @@ const TitleWrapper = styled.div`
   align-items: center;
   width: 58vw;
   height: 5vw;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     position: absolute;
     font-size: 7vw;
@@ -459,6 +458,10 @@ const TitleWrapper = styled.div`
     position: absolute;
     font-size: 54px;
     width: 691px;
+  }
+
+  ${media.fullWidth} {
+    width: 60vw;
   }
 `;
 
@@ -472,8 +475,7 @@ const Line = styled.div<{ open: boolean; initial: boolean }>`
 
   transform-origin: "50% 50%";
   margin-top: 0.8vw;
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     height: 8vw;
     margin-top: 1vw;
@@ -508,6 +510,10 @@ const TitleContainer = styled.div<{ open: boolean }>`
     transform: none;
     height: 54px;
     width: 400px;
+  }
+
+  ${media.fullWidth} {
+    width: 38vw;
   }
 `;
 
@@ -663,8 +669,6 @@ const NavLinks = styled.div<{ open: boolean; initial: boolean }>`
     }
   }
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     width: fit-content;
     height: auto;
@@ -674,8 +678,6 @@ const NavLinks = styled.div<{ open: boolean; initial: boolean }>`
 `;
 
 const DavidInitials = styled(DavidInitialsSVG)`
-  ${media.tablet} {
-  }
   ${media.mobile} {
     width: 12vw;
     height: 12vw;

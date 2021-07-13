@@ -581,6 +581,8 @@ const MainImage = styled.img`
 `;
 
 const SmallArrow = styled(SmallArrowSVG)`
+  width: 1.7vw;
+  height: 1vw;
   ${media.mobile} {
     position: relative;
     width: 6.8vw;
@@ -651,13 +653,14 @@ const MoreBtn = styled.button`
   padding-left: 0.7vw;
   width: 11.9vw;
   margin-right: 1.3vw;
-  border-color: #ffcef8;
+  border-color: ${colors.brightPurple};
   display: flex;
   justify-content: space-between;
   align-items: center;
   ${SmallArrow} {
     transform: rotate(180deg);
   }
+
   padding-right: 0.7vw;
   span {
     margin-left: 1vw;
@@ -750,7 +753,7 @@ const Links = styled.div<{ open: boolean }>`
   height: 2.5vw;
   padding: 0.2vw 0 0.3vw 0.7vw;
   width: 11.9vw;
-  border-color: #ffcef8;
+  border-color: ${colors.brightPurple};
   z-index: 5;
   position: relative;
   bottom: 0;
@@ -947,7 +950,7 @@ const Half = styled.div`
   ${Links} {
     position: absolute;
     bottom: 0;
-    border-color: ${colors.formSkinPurprle};
+    border-color: ${colors.brightPurple};
   }
   ${media.mobile} {
     width: 95.2vw;
