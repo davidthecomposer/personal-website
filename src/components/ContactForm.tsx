@@ -11,7 +11,7 @@ import { PrimaryButtonStyle } from "styles/Buttons";
 import { MobileContext } from "App";
 import colors from "styles/Colors";
 import media from "styles/media";
-import axios from "axios";
+
 import gsap from "gsap";
 
 const ContactForm: React.FC<{
@@ -89,11 +89,14 @@ const ContactForm: React.FC<{
     e.preventDefault();
     if (form.current) {
       // let formData = new FormData(form.current);
-      axios
-        .post("/", {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: formData,
-        })
+      let myForm = form.current;
+      let formData = new FormData(myForm);
+      fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        //@ts-ignore
+        body: new URLSearchParams(formData).toString(),
+      })
         .then((response) => {
           console.log(response);
           setFormData({
