@@ -11,6 +11,7 @@ import { PrimaryButtonStyle } from "styles/Buttons";
 import { MobileContext } from "App";
 import colors from "styles/Colors";
 import media from "styles/media";
+
 import gsap from "gsap";
 
 const ContactForm: React.FC<{
@@ -25,7 +26,6 @@ const ContactForm: React.FC<{
   const form = useRef<HTMLFormElement>(null);
   const mobile = useContext(MobileContext);
   const [success, setSuccess] = useState(false);
-  const inputNames = ["Name", "Email", "Project"];
   const [formData, setFormData] = useReducer(
     (
       state: { name: string; email: string; project: string },
@@ -45,21 +45,21 @@ const ContactForm: React.FC<{
     setFormData({ [name]: newValue });
   };
 
-  const inputs = inputNames.map((input, i) => {
-    return (
-      <FormRow key={i}>
-        <FormText>{input} :</FormText>
-        <TextInput
-          type={"text"}
-          id={`${input.toLowerCase()}`}
-          name={input.toLowerCase()}
-          //@ts-ignore
-          value={formData[input]}
-          onChange={(e: any) => updateFormState(e)}
-        />
-      </FormRow>
-    );
-  });
+  // const inputs = inputNames.map((input, i) => {
+  //   return (
+  //     <FormRow key={i}>
+  //       <FormText htmlFor={`${input.toLowerCase()}`}>{input} :</FormText>
+  //       <TextInput
+  //         type={i === 1 ? "email" : "text"}
+  //         id={input.toLowerCase()}
+  //         name={input.toLowerCase()}
+  //         //@ts-ignore
+  //         value={formData[input]}
+  //         onChange={(e: any) => updateFormState(e)}
+  //       />
+  //     </FormRow>
+  //   );
+  // });
 
   useEffect(() => {
     if (form.current) {
@@ -89,13 +89,16 @@ const ContactForm: React.FC<{
     e.preventDefault();
     if (form.current) {
       // let formData = new FormData(form.current);
+      let myForm = form.current;
+      let formData = new FormData(myForm);
       fetch("/", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-
+        //@ts-ignore
         body: new URLSearchParams(formData).toString(),
       })
-        .then(() => {
+        .then((response) => {
+          console.log(response);
           setFormData({
             name: "Name",
             email: "email",
@@ -117,11 +120,44 @@ const ContactForm: React.FC<{
       enter={enter}
       data-netlify="true"
       name="connect-form"
-      id="connect-form"
+      id="music-form"
       onSubmit={handleSubmit}
     >
       <Wrapper success={success}>
-        {inputs}
+        <FormRow>
+          <FormText htmlFor="name">Name :</FormText>
+          <TextInput
+            type="text"
+            id="name"
+            name="name"
+            //@ts-ignore
+
+            value={formData.name}
+            onChange={(e: any) => updateFormState(e)}
+          />
+        </FormRow>
+        <FormRow>
+          <FormText htmlFor="email">Email :</FormText>
+          <TextInput
+            type="email"
+            id="email"
+            name="email"
+            //@ts-ignore
+            value={formData.email}
+            onChange={(e: any) => updateFormState(e)}
+          />
+        </FormRow>
+        <FormRow>
+          <FormText htmlFor="project">Project :</FormText>
+          <TextInput
+            type="text"
+            id="project"
+            name="project"
+            //@ts-ignore
+            value={formData.project}
+            onChange={(e: any) => updateFormState(e)}
+          />
+        </FormRow>
         {mobile && !close && <Close onClick={closeModal}>Close</Close>}
         <input type="hidden" name="form-name" value="connect-form" />
         <SendMessage>Send Message</SendMessage>
@@ -186,7 +222,7 @@ const FormRow = styled.div`
   }
 `;
 
-const FormText = styled.p`
+const FormText = styled.label`
   ${media.tablet} {
   }
   ${media.mobile} {
