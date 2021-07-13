@@ -95,6 +95,7 @@ font-family: Metrophobic;
 font-style: normal;
 font-weight: normal;
 font-size: 1.3vw;
+font-size: max(18px);
 line-height: 200%;
 /* identical to box height, or 40px */
 
