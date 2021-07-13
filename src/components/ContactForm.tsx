@@ -26,7 +26,6 @@ const ContactForm: React.FC<{
   const form = useRef<HTMLFormElement>(null);
   const mobile = useContext(MobileContext);
   const [success, setSuccess] = useState(false);
-  const inputNames = ["Name", "Email", "Project"];
   const [formData, setFormData] = useReducer(
     (
       state: { name: string; email: string; project: string },
@@ -46,21 +45,21 @@ const ContactForm: React.FC<{
     setFormData({ [name]: newValue });
   };
 
-  const inputs = inputNames.map((input, i) => {
-    return (
-      <FormRow key={i}>
-        <FormText htmlFor={`${input.toLowerCase()}`}>{input} :</FormText>
-        <TextInput
-          type={i === 1 ? "email" : "text"}
-          id={input.toLowerCase()}
-          name={input.toLowerCase()}
-          //@ts-ignore
-          value={formData[input]}
-          onChange={(e: any) => updateFormState(e)}
-        />
-      </FormRow>
-    );
-  });
+  // const inputs = inputNames.map((input, i) => {
+  //   return (
+  //     <FormRow key={i}>
+  //       <FormText htmlFor={`${input.toLowerCase()}`}>{input} :</FormText>
+  //       <TextInput
+  //         type={i === 1 ? "email" : "text"}
+  //         id={input.toLowerCase()}
+  //         name={input.toLowerCase()}
+  //         //@ts-ignore
+  //         value={formData[input]}
+  //         onChange={(e: any) => updateFormState(e)}
+  //       />
+  //     </FormRow>
+  //   );
+  // });
 
   useEffect(() => {
     if (form.current) {
@@ -122,7 +121,31 @@ const ContactForm: React.FC<{
       onSubmit={handleSubmit}
     >
       <Wrapper success={success}>
-        {inputs}
+        <TextInput
+          type="text"
+          id="name"
+          name="name"
+          //@ts-ignore
+
+          value={formData.name}
+          onChange={(e: any) => updateFormState(e)}
+        />
+        <TextInput
+          type="email"
+          id="email"
+          name="email"
+          //@ts-ignore
+          value={formData.email}
+          onChange={(e: any) => updateFormState(e)}
+        />
+        <TextInput
+          type="text"
+          id="project"
+          name="project"
+          //@ts-ignore
+          value={formData.project}
+          onChange={(e: any) => updateFormState(e)}
+        />
         {mobile && !close && <Close onClick={closeModal}>Close</Close>}
         <input type="hidden" name="form-name" value="connect-form" />
         <SendMessage>Send Message</SendMessage>
