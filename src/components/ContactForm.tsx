@@ -11,6 +11,7 @@ import { PrimaryButtonStyle } from "styles/Buttons";
 import { MobileContext } from "App";
 import colors from "styles/Colors";
 import media from "styles/media";
+import axios from "axios";
 import gsap from "gsap";
 
 const ContactForm: React.FC<{
@@ -50,7 +51,7 @@ const ContactForm: React.FC<{
       <FormRow key={i}>
         <FormText htmlFor={`${input.toLowerCase()}`}>{input} :</FormText>
         <TextInput
-          type={"text"}
+          type={i === 1 ? "email" : "text"}
           id={input.toLowerCase()}
           name={input.toLowerCase()}
           //@ts-ignore
@@ -89,13 +90,13 @@ const ContactForm: React.FC<{
     e.preventDefault();
     if (form.current) {
       // let formData = new FormData(form.current);
-      fetch("/", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-
-        body: new URLSearchParams(formData).toString(),
-      })
-        .then(() => {
+      axios
+        .post("/", {
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: formData,
+        })
+        .then((response) => {
+          console.log(response);
           setFormData({
             name: "Name",
             email: "email",
