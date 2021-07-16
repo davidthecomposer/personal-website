@@ -363,7 +363,7 @@ const Wrapper = styled.section`
   position: relative;
   box-sizing: border-box;
   ${media.fullWidth} {
-    padding-top: 180px;
+    padding-top: 0;
   }
   ${media.mobile} {
     width: 100%;
@@ -444,8 +444,10 @@ const Counter = styled.div`
     left: 3.4vw;
   }
   ${media.fullWidth} {
-    top: max(70vh, 1000px);
+    top: 700px;
     left: 147px;
+    bottom: auto;
+    z-index: 10;
   }
 `;
 
@@ -989,7 +991,7 @@ const SlideWrapper = styled.div`
   width: 100%;
   height: 53.9vw;
   ${media.fullWidth} {
-    height: 53.9vw;
+    height: 776.2px;
     width: 1600px;
     left: 50%;
     transform: translateX(-50%);

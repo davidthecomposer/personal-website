@@ -8,237 +8,67 @@ import { PrimaryButtonStyle } from "styles/Buttons";
 import { MobileContext } from "App";
 import { ReactComponent as PlayButtonSVG } from "assets/svg/playButton.svg";
 import { ReactComponent as PauseButtonSVG } from "assets/svg/pauseButton.svg";
-import { ReactComponent as ProgressSVG } from "assets/svg/progress.svg";
-
-const flatlineMP3 = require("assets/audio/flatLine.mp3").default;
-const forceOfNatureMP3 = require("assets/audio/forceOfNature.mp3").default;
-const loveStoryMP3 = require("assets/audio/loveStory.mp3").default;
-const mischeivousMP3 = require("assets/audio/mischeivous.mp3").default;
-const redemptionMP3 = require("assets/audio/redemption.mp3").default;
-const rescueMP3 = require("assets/audio/rescue.mp3").default;
-const afterMP3 = require("assets/audio/rockIntro.mp3").default;
-const starlightMP3 = require("assets/audio/starlightStarbright.mp3").default;
-const starFlightMP3 = require("assets/audio/starflightStarbright.mp3").default;
-const turningPointMP3 = require("assets/audio/turningPoint.mp3").default;
 
 type Props = {
   setActiveScreen: any;
   introAni: boolean;
   setMobileInfo: any;
   mobileInfo: any;
+  mediaPieces: {
+    title: string;
+    img: string;
+    video: boolean;
+    music: string;
+    story: string;
+    audio: string;
+    id: number;
+  }[];
 };
 
 type AudioElementProps = {
-  track: string;
-  returnTimeString: any;
-  setTimeRemaining: any;
-  activeTrack: boolean;
-  setActiveTrack: any;
-  tracks: any;
-
-  setPlaying: any;
-  canPlay: boolean;
-
-  trackID: number;
-  shouldAutoPlay: any;
+  track: {
+    title: string;
+    img: string;
+    video: boolean;
+    music: string;
+    story: string;
+    audio: string;
+    id: number;
+  };
+  activeTrack: number;
+  setActiveTrack: React.Dispatch<React.SetStateAction<number>>;
+  playPushed: boolean;
+  setPlayPushed: React.Dispatch<React.SetStateAction<boolean>>;
+  shouldAutoPlay: React.MutableRefObject<boolean>;
+  allTracks: number;
 };
 
 const AudioElement: React.FC<AudioElementProps> = ({
   track,
-  returnTimeString,
-  setTimeRemaining,
   activeTrack,
   setActiveTrack,
-  tracks,
-  setPlaying,
-  canPlay,
-  trackID,
+  playPushed,
+  setPlayPushed,
   shouldAutoPlay,
+  allTracks,
 }) => {
   const player = useRef<HTMLAudioElement>(null);
+  const [timeRemaining, setTimeRemaining] = useState("0:00");
+  const progress = useRef<HTMLDivElement | null>(null);
+  const row = useRef<HTMLDivElement | null>(null);
+  const [canProgress, setCanProgress] = useState<boolean>(false);
+  const [progressCheck, setProgressCheck] = useState<number>(0);
   const handleEnd = () => {
     if (player.current) {
       player.current.currentTime = 0;
+      gsap.set(progress.current, { scaleX: 0, ease: "none" });
       player.current.pause();
+      setActiveTrack(track.id === allTracks - 1 ? 0 : track.id + 1);
     }
     if (!shouldAutoPlay.current) {
-      setPlaying(false);
-    }
-
-    setActiveTrack(trackID === tracks.length - 1 ? 0 : trackID + 1);
-  };
-  useEffect(() => {
-    gsap.set(".media__progress", { drawSVG: "0 0" });
-  }, []);
-
-  useEffect(() => {
-    if (activeTrack && player.current) {
-      const tl = gsap.timeline({
-        paused: true,
-
-        onUpdate: () => {
-          if (player.current) {
-            const time = player.current.currentTime;
-            const duration = player.current.duration;
-            const percentage = `${((time / duration) * 100).toFixed(2)}%`;
-            gsap.set(".media__progress", { drawSVG: `0 ${percentage}` });
-          }
-        },
-      });
-      tl.to(
-        ".media__progress",
-        { opacity: 1, duration: player?.current.duration },
-        0
-      );
-
-      if (canPlay) {
-        tl.play();
-      } else {
-        tl.pause();
-      }
-    }
-  }, [activeTrack, canPlay]);
-
-  useEffect(() => {
-    if (player.current) {
-      if (canPlay) {
-        player.current.play();
-      } else {
-        player.current.pause();
-      }
-    }
-  }, [canPlay, activeTrack, trackID]);
-
-  const getDuration = () => {
-    if (player.current) {
-      const time =
-        //@ts-ignore
-        Math.floor(player.current.duration) -
-        //@ts-ignore
-        Math.floor(player.current.currentTime);
-
-      const timeRemainingFormat = returnTimeString(time);
-
-      setTimeRemaining(timeRemainingFormat);
-
-      // setPureTime(audioPlayer.current.currentTime);
-      // setPureDuration(audioPlayer.current.duration);
+      setPlayPushed(false);
     }
   };
-
-  return (
-    <Player
-      onDurationChange={getDuration}
-      onTimeUpdate={getDuration}
-      onEnded={handleEnd}
-      src={track}
-      ref={player}
-      autoPlay={false}
-    />
-  );
-};
-
-const AudioPlayer: React.FC<Props> = ({
-  setActiveScreen,
-  introAni,
-  setMobileInfo,
-  mobileInfo,
-}) => {
-  const playList = useRef(null);
-  const [playing, setPlaying] = useState(false);
-  const [activeTrack, setActiveTrack] = useState(0);
-  const [timeRemaining, setTimeRemaining] = useState("0:00");
-  const mobile = useContext(MobileContext);
-
-  const [autoPlay, setAutoPlay] = useState(false);
-  const shouldAutoPlay = useRef(false);
-  const tracks = useRef([
-    {
-      title: "Flatline",
-      initialTime: "3:45",
-      audio: flatlineMP3,
-      id: 0,
-      currentTime: 0,
-    },
-    {
-      title: "Rescue",
-      initialTime: "3:45",
-      audio: rescueMP3,
-      id: 1,
-      currentTime: 0,
-    },
-    {
-      title: "Mischeivous Endeavors",
-      initialTime: "2:41",
-      audio: mischeivousMP3,
-      id: 2,
-      currentTime: 0,
-    },
-    {
-      title: "Turning Point",
-
-      initialTime: "3:32",
-      audio: turningPointMP3,
-      id: 3,
-      currentTime: 0,
-    },
-    {
-      title: "After",
-
-      initialTime: "1:10",
-      audio: afterMP3,
-      id: 4,
-      currentTime: 0,
-    },
-    {
-      title: "Redemption",
-      initialTime: "2:54",
-      audio: redemptionMP3,
-      id: 5,
-      currentTime: 0,
-    },
-    {
-      title: "StarLight, StarFlight",
-      initialTime: "4:27",
-      audio: starlightMP3,
-      id: 6,
-      currentTime: 0,
-    },
-    {
-      title: "Starflight, Starbright",
-
-      initialTime: "6:05",
-      audio: starFlightMP3,
-      id: 7,
-      currentTime: 0,
-    },
-    {
-      title: "Music for a Love Story",
-      initialTime: "3:05",
-      audio: loveStoryMP3,
-      id: 8,
-      currentTime: 0,
-    },
-    {
-      title: "Force Of Nature",
-      initialTime: "1:52",
-      audio: forceOfNatureMP3,
-      id: 9,
-      currentTime: 0,
-    },
-  ]);
-
-  useEffect(() => {
-    if (introAni) {
-      gsap.from(playList.current, {
-        x: "-=3vw",
-        y: "+=3vw",
-        duration: 1,
-        opacity: 0,
-        ease: "power1.inOut",
-      });
-    }
-  }, [introAni]);
 
   const returnTimeString = (time: number) => {
     return `${Math.floor(time / 60)}:${
@@ -252,58 +82,170 @@ const AudioPlayer: React.FC<Props> = ({
     }`;
   };
 
+  const getDuration = () => {
+    if (player.current) {
+      const time =
+        //@ts-ignore
+        Math.floor(player.current.duration) -
+        //@ts-ignore
+        Math.floor(player.current.currentTime);
+      const timeRemainingFormat = returnTimeString(time);
+      setTimeRemaining(timeRemainingFormat);
+    }
+  };
+
+  const handleProgress = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (row.current && player.current) {
+      const width = row.current.getBoundingClientRect().width;
+      const x = e.clientX - row.current.getBoundingClientRect().left;
+
+      const newTime = Math.floor((x / width) * player.current.duration);
+
+      player.current.currentTime = newTime;
+
+      setProgressCheck(newTime);
+    }
+  };
+
+  useEffect(() => {
+    if (player.current) {
+      const tl = gsap.timeline({
+        paused: true,
+
+        onUpdate: () => {
+          if (player.current) {
+            const time = player.current.currentTime;
+            const duration = player.current.duration;
+            const percentage = `${(time / duration).toFixed(4)}`;
+
+            gsap.set(progress.current, { scaleX: percentage, ease: "none" });
+          }
+        },
+      });
+      tl.to(progress.current, { duration: player?.current.duration }, 0);
+
+      if (canProgress) {
+        tl.play();
+      } else {
+        const time = player.current.currentTime;
+        const duration = player.current.duration;
+        const percentage = `${(time / duration).toFixed(4)}`;
+        gsap.set(progress.current, { scaleX: percentage, ease: "none" });
+        tl.pause();
+      }
+    }
+  }, [canProgress, progressCheck]);
+
+  useEffect(() => {
+    if (player.current) {
+      if (activeTrack === track.id && playPushed) {
+        player.current.play();
+        setCanProgress(true);
+      } else {
+        player.current.pause();
+        setCanProgress(false);
+      }
+    }
+  }, [activeTrack, track, playPushed]);
+
+  const handleRowClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (activeTrack !== track.id) {
+      setActiveTrack(track.id);
+    } else {
+      handleProgress(e);
+    }
+  };
+
+  return (
+    <Track
+      selected={activeTrack === track.id}
+      key={track.id}
+      data-id={track.id}
+    >
+      <Player
+        onDurationChange={getDuration}
+        onTimeUpdate={getDuration}
+        onEnded={handleEnd}
+        src={track.audio}
+        ref={player}
+        autoPlay={false}
+      />
+      <Row1
+        className={`media-track_row${track.id}`}
+        active={activeTrack === track.id}
+        ref={row}
+        onClick={(e) => {
+          handleRowClick(e);
+        }}
+      >
+        <Text>{track.title}</Text>
+        <Text>{timeRemaining}</Text>
+        <ProgressInner
+          active={activeTrack === track.id}
+          className={`media__progress${track.id}`}
+          ref={progress}
+        />
+      </Row1>
+    </Track>
+  );
+};
+
+const AudioPlayer: React.FC<Props> = ({
+  setActiveScreen,
+  introAni,
+  setMobileInfo,
+  mobileInfo,
+  mediaPieces,
+}) => {
+  const playList = useRef(null);
+  const [playPushed, setPlayPushed] = useState(false);
+  const [activeTrack, setActiveTrack] = useState<number>(0);
+  const mobile = useContext(MobileContext);
+  const [autoPlay, setAutoPlay] = useState(false);
+  const shouldAutoPlay = useRef(false);
+
+  useEffect(() => {
+    if (introAni) {
+      gsap.from(playList.current, {
+        x: "-=3vw",
+        y: "+=3vw",
+        duration: 1,
+        opacity: 0,
+        ease: "power1.inOut",
+      });
+    }
+  }, [introAni]);
+
   const [trackOrder, setTrackOrder] = useState(
-    tracks.current.map((track, i) => {
+    mediaPieces.map((track, i) => {
       return (
-        <Track selected={activeTrack === i} key={i} data-id={track.id}>
-          <AudioElement
-            track={track.audio}
-            returnTimeString={returnTimeString}
-            setTimeRemaining={setTimeRemaining}
-            activeTrack={activeTrack === i}
-            setActiveTrack={setActiveTrack}
-            tracks={tracks.current}
-            setPlaying={setPlaying}
-            canPlay={activeTrack === i && playing}
-            trackID={track.id}
-            shouldAutoPlay={shouldAutoPlay}
-          />
-          <Row1 active={activeTrack === i} onClick={() => setActiveTrack(i)}>
-            <Text>{track.title}</Text>
-            <Text>{activeTrack === i ? timeRemaining : track.initialTime}</Text>
-          </Row1>
-          <Progress>
-            <ProgressInner />
-          </Progress>
-        </Track>
+        <AudioElement
+          key={track.id}
+          activeTrack={activeTrack}
+          setActiveTrack={setActiveTrack}
+          track={mediaPieces[track.id]}
+          playPushed={playPushed}
+          setPlayPushed={setPlayPushed}
+          shouldAutoPlay={shouldAutoPlay}
+          allTracks={mediaPieces.length}
+        />
       );
     })
   );
 
   useEffect(() => {
-    const trackList = tracks.current.map((track, i) => {
+    const trackList = mediaPieces.map((track, i) => {
       return (
-        <Track selected={activeTrack === i} key={i} data-id={track.id}>
-          <AudioElement
-            track={track.audio}
-            returnTimeString={returnTimeString}
-            setTimeRemaining={setTimeRemaining}
-            activeTrack={activeTrack === i}
-            setActiveTrack={setActiveTrack}
-            tracks={tracks.current}
-            setPlaying={setPlaying}
-            canPlay={activeTrack === i && playing}
-            trackID={track.id}
-            shouldAutoPlay={shouldAutoPlay}
-          />
-          <Row1 active={activeTrack === i} onClick={() => setActiveTrack(i)}>
-            <Text>{track.title}</Text>
-            <Text>{activeTrack === i ? timeRemaining : track.initialTime}</Text>
-          </Row1>
-          <Progress>
-            <ProgressInner />
-          </Progress>
-        </Track>
+        <AudioElement
+          key={track.id}
+          activeTrack={activeTrack}
+          setActiveTrack={setActiveTrack}
+          track={mediaPieces[track.id]}
+          playPushed={playPushed}
+          setPlayPushed={setPlayPushed}
+          shouldAutoPlay={shouldAutoPlay}
+          allTracks={mediaPieces.length}
+        />
       );
     });
 
@@ -311,13 +253,13 @@ const AudioPlayer: React.FC<Props> = ({
       ...trackList.slice(activeTrack, trackList.length),
       ...trackList.slice(0, activeTrack),
     ];
-    const activeInfo = trackListOrdered[0].props["data-id"];
+    const activeInfo = trackListOrdered[0].props["activeTrack"];
     setActiveScreen(activeInfo);
     setTrackOrder(trackListOrdered);
-  }, [activeTrack, setActiveScreen, playing, timeRemaining]);
+  }, [activeTrack, setActiveScreen, playPushed, mediaPieces]);
 
   const handleClick = () => {
-    setPlaying(!playing);
+    setPlayPushed(!playPushed);
   };
 
   useEffect(() => {
@@ -335,7 +277,7 @@ const AudioPlayer: React.FC<Props> = ({
   return (
     <Playlist ref={playList}>
       <PlayBack>
-        <Play onClick={handleClick} play={playing}>
+        <Play onClick={handleClick} play={playPushed}>
           <PauseButton />
           <PlayButton />
         </Play>
@@ -369,7 +311,7 @@ const Playlist = styled.div`
   border: 1px solid #000000;
   box-sizing: border-box;
   border-radius: 5px;
-  box-shadow: 0.6vw 0.6vw 1.9vw 0.8vw rgba(0, 0, 0, 0.25);
+  box-shadow: 10px 10px 10px 5px rgba(0, 0, 0, 0.25);
   border-radius: 0.3vw;
 
   ${media.mobile} {
@@ -442,7 +384,10 @@ const Info = styled.button`
 const Text = styled.div`
   ${Body1};
   width: 19.3vw;
-
+  position: relative;
+  z-index: 3;
+  -webkit-user-select: none;
+  user-select: none;
   ${media.mobile} {
     font-size: 4.3vw;
   }
@@ -618,12 +563,34 @@ const AutoPlay = styled.button<{ active: boolean }>`
   }
 `;
 
+const ProgressInner = styled.div<{ active: boolean }>`
+  width: 100%;
+  height: 100%;
+
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 0;
+  background: linear-gradient(
+    to right,
+    #ff4f9d 18.14%,
+    rgba(32, 242, 255, 0.78) 78.65%
+  );
+  transform: scaleX(0);
+  transform-origin: 0% 0%;
+`;
+
 const Track = styled.div<{ selected: boolean }>`
   ${Body1};
   width: 100%;
   height: 2.6vw;
   cursor: pointer;
   transition: 0.3s;
+
+  ${ProgressInner} {
+    opacity: ${(props) => (props.selected ? 0.6 : 0.07)};
+  }
+
   ${media.hover} {
     :hover {
       ${Text} {
@@ -654,34 +621,12 @@ const Row1 = styled.div<{ active: boolean }>`
   }
 `;
 
-const Progress = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 1.3vw;
-  left: 0vw;
-  top: 0.7vw;
-  z-index: 0;
-  ${media.mobile} {
-    height: 5vw;
-    top: 2vw;
-  }
-  ${media.tabletPortrait} {
-    height: 26px;
-    top: 10px;
-  }
-`;
-
 const Player = styled.audio`
   height: 0;
   width: 0;
   position: relative;
   padding: 0;
   display: none;
-`;
-
-const ProgressInner = styled(ProgressSVG)`
-  width: 100%;
-  height: 100%;
 `;
 
 export default AudioPlayer;
