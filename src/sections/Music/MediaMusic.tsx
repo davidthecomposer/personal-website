@@ -6,16 +6,7 @@ import colors from "styles/Colors";
 import media from "styles/media";
 import mediaMusicBG from "assets/images/mediaMusicBG.jpg";
 import { PrimaryButtonStyle } from "styles/Buttons";
-import flatline from "assets/images/flatline.jpg";
-import after from "assets/images/after.jpg";
-import forceOfNature from "assets/images/forceOfNature.jpg";
-import mischeivous from "assets/images/mischeivous.jpg";
-import redemption from "assets/images/redemption.jpg";
-import rescue from "assets/images/rescue.jpg";
-import starFlight from "assets/images/starFlight.jpg";
-import starlight from "assets/images/starlight.jpg";
-import turningPoint from "assets/images/turningPoint.jpg";
-import loveStory from "assets/images/loveStory.jpg";
+import { mediaPieces } from "data/MediaPieces";
 
 import gsap from "gsap";
 import AudioPlayer from "components/AudioPlayer";
@@ -31,82 +22,6 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
   const [mobileInfo, setMobileInfo] = useState(false);
   const [activeScreen, setActiveScreen] = useState(0);
   const [trackState, setTrackState] = useState(0);
-
-  const tracks = useRef([
-    {
-      title: "Flatline",
-      img: flatline,
-      video: false,
-      music: "The Music",
-      story:
-        "This Is where the story will go. It will be a short paragraph about the scene and will explain Some kind of thing about it. It will try to set the mood and give the reader some more intormation about why I made the choices I did. ",
-    },
-    {
-      title: "Rescue",
-      img: rescue,
-      video: false,
-      music:
-        "Details about the music. Could talk about orchestration or instruments or something that would add interest.",
-      story:
-        "This Is where the story will go. It will be a short paragraph about the scene and will explain Some kind of thing about it. It will try to set the mood and give the reader some more intormation about why I made the choices I did. ",
-    },
-    {
-      title: "Mischeivous Endeavors",
-      img: mischeivous,
-      video: false,
-      music: "",
-      story: "",
-    },
-    {
-      title: "Turning Point",
-      img: turningPoint,
-      video: false,
-      music: "",
-      story: "",
-    },
-    {
-      title: "After",
-      img: after,
-      video: false,
-      music: "",
-      story: "",
-    },
-    {
-      title: "Redemption",
-      img: redemption,
-      video: false,
-      music: "",
-      story: "",
-    },
-    {
-      title: "StarLight, StarFlight",
-      img: starlight,
-      video: false,
-      music: "",
-      story: "",
-    },
-    {
-      title: "Starflight, Starbright",
-      img: starFlight,
-      video: false,
-      music: "",
-      story: "",
-    },
-    {
-      title: "Music for a Love Story",
-      img: loveStory,
-      video: false,
-      music: "",
-      story: "",
-    },
-    {
-      title: "Force Of Nature",
-      img: forceOfNature,
-      video: false,
-      music: "",
-      story: "",
-    },
-  ]);
 
   useEffect(() => {
     if (headerLine.current) {
@@ -163,7 +78,11 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
     }
   }, []);
 
-  const allTracks = tracks.current.map((track, i) => {
+  useEffect(() => {
+    setTrackState(0);
+  }, [activeScreen]);
+
+  const allTracks = mediaPieces.map((track, i) => {
     return (
       <ScreenWrapper
         key={`track-presentation-${i}`}
@@ -208,6 +127,7 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
             setActiveScreen={setActiveScreen}
             setMobileInfo={setMobileInfo}
             mobileInfo={mobileInfo}
+            mediaPieces={mediaPieces}
           />
           {mobile && (
             <Info
@@ -224,12 +144,11 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
         <CTA ref={cta} enter={enter}>
           <HeadLine>Have a Media Project?</HeadLine>
           <Text>
-            Great music can add so much to any media production. I have access
-            to world-class virtual instruments and knowledge in order to add
-            that extra level of craft and realism to help promote your artistic
-            vision. For projects with a larger budget I am also able to
-            incorporate live musicians and have experience conduting choirs and
-            orchestras.
+            Quality music can add so much to any media project. I have access to
+            world-class virtual instruments, live musicians, and knowledge that
+            can add that extra level of craft and realism to help realize your
+            artistic vision. Send me a message and let's talk more about what we
+            can make together!
           </Text>
           <GetInTouch
             onClick={() => {

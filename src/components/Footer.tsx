@@ -117,12 +117,11 @@ const Footer: React.FC<{}> = () => {
       <BuildColumn>
         <Title>I Create </Title>
         <Text>
-          There are many variations of passages of Lorem Ipsum available, but
-          the majority have suffered alteration in some form, by injected
-          humour, or randomised words which don't look even slightly believable.
-          If you are going to use a passage of Lorem Ipsum, you need to be sure
-          there isn't anything embarrassing hidden in the middle of text. All
-          the Lorem Ipsum{" "}
+          Whether it is composing music, developing websites, or cultivating
+          relationships with other creative people I am genuinly happiest
+          working on projects and creating something that I hope resonates with
+          others. If you want to join me on that journey please consider
+          following my social media or getting in touch!
         </Text>
         <Email>
           <a href="mailto:composer@davidhalcampbell.com">

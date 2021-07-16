@@ -429,7 +429,7 @@ const Wrapper = styled.nav<{ willDisplay: boolean; open: boolean }>`
   padding: 0.5vw 2vw;
   z-index: 1000;
   right: 0;
-
+  top: 0;
   ${media.mobile} {
     height: 19.3vw;
     width: 96vw;
@@ -492,7 +492,7 @@ const TitleContainer = styled.div<{ open: boolean }>`
   position: relative;
   overflow: hidden;
   padding-right: 1.3vw;
-  width: 35vw;
+  width: 37vw;
   height: 4.3vw;
   transform: scaleY(${(props) => (props.open ? 1 : 0)});
   opacity: ${(props) => (props.open ? 1 : 0)};

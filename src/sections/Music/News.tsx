@@ -3,18 +3,14 @@ import styled from "styled-components";
 import { PrimaryButtonStyle } from "styles/Buttons";
 import colors from "styles/Colors";
 import { Heading1, Body1, SubHeader2 } from "styles/text";
-import sampleNews from "assets/images/sampleNews.jpg";
+import twitter from "assets/svg/twitterIcon.svg";
+import linkedin from "assets/svg/linkedIcon.svg";
+import facebook from "assets/svg/facebookIcon.svg";
 import media from "styles/media";
 import gsap from "gsap";
-import twitter from "assets/svg/twitterIcon.svg";
-import instagram from "assets/svg/instagramIcon.svg";
-import linkedin from "assets/svg/linkedIcon.svg";
-import web from "assets/svg/webIcon.svg";
-import facebook from "assets/svg/facebookIcon.svg";
-import liz2 from "assets/images/liz2.jpg";
-import mandiScarf from "assets/images/mandiScarf.jpg";
-import mandiDemo from "assets/images/mandiDemo.jpg";
+
 import { ReactComponent as SmallArrowSVG } from "assets/svg/smallArrow.svg";
+import NewsStories from "data/NewsStories";
 import {
   FacebookShareButton,
   TwitterShareButton,
@@ -25,69 +21,6 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
   const header = useRef(null);
   const headerLine = useRef(null);
   const [openLink, setOpenLink] = useState("");
-  const newsItems = useRef([
-    {
-      title: "News Title Longer 1",
-      mainImage: sampleNews,
-      paragraph:
-        "In the works of Spelling, and destruction. ground between society and reality exist. In Models, Inc., Spelling reiterates modernist feminism; in The Heights he examines predialectic narrative. But the subject is contextualised into a semioticist paradigm of expression that includes truth as a reality. If modernist feminism holds, we have to choose between the subtextual paradigm of narrative and conceptualist deconstruction. Spelling reiterates modernist feminism; in The Heights he examines predialectic narrative. But the subject is contextualised",
-      paragraph1: "",
-      share: "News Item 1 short synopsis",
-      links1: [
-        { icon: twitter, link: "" },
-        { icon: facebook, link: "" },
-        { icon: instagram, link: "" },
-        { icon: web, link: "" },
-      ],
-      links2: [
-        { icon: twitter, link: "" },
-        { icon: facebook, link: "" },
-        { icon: instagram, link: "" },
-        { icon: web, link: "" },
-      ],
-      moreTitle: "Meet them",
-      moreImage1: mandiScarf,
-      moreText1: [
-        "In the works of Spelling, a predominant concept is the distinction between creation and destruction. Thus, many theories concerning the common ground between society and reality exist. In Models, Inc., Spellin reiterates modernist feminism; in The Heights he examines predialectic narrative. But the subject is contextualised into a semioticist of expression that includes truth a reality. If modernist feminism holds, we have to choose between the subtextual paradigm of narrative andconceptualist deconstruction.",
-        "But the subject is contextualised into a semioticist of expression that includes truth a reality.",
-      ],
-      moreText2: [
-        "In the works of Spelling, and destruction. ground between society and reality exist. In Models, Inc., Spelling reiterates modernist feminism; in The Heights he examines predialectic narrative. But the subject is contextualised into a semioticist paradigm of expression that includes truth as a reality. If modernist feminism holds, we have to choose between the subtextual paradigm of narrative and conceptualist deconstruction.",
-        "In a sense, the subject is interpolated into a predialectic narrative that includes language as a whole. Several discourses concerning the semioticist paradigm of expression may be found.",
-      ],
-      moreImage2: liz2,
-      moreText2a: "",
-    },
-    {
-      title: "News Title 2",
-      mainImage: sampleNews,
-      paragraph:
-        "In the works of Spelling, and destruction. ground between society and reality exist. In Models, Inc., Spelling reiterates modernist feminism; in The Heights he examines predialectic narrative. But the subject is contextualised into a semioticist paradigm of expression that includes truth as a reality. If modernist feminism holds, we have to choose between the subtextual paradigm of narrative and conceptualist deconstruction. Spelling reiterates modernist feminism; in The Heights he examines predialectic narrative. But the subject is contextualised",
-      paragraph1: "",
-      share: "News Item 2 short synopsis",
-
-      links1: [
-        { icon: twitter, link: "" },
-        { icon: facebook, link: "" },
-        { icon: web, link: "" },
-      ],
-      links2: [
-        { icon: twitter, link: "" },
-        { icon: facebook, link: "" },
-        { icon: instagram, link: "" },
-        { icon: web, link: "" },
-      ],
-      moreTitle: "Meet them",
-      layout: "full",
-      moreImage1: mandiDemo,
-      moreImage2: "",
-      moreText1: [
-        "In the works of Spelling, a predominant concept is the distinction between creation and destruction. Thus, many theories concerning the common ground between society and reality exist. In Models, Inc., Spellin reiterates modernist feminism; in The Heights he examines predialectic narrative. But the subject is contextualised into a semioticist of expression that includes truth a reality. ",
-        "If modernist feminism holds, we have to choose between the subtextual paradigm of narrative andconceptualist deconstruction. But the subject is contextualised into a semioticist of expression that includes truth a reality.",
-      ],
-      moreText2: [],
-    },
-  ]);
 
   useEffect(() => {
     const tl = gsap.timeline({ scrollTrigger: headerLine.current });
@@ -102,7 +35,7 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
   }, []);
 
   useEffect(() => {
-    newsItems.current.forEach((item, i) => {
+    NewsStories.forEach((item, i) => {
       const tl = gsap.timeline({
         scrollTrigger: { trigger: `.newsCard-${i}`, start: "top 60%" },
       });
@@ -114,9 +47,9 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
         ease: "power1.inOut",
       });
     });
-  }, [newsItems]);
+  }, []);
 
-  const allNewsItems = newsItems.current.map((item, i) => {
+  const allNewsItems = NewsStories.map((item, i) => {
     const {
       title,
       mainImage,

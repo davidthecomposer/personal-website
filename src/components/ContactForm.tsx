@@ -196,7 +196,7 @@ const FormModal = styled.form<{
     height: 80.5vw;
     transform: scale(1);
     left: ${(props) => (props.enter ? 0 : props.leftVal)};
-    padding: 13.3vw 10.4vw 12.8vw 6.3vw;
+    padding: 10vw 10vw 10vw 6.3vw;
   }
   ${media.tabletPortrait} {
     width: 345px;
@@ -217,12 +217,12 @@ const FormRow = styled.div`
   margin-bottom: 1vw;
 
   ${media.mobile} {
-    font-size: 4.8vw;
-    margin-bottom: 11.1vw;
+    font-size: 16px;
+    margin-bottom: 4vw;
   }
   ${media.tabletPortrait} {
-    font-size: 20px;
-    margin-bottom: 46px;
+    font-size: 18px;
+    margin-bottom: 20px;
   }
 `;
 
@@ -276,11 +276,12 @@ const TextArea = styled.textarea`
   }
   ${media.mobile} {
     width: 60.4vw;
-    height: 9.7vw;
+    height: 30vw;
+    font-size: 16px;
   }
   ${media.tabletPortrait} {
     width: 250px;
-    height: 40px;
+    height: 120px;
   }
 `;
 
@@ -297,6 +298,7 @@ const SendMessage = styled.button`
     width: 48.3vw;
     height: 9.7vw;
     margin-left: 34vw;
+    margin-top: 2vw;
   }
   ${media.tabletPortrait} {
     font-size: 18px;

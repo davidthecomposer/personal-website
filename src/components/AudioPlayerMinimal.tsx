@@ -14,47 +14,6 @@ type Props = {
   id: number;
 };
 
-type ConcertProps = {
-  title: string;
-};
-
-const ProgressConcert: React.FC<ConcertProps> = ({ title }) => {
-  return (
-    <svg
-      width="144"
-      height="20"
-      viewBox="0 0 144 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <g clipPath="url(#clip0_blue)">
-        <path
-          className={`concert_${title}`}
-          d="M0 10L144 10"
-          stroke="url(#paint0_linear_blue)"
-          strokeWidth="20"
-        />
-      </g>
-      <defs>
-        <linearGradient
-          id="paint0_linear_blue"
-          x1="0"
-          y1="11"
-          x2="136.5"
-          y2="9.99961"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop offset="0.181408" stopColor="#73D1EF" stopOpacity="0.6" />
-          <stop offset="0.80951" stopColor="#10034d" stopOpacity="0.9" />
-        </linearGradient>
-        <clipPath id="clip0_blue">
-          <rect width="144" height="20" fill="white" />
-        </clipPath>
-      </defs>
-    </svg>
-  );
-};
-
 const AudioPlayerMinimal: React.FC<Props> = ({
   track,
   title,
@@ -64,8 +23,10 @@ const AudioPlayerMinimal: React.FC<Props> = ({
   const [playing, setPlaying] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState("0:00");
   const shouldAutoPlay = useRef(false);
+  const row = useRef<HTMLDivElement>(null);
   const player = useRef<HTMLAudioElement>(null);
-
+  const progress = useRef<HTMLDivElement>(null);
+  const [progressPos, setProgressPos] = useState(0);
   const returnTimeString = (time: number) => {
     return `${Math.floor(time / 60)}:${
       time < 10
@@ -78,6 +39,19 @@ const AudioPlayerMinimal: React.FC<Props> = ({
     }`;
   };
 
+  const handleProgress = (e: any) => {
+    if (row.current && player.current && track !== "") {
+      const width = row.current.getBoundingClientRect().width;
+      const x = e.clientX - row.current.getBoundingClientRect().left;
+
+      const newTime = Math.floor((x / width) * player.current.duration);
+
+      player.current.currentTime = newTime;
+
+      setProgressPos(newTime);
+    }
+  };
+
   useEffect(() => {
     if (player.current && track) {
       const tl = gsap.timeline({
@@ -87,13 +61,14 @@ const AudioPlayerMinimal: React.FC<Props> = ({
           if (player.current) {
             const time = player.current.currentTime;
             const duration = player.current.duration;
-            const percentage = `${((time / duration) * 100).toFixed(2)}%`;
-            gsap.set(`.concert_${title}`, { drawSVG: `0 ${percentage}` });
+            const percentage = `${(time / duration).toFixed(4)}`;
+
+            gsap.set(progress.current, { scaleX: percentage, ease: "none" });
           }
         },
       });
       tl.to(
-        `.concert_${title}`,
+        progress.current,
         { opacity: 1, duration: player?.current.duration },
         0
       );
@@ -102,11 +77,15 @@ const AudioPlayerMinimal: React.FC<Props> = ({
         player.current.play();
         tl.play();
       } else {
+        const time = player.current.currentTime;
+        const duration = player.current.duration;
+        const percentage = `${(time / duration).toFixed(4)}`;
+        gsap.set(progress.current, { scaleX: percentage, ease: "none" });
         player.current.pause();
         tl.pause();
       }
     }
-  }, [playing, title, track]);
+  }, [playing, track, progressPos]);
 
   const handleEnd = () => {
     if (player.current) {
@@ -118,8 +97,8 @@ const AudioPlayerMinimal: React.FC<Props> = ({
     }
   };
 
-  const handleClick = () => {
-    console.log(player.current);
+  const handleClick = (e: any) => {
+    e.stopPropagation();
     setPlaying(!playing);
   };
 
@@ -145,17 +124,15 @@ const AudioPlayerMinimal: React.FC<Props> = ({
         ref={player}
         autoPlay={false}
       />
-      <Row1 playing={playing}>
+      <Row1 ref={row} playing={playing} onClick={handleProgress}>
         <Text playing={playing}>{`${id + 1}. ${title}`}</Text>
         {track && (
           <>
-            <Play onClick={handleClick} play={playing}>
+            <Play onClick={(e) => handleClick(e)} play={playing}>
               <PauseButton />
               <PlayButton />
             </Play>
-            <Progress playing={playing}>
-              <ProgressConcert title={title} />
-            </Progress>
+            <Progress ref={progress} playing={playing}></Progress>
           </>
         )}
         <TextTime playing={playing}>{timeRemaining}</TextTime>
@@ -169,8 +146,9 @@ const Text = styled.div<{ playing: boolean }>`
   position: relative;
   margin-left: 2.5%;
   z-index: 0;
-  color: ${(props) => (props.playing ? colors.coolWhite : "black")};
-
+  color: ${(props) => (props.playing ? colors.deepPurple : "black")};
+  font-size: clamp(16px, 1.1vw, 16px);
+  pointer-events: none;
   ${media.mobile} {
     font-size: 3.4vw;
   }
@@ -186,8 +164,8 @@ const TextTime = styled.div<{ playing: boolean }>`
   opacity: ${(props) => (props.playing ? 1 : 0)};
   transition: opacity 0.4s;
   z-index: 0;
-  color: ${colors.coolWhite};
-
+  color: ${colors.deepPurple};
+  pointer-events: none;
   ${media.mobile} {
     font-size: 3.4vw;
   }
@@ -222,7 +200,8 @@ const Row1 = styled.div<{ playing: boolean }>`
   width: 90%;
   height: 1.3vw;
   margin-bottom: 0.7vw;
-  background: ${(props) => (props.playing ? "#00000095" : "none")};
+  /* background: ${(props) => (props.playing ? "#00000095" : "none")}; */
+  background: transparent;
   align-items: center;
 
   ${media.mobile} {
@@ -238,16 +217,19 @@ const PauseButton = styled(PauseButtonSVG)`
   position: absolute;
   width: 1vw;
   height: 1.2vw;
-
-  ${media.tablet} {
+  ${media.mobile} {
+    width: 4vw;
+    height: 4vw;
   }
   ${media.tabletPortrait} {
+    width: 12px;
+    height: 12px;
   }
 `;
 const Play = styled.button<{ play: boolean }>`
   position: absolute;
 
-  left: ${(props) => (props.play ? "-1.5vw" : "calc(100% - 2vw)")};
+  left: ${(props) => (props.play ? "102%" : "calc(100% - 2vw)")};
   transition: left 0.5s;
   width: 1.4vw;
   height: 1.4vw;
@@ -268,12 +250,12 @@ const Play = styled.button<{ play: boolean }>`
   ${media.mobile} {
     width: 7vw;
     height: 7vw;
-    left: ${(props) => (props.play ? "-1.5vw" : "calc(100% - 10vw)")};
+    left: ${(props) => (props.play ? "102%" : "calc(100% - 10vw)")};
   }
   ${media.tabletPortrait} {
     width: 36px;
     height: 36px;
-    left: ${(props) => (props.play ? "-7px" : "calc(100% - 51px)")};
+    left: ${(props) => (props.play ? "102%" : "calc(100% - 51px)")};
   }
 `;
 
@@ -284,9 +266,10 @@ const Track = styled.div`
   cursor: pointer;
   transition: 0.3s;
   ${media.hover} {
+    transition: 0.3s;
     :hover {
       ${Text} {
-        color: ${colors.coolPurple};
+        color: #242424;
         transition: 0.3s;
       }
     }
@@ -299,8 +282,15 @@ const Progress = styled.div<{ playing: boolean }>`
   height: 100%;
   left: 0;
   top: 0;
-  z-index: 0;
-  opacity: ${(props) => (props.playing ? 1 : 0)};
+  z-index: 3;
+  /* opacity: ${(props) => (props.playing ? 1 : 0)}; */
+  /* background: linear-gradient(
+    #0d4e62 6.72% rgba(29, 79, 135, 0.9446) 29.69% rgba(21, 87, 130, 0.9009)
+      47.65% rgba(5, 87, 113, 0.83) 91.15%
+  ); */
+  background: linear-gradient(to right, #5b186190, #3f829c9b);
+  transform: scaleX(0);
+  transform-origin: 0% 0%;
 `;
 
 const Player = styled.audio`

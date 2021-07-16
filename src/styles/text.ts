@@ -131,7 +131,7 @@ line-height: 150%;
 letter-spacing: -0.02em;
 color: rgba(23, 22, 27, 0.7);
 ${media.mobile} {
-    font-size: 6.8vw;
+    font-size: 5.3vw;
 }
 ${media.tabletPortrait} {
     font-size: 30px;

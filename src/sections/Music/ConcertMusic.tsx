@@ -16,7 +16,7 @@ import concertMusicBG from "assets/images/concertMusic.jpg";
 import concertMusicBGM from "assets/images/concertMusicM.jpg";
 import { PrimaryButtonStyle } from "styles/Buttons";
 import { ReactComponent as ButtonArrowSVG } from "assets/svg/buttonArrow.svg";
-import { ReactComponent as ScoreIconSVG } from "assets/svg/scoreIcon.svg";
+import { ReactComponent as ScoreIconSVG } from "assets/svg/pdf.svg";
 import gsap from "gsap";
 import AudioPlayerMinimal from "components/AudioPlayerMinimal";
 import { concertPieces } from "data/ConcertPieces";
@@ -35,6 +35,7 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
     (num: number, z: number) => {
       const turnBack = page.current > num || (num === 1 && page.current);
       setActivePage(num);
+      setActivePiece(0);
 
       let pages = [];
       for (
@@ -192,6 +193,7 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
       playList.map((piece, i) => {
         return (
           <Piece
+            activePiece={activePiece === i && activePage === index}
             onClick={() => setActivePiece(i)}
             key={`${nexTitle}-piece-${i}`}
           >{`${i + 1}. ${piece}`}</Piece>
@@ -235,28 +237,41 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
               <>
                 <Underline />
                 <Year>{year}</Year>
-                <Description>{description}</Description>
-                <BigRow>
+
+                <BigColumn>
+                  <Description>{description}</Description>
+                  <InfoColumn>
+                    <ScoreSample>
+                      <SmallTitle>Score: </SmallTitle>
+                      {scoreSample.map((sample: string, i: number) => {
+                        if (sample !== "") {
+                          return (
+                            <a
+                              href={sample}
+                              key={`sample-${i}`}
+                              target="__blank"
+                              rel="noopener noreferrer"
+                            >
+                              <ScoreIcon />
+                            </a>
+                          );
+                        } else return null;
+                      })}
+                    </ScoreSample>
+
+                    <Column>
+                      <SmallTitle>Instrumentation: </SmallTitle>
+                      <Instrumentation>{allInstrumentation}</Instrumentation>
+                    </Column>
+                  </InfoColumn>
                   <Movements>
                     <SmallTitle>Movements: </SmallTitle>
                     {allMovements}
                   </Movements>
-                  <InfoColumn>
-                    <Row>
-                      <ScoreSample>
-                        <SmallTitle>Score Sample: </SmallTitle>
-                        <a href={scoreSample}>
-                          <ScoreIcon />
-                        </a>
-                      </ScoreSample>
-                    </Row>
-                    <SmallTitle>Instrumentation: </SmallTitle>
-                    <Instrumentation>{allInstrumentation}</Instrumentation>
-                  </InfoColumn>
-                  <Duration>{duration}</Duration>
-                </BigRow>
+                </BigColumn>
               </>
             )}
+            {duration && <Duration>{duration}</Duration>}
           </InfoWrapper>
         );
       });
@@ -309,7 +324,6 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
 
   return (
     <Wrapper id="Concert Music">
-      <TopFade />
       <HeaderWrapper>
         <Header ref={header}>Concert Music</Header>
         <HeaderLine ref={headerLine} />
@@ -322,8 +336,10 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
         <CTA ref={cta} enter={enter}>
           <HeadLine>Want to Collaborate?</HeadLine>
           <Text>
-            More Copy about the kinds of things I have at my disposal for media
-            projects including sounds, conducting, styles, musicians, etc.
+            I am always on the lookout for passionate musicians, or music lovers
+            who are looking to collaborate on or commision art music. If you are
+            an author, musican or patron looking for new music send me a message
+            and let's create something amazing!
           </Text>
           <GetInTouch
             onClick={() => {
@@ -595,16 +611,6 @@ const GetInTouch = styled.button`
   }
 `;
 
-const TopFade = styled.div`
-  position: absolute;
-  top: -8vw;
-  left: 0;
-  width: 100%;
-  background: linear-gradient(180deg, #040101 0%, rgba(4, 1, 1, 0) 100%);
-  height: 25vw;
-  z-index: 2;
-`;
-
 const FrontAndBackPage = styled.div<{ z: number }>`
   position: absolute;
   left: 32.2vw;
@@ -820,20 +826,44 @@ const TOCWrap = styled.div`
 
 const PiecesInfoWrap = styled.div``;
 
-const Piece = styled.p`
+const Piece = styled.p<{ activePiece: boolean }>`
   ${Playlist};
   margin-bottom: 2vw;
   cursor: pointer;
-
+  position: relative;
+  width: fit-content;
+  transition: 0.1s;
+  :after {
+    content: "";
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    background: ${colors.deepPurple};
+    opacity: 0.5;
+    height: 3px;
+    border-radius: 3px;
+    transform: scaleX(${(props) => (props.activePiece ? 1 : 0)});
+    transition: 0.3s;
+    transform-origin: 0% 0%;
+  }
   ${media.mobile} {
     font-size: 3.9vw;
     padding-bottom: 4vw;
     margin-bottom: 0;
+    :after {
+      bottom: auto;
+      top: 6vw;
+    }
   }
   ${media.tabletPortrait} {
     font-size: 20px;
     padding-bottom: 21px;
     margin-bottom: 0;
+    :after {
+      bottom: auto;
+      top: 30px;
+    }
   }
 `;
 
@@ -846,6 +876,7 @@ const InfoWrapper = styled.div<{ visible: boolean }>`
   position: absolute;
   opacity: ${(props) => (props.visible ? 1 : 0)};
   z-index: ${(props) => (props.visible ? 10 : 0)};
+  transition: opacity 0.4s z-index 0.1s 0.5s;
   width: 27.5vw;
   height: 40.7vw;
 
@@ -854,27 +885,34 @@ const InfoWrapper = styled.div<{ visible: boolean }>`
     height: calc(100% - 2vw);
     padding: 2vw 4.8vw 0 0;
     top: 0;
-    overflow: scroll;
   }
   ${media.tabletPortrait} {
     width: calc(100% - 45px);
     height: calc(100% - 10px);
     padding: 10px 25px 0 0;
     top: 0;
-    overflow: scroll;
   }
 `;
 const PieceTitle = styled.h3`
   ${ConcertTitle};
-  font-size: 2.4vw;
+  font-size: 1.8vw;
   text-align: left;
 
   ${media.mobile} {
-    width: 74.2vw;
   }
   ${media.tabletPortrait} {
-    font-size: 37px;
-    width: 384px;
+    font-size: 26px;
+  }
+`;
+
+const Column = styled.div`
+  width: 60%;
+
+  ${media.tablet} {
+  }
+  ${media.mobile} {
+  }
+  ${media.fullWidth} {
   }
 `;
 
@@ -911,83 +949,75 @@ const Year = styled.h4`
   }
   ${media.tabletPortrait} {
     margin-top: 10px;
-    font-size: 20px;
+    font-size: 18px;
   }
 `;
 
 const Description = styled.p`
   ${BodySmall};
-  margin-left: 1.8vw;
-  margin-bottom: 2.2vw;
-  height: 10.6vw;
+  margin-bottom: 1.4vw;
   color: #17161b95;
 
   ${media.mobile} {
     height: auto;
-    font-size: 3.9vw;
-    margin-left: 4vw;
+    font-size: 16px;
     margin-bottom: 4.8vw;
   }
   ${media.tabletPortrait} {
     height: auto;
     font-size: 20px;
-    margin-left: 21px;
     margin-bottom: 25px;
   }
 `;
 
-const BigRow = styled.div`
-  position: relative;
+const BigColumn = styled.div`
+  position: absolute;
+  top: 6vw;
+  left: 2vw;
+  width: 96%;
+  padding-right: 3%;
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 4.8vw;
+  flex-direction: column;
 
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 32vw;
+  border: none;
+  outline: none;
   ${media.mobile} {
-    min-height: 33vw;
+    height: 80%;
+    top: 15%;
   }
   ${media.tabletPortrait} {
-    min-height: 171px;
+    width: 90%;
   }
-`;
-
-const Row = styled.div`
-  display: flex;
-  justify-content: space-between;
 `;
 
 const Movements = styled.div`
   ${BodySmall};
-
-  width: 13vw;
-  margin-left: 1.8vw;
-
+  width: 90%;
+  margin-left: 0;
   ${media.mobile} {
-    position: relative;
-    width: 40vw;
-    font-size: 3.9vw;
-    margin-left: 4vw;
+    font-size: 4vw;
   }
   ${media.tabletPortrait} {
-    width: 207px;
     font-size: 20px;
-    margin-left: 21px;
   }
 `;
 
 const InfoColumn = styled.div`
-  width: 14vw;
-
+  width: 100%;
+  display: flex;
+  flex-direction: row;
   ${media.mobile} {
-    width: 38vw;
   }
   ${media.tabletPortrait} {
-    width: 196px;
   }
 `;
 const ScoreSample = styled.div`
   width: 7.5vw;
   margin-bottom: 2.1vw;
-
+  margin-right: 5%;
   ${media.mobile} {
     width: 38vw;
     display: flex;
@@ -1007,15 +1037,13 @@ const Duration = styled.div`
 
   ${media.mobile} {
     font-size: 4.3vw;
-
-    width: 100%;
-    text-align: right;
+    right: 5vw;
+    bottom: 5vw;
   }
   ${media.tabletPortrait} {
-    font-size: 22px;
-
-    width: 100%;
-    text-align: right;
+    font-size: 24px;
+    right: 20px;
+    bottom: 20px;
   }
 `;
 
@@ -1049,6 +1077,13 @@ const ScoreIcon = styled(ScoreIconSVG)`
   width: 2.4vw;
   height: 2.4vw;
 
+  transition: 0.3s;
+  ${media.hover} {
+    :hover {
+      transform: scaleX(1.3);
+      transition: 0.3s;
+    }
+  }
   ${media.mobile} {
     width: 6.8vw;
     height: 6.8vw;
