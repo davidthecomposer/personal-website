@@ -363,7 +363,7 @@ const Wrapper = styled.section`
   position: relative;
   box-sizing: border-box;
   ${media.fullWidth} {
-    padding-top: 0;
+    padding-top: 100px;
   }
   ${media.mobile} {
     width: 100%;

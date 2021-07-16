@@ -73,7 +73,7 @@ const midday = require("assets/audio/concert-music/Solo/midday.mp3").default;
 const night = require("assets/audio/concert-music/Solo/night.mp3").default;
 
 const theme =
-  require("assets/audio/concert-music/Chamber/Dialogues/theme.mp3").default;
+  require("assets/audio/concert-music/Chamber/Dialogues/Theme.mp3").default;
 const vari1 =
   require("assets/audio/concert-music/Chamber/Dialogues/var1.mp3").default;
 const vari2 =

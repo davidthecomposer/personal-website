@@ -130,11 +130,7 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
           {!layout && (
             <RowNoLayout>
               <Half>
-                <MoreText>
-                  {moreText1.map((text: string, i: any) => {
-                    return <p key={`text1-${i}`}>{text}</p>;
-                  })}
-                </MoreText>
+                <MoreText>{moreText1}</MoreText>
                 <MoreImage src={moreImage1} />
                 {mobile && (
                   <MoreBtn
@@ -171,11 +167,7 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
                   </TitleContainer>
                 )}
                 <MoreImage src={moreImage2} />
-                <MoreText>
-                  {moreText2.map((text: string, i: any) => {
-                    return <p key={`text2-${i}`}>{text}</p>;
-                  })}
-                </MoreText>
+                <MoreText>{moreText2}</MoreText>
                 {mobile && (
                   <Back onClick={() => handleBack(`.front-${i}`, `.more-${i}`)}>
                     <SmallArrow />
@@ -208,11 +200,7 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
             <Row>
               <Full>
                 <MoreImage src={moreImage1} />
-                <MoreText>
-                  {moreText1.map((text: string, i: any) => {
-                    return <p key={`text1-full${i}`}>{text}</p>;
-                  })}
-                </MoreText>
+                <MoreText>{moreText1}</MoreText>
                 <Links
                   onClick={() =>
                     setOpenLink(openLink === `link-${i}` ? "" : `link-${i}`)
@@ -664,7 +652,9 @@ const MoreImage = styled.img`
 
 const MoreText = styled.div`
   ${Body1};
-
+  a {
+    color: ${colors.activeTeal};
+  }
   p {
     margin-bottom: 0.6vw;
   }
@@ -706,12 +696,13 @@ const Links = styled.div<{ open: boolean }>`
       :hover {
         transform: rotateZ(360deg);
         transition: 0.3s;
+        transform-origin: 50% 50%;
       }
     }
   }
   ${media.hover} {
     :hover {
-      width: 20vw;
+      width: 16.1vw;
       opacity: 0.5s;
       .share_links {
         opacity: 1;
@@ -895,10 +886,9 @@ const Half = styled.div`
       height: 47.3vw;
     }
     ${MoreText} {
-      p {
-        font-size: 3.9vw;
-        line-height: 150%;
-      }
+      font-size: 3.9vw;
+      line-height: 150%;
+
       position: relative;
       width: 93vw;
       top: auto;
@@ -925,9 +915,8 @@ const Half = styled.div`
       height: 245px;
     }
     ${MoreText} {
-      p {
-        font-size: 20px;
-      }
+      font-size: 20px;
+
       width: 481px;
       height: 386px;
       padding-bottom: 51px;
@@ -993,10 +982,9 @@ const Half1 = styled.div`
       left: 0;
     }
     ${MoreText} {
-      p {
-        font-size: 3.9vw;
-        line-height: 150%;
-      }
+      font-size: 3.9vw;
+      line-height: 150%;
+
       position: relative;
       width: 93vw;
       top: auto;
@@ -1034,9 +1022,7 @@ const Half1 = styled.div`
       top: -51px;
     }
     ${MoreText} {
-      p {
-        font-size: 20px;
-      }
+      font-size: 20px;
 
       width: 481px;
 

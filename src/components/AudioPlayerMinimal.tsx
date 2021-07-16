@@ -147,7 +147,7 @@ const Text = styled.div<{ playing: boolean }>`
   margin-left: 2.5%;
   z-index: 0;
   color: ${(props) => (props.playing ? colors.deepPurple : "black")};
-  font-size: clamp(16px, 1.1vw, 16px);
+  font-size: clamp(16px, 1.1vw, 20px);
   pointer-events: none;
   ${media.mobile} {
     font-size: 3.4vw;
