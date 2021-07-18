@@ -53,10 +53,11 @@ const Connect: React.FC<{ mobile: boolean }> = ({ mobile }) => {
         <SubTitle>Let’s Connect</SubTitle>
         <Text>
           I'm always on the lookout for interesting and creative projects and
-          people. If you have a film, opera, classical, thatre or just about any
-          other project that needs artisticly crafted music let's talk about the
-          possibilites of working together. Just send me a quick message using
-          the form above. I can't wait to hear about what you are working on.
+          people. If you have a film, opera, classical, theatre or just about
+          any other project that needs artistically crafted music let's talk
+          about the possibilities of working together. Just send me a quick
+          message using the form above. I can't wait to hear about what you are
+          working on.
         </Text>
       </Collaborate>
       <ContactForm

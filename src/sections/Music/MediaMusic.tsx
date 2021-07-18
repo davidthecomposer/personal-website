@@ -447,7 +447,9 @@ const Music = styled.button<{ trackState: boolean }>`
     left: 4.8vw;
     width: 29vw;
     height: 9.7vw;
-    border-radius: 2.4vw;
+    border-radius: 1.2vw;
+    text-align: left;
+    padding-left: 2vw;
     opacity: ${(props) => (props.trackState ? 0 : 1)};
     transform: scale(${(props) => (props.trackState ? 0 : 1)});
     transition: opacity 0.5s transform 0 0.5s;

@@ -1,18 +1,19 @@
-import sampleNews from "assets/images/sampleNews.jpg";
+import operaNews from "assets/images/operaCommissionNews.jpg";
+import songCycleNews from "assets/images/songCycleNews.jpg";
 import twitter from "assets/svg/twitterIcon.svg";
 import instagram from "assets/svg/instagramIcon.svg";
 import web from "assets/svg/webIcon.svg";
 import facebook from "assets/svg/facebookIcon.svg";
-import liz2 from "assets/images/liz2.jpg";
-import mandiScarf from "assets/images/mandiScarf.jpg";
-import jenny from "assets/images/jennyCampbell.jpg";
+import liz2 from "assets/images/liz2.png";
+import mandiNews from "assets/images/mandiNews.jpg";
+import jenny from "assets/images/jennySmile.jpg";
 
 const newsItems = [
   {
-    title: "Song Cycle Commission",
-    mainImage: sampleNews,
+    title: "Instagram Song Cycle",
+    mainImage: songCycleNews,
     paragraph:
-      "I have the pleasure of announcing that I am finishing up a set of 6 songs setting the words of Liz Christensen, and to be performed by Mezzo-Soprano Mandi Barrus in the Fall/Winter of 2021. This has been an ongoing project for some time that has continued during many life changes and the obvious global pandemic. More info to come about performance times and details.",
+      "I have accepted an offer to compose 6 art songs setting texts from a local author and to be performed and recorded through the auspices of Opera Contempo. 5 of the 6 have been completed.  The texts were part of a set of works published straight to social media by local author Liz Christensen, and will be performed by Mezzo Soprano Mandi Barrus. With the pandemic the timeline for performance changed a bit but we are finalizing performance dates soon. Stay tuned! ",
     paragraph1: "",
     share: "News Item 1 short synopsis",
     links1: [
@@ -27,11 +28,12 @@ const newsItems = [
       { icon: instagram, link: "" },
       { icon: web, link: "" },
     ],
-    moreTitle: "Creators",
-    moreImage1: mandiScarf,
+    moreTitle: "The Team",
+    moreImage1: mandiNews,
     moreText1: [
       "Mezzo-soprano ",
       <a
+        key="mandi-1"
         href="http://mandibarrus.com"
         target="__blank"
         rel="noreferrer noopener"
@@ -40,6 +42,7 @@ const newsItems = [
       </a>,
       " is a musician originally from Seattle, Washington. With her ",
       <a
+        key="mandi-2"
         href="https://frontrowreviewersutah.com/?p=8504"
         target="__blank"
         rel="noreferrer noopener"
@@ -48,6 +51,7 @@ const newsItems = [
       </a>,
       " . Ms. Barrus' performances are described as ",
       <a
+        key="mandi-3"
         href="https://frontrowreviewersutah.com/?p=8504"
         target="__blank"
         rel="noreferrer noopener"
@@ -56,6 +60,7 @@ const newsItems = [
       </a>,
       " and ",
       <a
+        key="mandi-4"
         href="https://frontrowreviewersutah.com/?p=3625"
         target="__blank"
         rel="noreferrer noopener"
@@ -66,6 +71,7 @@ const newsItems = [
     ],
     moreText2: [
       <a
+        key="liz-1"
         target="__blank"
         rel="noreferrer noopener"
         href="http://www.lizzylizzyliz.com"
@@ -74,6 +80,7 @@ const newsItems = [
       </a>,
       "is the producer and host of both the entertainment podcast ",
       <a
+        key="liz-2"
         target="__blank"
         rel="noreferrer noopener"
         href="https://inthetellingpodcast.buzzsprout.com/"
@@ -82,6 +89,7 @@ const newsItems = [
       </a>,
       " and the webseries ",
       <a
+        key="liz-3"
         target="__blank"
         rel="noreferrer noopener"
         href="https://www.youtube.com/channel/UCvHO_s9oMYjKv2crN9_tjqA"
@@ -90,6 +98,7 @@ const newsItems = [
       </a>,
       " She is also a playwright, editor, theatre director, choreographer stage and ",
       <a
+        key="liz-4"
         target="__blank"
         rel="noreferrer noopener"
         href="https://www.imdb.com/name/nm2296618/?ref_=fn_al_nm_1"
@@ -98,6 +107,7 @@ const newsItems = [
       </a>,
       " actress, and ",
       <a
+        key="liz-5"
         target="__blank"
         rel="noreferrer noopener"
         href="https://www.instagram.com/lizcpoetry/"
@@ -110,10 +120,10 @@ const newsItems = [
     moreText2a: "",
   },
   {
-    title: "Chamber Opera",
-    mainImage: sampleNews,
+    title: 'Chamber Opera : "X"',
+    mainImage: operaNews,
     paragraph:
-      "This project was originally slated for the spring of this year, but once again the pandemic put everything on pause. The librettist has begun again in earnest to create a compelling chamber opera touching on topics of technology, personhood, and class warfare. More updates to come",
+      'This chamber opera was originally slated for the spring of this year, but once again the pandemic put everything on pause. The librettist has begun again in earnest to create a piece touching on the intersection of technology and person-hood, power structures and dynamics, and what it means to be alive. The working title is "X" and the protagonist is a sentient AI named model X. I am excited to be moving forward again with this project!',
     paragraph1: "",
     share: "Meet Jenny",
 
@@ -135,9 +145,8 @@ const newsItems = [
     moreText1: [
       `Jennifer Campbell is a writer with a background in history, journalism
       and video. Her articles have appeared on Faithcounts.org and in Utah
-      Stories Magazine. She is currently working on a fantasy novel set in
-      alt-world ancient Persia. When not writing she's busy getting called
-      "noob" by her 11-year-old son, escaping to the Uintas and ripping it
+      Stories Magazine. She is currently working on multiple writing projects including a fantasy novel, short stories, and a chamber Opera libretto. When not writing she's busy getting called
+      "noob" by her 13-year-old son, escaping to the Uintas and ripping it
       up on the flag football field.`,
     ],
     moreText2: [],

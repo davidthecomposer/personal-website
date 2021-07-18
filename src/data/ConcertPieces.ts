@@ -112,7 +112,7 @@ const vocalPieces = [
     key: "song-cycle",
     year: "2021",
     description:
-      "I encountered a local writer who was doing some instagram-type daily posting of poems as a writing excercise. After some discussions with the author we agreed that I would take 6-7 of the ones that I found most intruiging and set them to music for Mezzo-Soprano through the intermediary of Opera Contempo. The plan is to feature them in a recital hosted by Opera Contempo during the end of 2021",
+      "I encountered a local writer who was doing some instagram-type daily posting of poems as a writing exercise. After some discussions with the author we agreed that I would take 6-7 of the ones that I found most intriguing and set them to music for Mezzo-Soprano through the intermediary of Opera Contempo. The plan is to feature them in a recital hosted by Opera Contempo during the end of 2021",
     movements: [
       { name: "I always Write About You", audio: "", initialTime: "3:22" },
       { name: "...", audio: "", initialTime: "3:22" },
@@ -130,7 +130,7 @@ const vocalPieces = [
     key: "habit",
     year: "2014",
     description:
-      "I approached Jenny Campbell with the desire to work on a group of art songs regarding addiction. She had been working with people who suffered from addicition and was able to incorporate a lot of elements from that into this work. The work spirals through the different stages of addiction",
+      "I approached Jenny Campbell with the desire to work on a group of art songs regarding addiction. She had been working with people who suffered from addiction and was able to incorporate a lot of elements from that into this work. The work spirals through the different stages of addiction",
     movements: [
       { name: "Aftermath", audio: aftermath, initialTime: "3:22" },
       { name: "Fantasy", audio: "", initialTime: "3:22" },
@@ -148,7 +148,7 @@ const vocalPieces = [
     key: "copernicus",
     year: "2018",
     description:
-      "An arrangment of the popular Christian/American folk song. This is the second arrangement of it that I have done. I was asked to do this for a performance by a family member. It sticks to traditional tonalities much more than some of my other pieces.",
+      "An arrangement of the popular Christian/American folk song. This is the second arrangement of it that I have done. I was asked to do this for a performance by a family member. It sticks to traditional tonalities much more than some of my other pieces.",
     movements: [
       { name: "I Wonder as I Wander", audio: "", initialTime: "3:22" },
     ],
@@ -161,7 +161,7 @@ const vocalPieces = [
     key: "silent-night",
     year: "2016",
     description:
-      "This was originally wirtten for a Soprano acquaintance I new in New York. It engages in a highly coloristic treatment of the piece, although it retains a throuroughly tonal feel throughout. I borrowed some elements from film score studies that I had been undergoing at the time",
+      "This was originally written for a Soprano acquaintance I new in New York. It engages in a highly coloristic treatment of the piece, although it retains a thoroughly tonal feel throughout. I borrowed some elements from film score studies that I had been undergoing at the time",
     movements: [{ name: "Silent Night", audio: "", initialTime: "3:22" }],
     instrumentation: ["Solo Piano", "High Voice"],
     scoreSample: [silentNightPDF],
@@ -186,7 +186,7 @@ const vocalPieces = [
     key: "3-christmas-songs",
     year: "2008",
     description:
-      "These were written as part of my undergraduate music recital way back in 2008. I was just developing a style but these were probably some of the standout excercises from that period. My vocal professor at the time agreed to perform them for the concert. ",
+      "These were written as part of my undergraduate music recital way back in 2008. I was just developing a style but these were probably some of the standout exercises from that period. My vocal professor at the time agreed to perform them for the concert. ",
     movements: [
       { name: "I Wonder", audio: iWonder, initialTime: "3:22" },
       { name: "O Come", audio: oCome, initialTime: "3:22" },
@@ -217,7 +217,7 @@ const vocalPieces = [
     key: "crystal-gazer",
     year: "2007",
     description:
-      "One of the first art songs I attempted to write. I was struck by the evocative imagery of the text, and also had heard about the untimely death of the author. This pushed me to attempt to write a haunting, somber piece playing on that context. Whether I was succesful or not is up to interpretation",
+      "One of the first art songs I attempted to write. I was struck by the evocative imagery of the text, and also had heard about the untimely death of the author. This pushed me to attempt to write a haunting, somber piece playing on that context. Whether I was successful or not is up to interpretation",
     movements: [{ name: "Crystal Gazer", audio: "", initialTime: "3:22" }],
     instrumentation: ["Solo Piano", "Tenor"],
     scoreSample: [crystalGazerPDF],
@@ -286,7 +286,7 @@ const orchestralPieces = [
     key: "terminal",
     year: "2010",
     description:
-      "A two movement work exploring the contrasts bewteen light and dark. It was the piece I wrote as a requirement of my MM degree.",
+      "A two movement work exploring the contrasts between light and dark. It was the piece I wrote as a requirement of my MM degree.",
     movements: [
       { name: "Terminal Night", audio: "", initialTime: "10:45" },
       { name: "Terminal Light", audio: "", initialTime: "10:45" },
@@ -301,7 +301,7 @@ const orchestralPieces = [
 const chamberPieces = [
   {
     title: "Dialogues",
-    key: "dalogue",
+    key: "dialogues",
     year: "2017",
     description:
       "A set of miniature variations on a theme. They are inspired by memorable conversations that I've had throughout my life.",
@@ -337,7 +337,7 @@ const chamberPieces = [
     key: "neon-games",
     year: "2015",
     description:
-      "I was offered the chance to write a piece for a crossover trio who enjoyed a mix of Jazz and classical music. This piece was the result of that experiment. There are sections of improvisation mixed with colorful crunchy harmonies with a minimalistic feel",
+      "I was offered the chance to write a piece for a crossover trio who enjoyed a mix of Jazz and classical music. This piece was the result of that experiment. There are sections of improvisation mixed with colorful crunchy harmonies with a minimalist feel",
     movements: [{ name: "Neon Games", audio: neonGames, initialTime: "9:35" }],
     instrumentation: ["Flute", "Alto Sax", "Piano"],
     scoreSample: [neonGamesPDF],
@@ -369,10 +369,10 @@ const chamberPieces = [
     description:
       "An early, and fairly quirky set of short pieces depicting a mythical hero named Pierrot Lunaire. Each piece was an exploration of a different 20th century compositional technique.",
     movements: [
-      { name: "Pierrot - Serpent a Sonnettes", audio: "", initialTime: "9:35" },
+      { name: "Pierrot - Serpent à Sonnettes", audio: "", initialTime: "9:35" },
       { name: "Dansez avec Pierrot", audio: "", initialTime: "9:35" },
       {
-        name: "Un gros mouvement de (pier)eau, provoque",
+        name: "Un gros mouvement de (pier)eau, provoqué",
         audio: "",
         initialTime: "9:35",
       },
@@ -397,9 +397,9 @@ const chamberPieces = [
       "Five memories of two years spent in France (and Belgium) set for String quartet.",
     movements: [
       { name: "Le Premier Matin", audio: "", initialTime: "9:35" },
-      { name: "Sur les Collines a Velo", audio: "", initialTime: "9:35" },
+      { name: "Sur les Collines à Velo", audio: "", initialTime: "9:35" },
       {
-        name: "Au Divinite",
+        name: "Au Divinité'",
         audio: "",
         initialTime: "9:35",
       },
@@ -422,7 +422,7 @@ const choralPieces = [
     key: "soft-rains",
     year: "2017",
     description:
-      "An overly-ambious attempt at writing a choral piece for a highschool choir. Looking at the score it went about as well as expected.",
+      "This was originally written a a choral piece targeting a highschool or college level choir. It was never performed, and turned out to be quite a bit more difficult that I had first envisioned. It uses some indeterminism to create the organic feeling of a rainstorm throughout",
     movements: [
       {
         name: "There Will Come Soft Rains",
@@ -476,7 +476,7 @@ const tableOfContents = [
   [
     "Song Cycle (unnamed)",
     "Habit",
-    "I wonder as I wander",
+    "I Wonder as I Wander",
     "Silent Night",
     "Come, Come ye Saints",
     "3 Christmas Songs",

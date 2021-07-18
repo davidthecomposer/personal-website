@@ -53,7 +53,7 @@ const About: React.FC<{ mobile: boolean }> = ({ mobile }) => {
       tl.from(
         ".about-text",
         {
-          yPercent: 60,
+          yPercent: 30,
           xPercent: -3,
           ease: "none",
         },
@@ -62,7 +62,7 @@ const About: React.FC<{ mobile: boolean }> = ({ mobile }) => {
         .to(
           teal.current,
           {
-            yPercent: 100,
+            yPercent: 135,
             xPercent: 20,
             ease: "none",
           },
@@ -87,7 +87,7 @@ const About: React.FC<{ mobile: boolean }> = ({ mobile }) => {
         .to(
           grey.current,
           {
-            y: tabletPortrait ? "1552px" : "300vw",
+            y: tabletPortrait ? "2152px" : "390vw",
             x: "-=40%",
             ease: "none",
             duration: 7,
@@ -97,7 +97,7 @@ const About: React.FC<{ mobile: boolean }> = ({ mobile }) => {
         .to(
           teal.current,
           {
-            y: tabletPortrait ? "2432px" : "470vw",
+            y: tabletPortrait ? "3032px" : "560vw",
             x: "+=10%",
             ease: "none",
             duration: 9.25,
@@ -108,7 +108,7 @@ const About: React.FC<{ mobile: boolean }> = ({ mobile }) => {
         .to(
           grey.current,
           {
-            y: tabletPortrait ? "2174px" : "420vw",
+            y: tabletPortrait ? "2774px" : "510vw",
             ease: "none",
             duration: 1.5,
           },
@@ -132,32 +132,75 @@ const About: React.FC<{ mobile: boolean }> = ({ mobile }) => {
       <Grey className="about-images" ref={grey} />
 
       <Text className="about-text">
-        I am a composer living in Salt Lake City Utah. When I was first
-        introduced to writing music I was immediately fascinated with the sheer
-        amount of possibilities that existed from the simple combination of
-        notes and rhythms. That a composer can create art that has the potential
-        to be breathtakingly beautiful, devastatingly hideous, heart-wrenching,
-        horrific, silly, intricate, or even incomprehensible is such an amazing
-        reality.
-        <br />
-        <br />
-        I find myself of two minds more recently. I love the freedom of writing
-        concert music in my own style, but I’ve found great enjoyment and
-        challenge in writing music for media. This site represents that musical
-        duality. Here you can find a sample of some of my media works as well as
-        scores and music for my concert works. I’m very excited about new
-        projects on the horizon in both areas and hope that you will come back
-        and listen as I compose new works and add new projects to this site.
-        <br />
-        <br />
-        Outside of music I am learning.
-        <a href="https://www.developer.davidhalcampbell.com">
-          web development.
-        </a>{" "}
-        I am an avid weightlifter, I love playing most sports including a new
-        love for pickle-ball, attending cultural and intellectually stimulating
-        events, and nights out on the town dancing until 2 AM with friends. I am
-        perpetually hoping to finish my science fiction novel. I love to create!
+        <p>
+          Hello! I’m David and I create music. On this site you can see a
+          selection of some of my work. I plan on continuing to update this site
+          as I continue to search for and participate in new and interesting
+          projects. There is something so fascinating to me about the process of
+          building something out of nothing other than notes, rhythms,
+          creativity, and imagination. I’ve spent half of my life now studying
+          and trying to perfect the craft of that process, but I still find it
+          awe-inspiring just how many possibilities and new ways of creating
+          sound exist in the world. I feel like I’ve just scratched the surface
+          of what’s possible.
+        </p>
+        <p>
+          Over the years I’ve had the chance to learn about music and the art of
+          music composition with formal study at Southern Utah University,
+          Western Washington University, and Stony Brook University where I had
+          the privilege to study with composers whose music and knowledge I
+          greatly admire including Hal Campbell, Keith Bradshaw, Leslie Sommer,
+          Roger Briggs, Sheila Silver, and Perry Goldstein. Their lessons and
+          the knowledge gained through studying great and obscure composers has
+          helped shape my own musical voice.
+        </p>
+        <p>
+          My current skill set includes arranging, composition in any style,
+          sound editing, virtual instrument mockups, conducting, vocal
+          performance, and a little bit of piano. I have the ability and skill
+          to create extremely high level professional music for media projects.
+          I love to mix musical styles and find the challenge of fitting music
+          to film or other media to be exhilarating and energizing. I love
+          working with the technology of music production. Most of all I love to
+          collaborate and learn about the perspectives of other creative people.
+          I am in awe of the talents of filmmakers who conceive of and execute
+          an artistic vision. I love good acting and interesting stories. It’s
+          so rewarding to help enhance all of those elements with my own art. I
+          am flexible, easy to work with, and generally a positive force in any
+          endeavour.
+        </p>
+        <p>
+          I continue to seek out projects in the contemporary art music sphere
+          where I can be a little bit more experimental and have an outlet for
+          that part of my musical expression. I am currently working on projects
+          in that realm and hope to continue always having an art music project
+          that I’m working on. I am a board member and composer-in-residence for
+          Opera Contempo, whose mission is to promote new works , new voices,
+          and new interpretations of Opera for our times. I love writing new
+          music for talented solo performers, small or large ensembles. I think
+          having a foot in both musical worlds keeps my ideas fresh and my
+          skills sharp. I often find myself borrowing from contemporary
+          classical styles or injecting ideas that I encounter writing media
+          music into my art music compositions. I take a great sense of
+          professional pride in the quality of the music that I produce
+          regardless of style.
+        </p>
+        <p>
+          Other than music I currently have a day job as a front end developer.
+          I find many analogues to music composition in software development,
+          and believe strongly that learning to code has helped improve my
+          ability to write music as well as given me another outlet to design,
+          create, and challenge myself. This site is one of my development
+          projects! My hobbies include attending concerts, theatre, interesting
+          art exhibits, painting, writing, sports of all kinds, weight-lifting,
+          outdoors activities, and dancing the night away with friends. I
+          currently live in Salt Lake City, UT, but love to travel.
+        </p>
+        <p>
+          Thanks for visiting. I hope that you will listen to some of the music
+          and get in touch with me if you have questions or want to create
+          something amazing together.
+        </p>
       </Text>
       <CoverDiv className="about-bg-cover" />
     </Wrapper>
@@ -165,8 +208,8 @@ const About: React.FC<{ mobile: boolean }> = ({ mobile }) => {
 };
 
 const Wrapper = styled.section`
-  height: 158.5vw;
-  padding: 15.4vw 0 20vw 0;
+  height: 168.5vw;
+  padding: 15.4vw 0 14vw 0;
   background-size: cover;
   position: relative;
   box-sizing: border-box;
@@ -174,14 +217,14 @@ const Wrapper = styled.section`
 
   ${media.mobile} {
     width: 100%;
-    height: 650.8vw;
+    height: 740vw;
     padding: 0 2.4vw 60vw;
     background-image: url(${davidHugeM});
     background-position: 50% 50%;
   }
   ${media.tabletPortrait} {
     width: 100%;
-    height: 3367px;
+    height: 3967px;
     padding: 0 12px 310px;
   }
 `;
@@ -249,7 +292,7 @@ const HeaderLine = styled.div`
   }
 `;
 
-const Text = styled.p`
+const Text = styled.div`
   ${Body1};
   position: absolute;
   width: 37.1vw;
@@ -258,7 +301,14 @@ const Text = styled.p`
   top: 60vw;
   opacity: 0;
   z-index: 3;
-  ${media.tablet} {
+  ::first-letter {
+    font-size: 5vw;
+  }
+  p {
+    margin-bottom: 0.4vw;
+    ::first-line {
+      margin-left: 2vw;
+    }
   }
   ${media.mobile} {
     font-size: 3.9vw;
