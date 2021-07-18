@@ -67,7 +67,7 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
     } = item;
 
     return (
-      <NewsCard key={i} className={`newsCard-${i}`}>
+      <NewsCard key={`news-card${i}`} className={`newsCard-${i}`}>
         <Front className={`front-${i}`}>
           <TitleContainer>
             <NewsTitle>{title}</NewsTitle>
@@ -130,11 +130,7 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
           {!layout && (
             <RowNoLayout>
               <Half>
-                <MoreText>
-                  {moreText1.map((text: string, i: any) => {
-                    return <p key={`text1-${i}`}>{text}</p>;
-                  })}
-                </MoreText>
+                <MoreText>{moreText1}</MoreText>
                 <MoreImage src={moreImage1} />
                 {mobile && (
                   <MoreBtn
@@ -171,11 +167,7 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
                   </TitleContainer>
                 )}
                 <MoreImage src={moreImage2} />
-                <MoreText>
-                  {moreText2.map((text: string, i: any) => {
-                    return <p key={`text2-${i}`}>{text}</p>;
-                  })}
-                </MoreText>
+                <MoreText>{moreText2}</MoreText>
                 {mobile && (
                   <Back onClick={() => handleBack(`.front-${i}`, `.more-${i}`)}>
                     <SmallArrow />
@@ -208,11 +200,7 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
             <Row>
               <Full>
                 <MoreImage src={moreImage1} />
-                <MoreText>
-                  {moreText1.map((text: string, i: any) => {
-                    return <p key={`text1-full${i}`}>{text}</p>;
-                  })}
-                </MoreText>
+                <MoreText>{moreText1}</MoreText>
                 <Links
                   onClick={() =>
                     setOpenLink(openLink === `link-${i}` ? "" : `link-${i}`)
@@ -516,6 +504,8 @@ const MainImage = styled.img`
 const SmallArrow = styled(SmallArrowSVG)`
   width: 1.7vw;
   height: 1vw;
+  transition: 0.4s;
+  transform: translateX(0);
   ${media.mobile} {
     position: relative;
     width: 6.8vw;
@@ -569,6 +559,7 @@ const More = styled.div<{ layout: boolean }>`
   ${Back} {
     right: ${(props) => (props.layout ? "auto" : "0")};
   }
+
   ${media.mobile} {
     ${Back} {
       right: 3vw;
@@ -651,6 +642,7 @@ const Row = styled.div`
 const MoreImage = styled.img`
   width: 16.1vw;
   height: 23.8vw;
+  border-radius: 2%;
 
   ${media.mobile} {
     width: 46.1vw;
@@ -664,7 +656,9 @@ const MoreImage = styled.img`
 
 const MoreText = styled.div`
   ${Body1};
-
+  a {
+    color: ${colors.activeTeal};
+  }
   p {
     margin-bottom: 0.6vw;
   }
@@ -693,8 +687,10 @@ const Links = styled.div<{ open: boolean }>`
   display: flex;
   overflow: hidden;
   align-items: center;
+  justify-content: flex-end;
   span {
-    margin-right: 4vw;
+    position: absolute;
+    left: 1vw;
   }
   transition: 0.5s;
   .share_links {
@@ -706,12 +702,13 @@ const Links = styled.div<{ open: boolean }>`
       :hover {
         transform: rotateZ(360deg);
         transition: 0.3s;
+        transform-origin: 50% 50%;
       }
     }
   }
   ${media.hover} {
     :hover {
-      width: 20vw;
+      width: 16.1vw;
       opacity: 0.5s;
       .share_links {
         opacity: 1;
@@ -720,16 +717,44 @@ const Links = styled.div<{ open: boolean }>`
       }
     }
   }
-
+  ${media.tablet} {
+    width: ${(props) => (props.open ? "15vw" : "11.9vw")};
+    .share_links {
+      width: 20px;
+      height: 20px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+      opacity: ${(props) => (props.open ? 1 : 0)};
+      z-index: ${(props) => (props.open ? 2 : -1)};
+      transform: scale(${(props) => (props.open ? 1 : 0)});
+    }
+  }
   ${media.mobile} {
     width: ${(props) => (props.open ? "50vw" : "30vw")};
     .share_links {
+      width: 30px;
+      height: 40px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
       opacity: ${(props) => (props.open ? 1 : 0)};
       z-index: ${(props) => (props.open ? 2 : -1)};
+      transform: scale(${(props) => (props.open ? 1 : 0)});
     }
   }
   ${media.tabletPortrait} {
     width: ${(props) => (props.open ? "259px" : "155px")};
+    .share_links {
+      width: 30px;
+      height: 40px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
     height: 50px;
     font-size: 22px;
   }
@@ -764,7 +789,16 @@ const Share = styled(Links)<{ open: boolean }>`
 const NewsItemsWrapper = styled.div`
   width: 100%;
   position: relative;
-
+  ${MoreBtn} {
+    ${media.hover} {
+      :hover {
+        ${SmallArrow} {
+          transform: rotate(180deg) translateX(-0.3vw);
+          transition: 0.4s;
+        }
+      }
+    }
+  }
   ${NewsCard}:nth-child(odd) {
     margin-left: 5.7vw;
     ${media.mobile} {
@@ -834,6 +868,14 @@ const NewsItemsWrapper = styled.div`
       padding-right: 0.7vw;
       margin-left: 1.3vw;
       margin-right: 0;
+      ${media.hover} {
+        :hover {
+          ${SmallArrow} {
+            transform: rotate(180deg) translateX(-0.3vw);
+            transition: 0.4s;
+          }
+        }
+      }
     }
     ${Links} {
       border-color: #73d1ef;
@@ -842,8 +884,8 @@ const NewsItemsWrapper = styled.div`
       z-index: 5;
       flex-direction: row-reverse;
       span {
-        margin-right: 0;
-        margin-left: 4vw;
+        left: auto;
+        right: 1vw;
       }
 
       a {
@@ -895,10 +937,9 @@ const Half = styled.div`
       height: 47.3vw;
     }
     ${MoreText} {
-      p {
-        font-size: 3.9vw;
-        line-height: 150%;
-      }
+      font-size: 3.9vw;
+      line-height: 150%;
+
       position: relative;
       width: 93vw;
       top: auto;
@@ -925,9 +966,8 @@ const Half = styled.div`
       height: 245px;
     }
     ${MoreText} {
-      p {
-        font-size: 20px;
-      }
+      font-size: 20px;
+
       width: 481px;
       height: 386px;
       padding-bottom: 51px;
@@ -964,10 +1004,8 @@ const Half1 = styled.div`
     z-index: 5;
     flex-direction: row-reverse;
     span {
-      margin-right: 0;
-      margin-left: 4vw;
+      right: 1vw;
     }
-
     a {
       margin-left: 0.6vw;
       margin-right: 0;
@@ -993,10 +1031,9 @@ const Half1 = styled.div`
       left: 0;
     }
     ${MoreText} {
-      p {
-        font-size: 3.9vw;
-        line-height: 150%;
-      }
+      font-size: 3.9vw;
+      line-height: 150%;
+
       position: relative;
       width: 93vw;
       top: auto;
@@ -1018,6 +1055,10 @@ const Half1 = styled.div`
       top: 38vw;
       left: 35vw;
       bottom: auto;
+      span {
+        right: 1vw;
+        left: auto;
+      }
     }
     ${Back} {
       position: absolute;
@@ -1034,9 +1075,7 @@ const Half1 = styled.div`
       top: -51px;
     }
     ${MoreText} {
-      p {
-        font-size: 20px;
-      }
+      font-size: 20px;
 
       width: 481px;
 

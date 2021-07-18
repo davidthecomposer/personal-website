@@ -370,6 +370,10 @@ const Header: React.FC<{}> = () => {
     }
   }, [navOpen, initial, mobile]);
 
+  const handleLinkClick = (sectionID: string) => {
+    gsap.to(window, { duration: 0.2, scrollTo: sectionID });
+  };
+
   return (
     <Wrapper
       ref={wrapper}
@@ -390,19 +394,39 @@ const Header: React.FC<{}> = () => {
         open={navOpen && !pressed.current}
         initial={initial}
       >
-        <Link open={navOpen} className="header__link">
-          Home
+        <Link
+          open={navOpen}
+          className="header__link"
+          onClick={() => handleLinkClick("#media-music")}
+        >
+          Media
         </Link>
-        <Link open={navOpen} className="header__link">
-          Music
+        <Link
+          open={navOpen}
+          className="header__link"
+          onClick={() => handleLinkClick("#Concert-Music")}
+        >
+          Concert
         </Link>
-        <Link open={navOpen} className="header__link">
+        <Link
+          open={navOpen}
+          className="header__link"
+          onClick={() => handleLinkClick("#news")}
+        >
           News
         </Link>
-        <Link open={navOpen} className="header__link">
+        <Link
+          open={navOpen}
+          className="header__link"
+          onClick={() => handleLinkClick("#about")}
+        >
           About
         </Link>
-        <Link open={navOpen} className="header__link">
+        <Link
+          open={navOpen}
+          className="header__link"
+          onClick={() => handleLinkClick("#connect")}
+        >
           Connect
         </Link>
       </NavLinks>
@@ -643,7 +667,7 @@ const NavBtn = styled.button<{ open: boolean }>`
 
 const NavLinks = styled.div<{ open: boolean; initial: boolean }>`
   display: flex;
-  width: 25vw;
+  width: 26vw;
   position: relative;
   transition: opacity 0.8s, width 0.3s 0.4s, border 0.6s;
   transform-origin: ${(props) => (!props.open ? "50% 50%" : "right")};

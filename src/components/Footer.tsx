@@ -1,12 +1,9 @@
 import React, { useEffect } from "react";
-// import { DesktopContext, TabletContext } from "App";
 import styled from "styled-components";
 import media from "styles/media";
 import colors from "styles/Colors";
 import gsap from "gsap";
 import { SubHeader, Body1, FooterSubHeader } from "styles/text";
-// import { ReactComponent as DavidSigSVG } from "assets/svg/davidSig.svg";
-// import { useHistory } from "react-router-dom";
 import twitter from "assets/svg/twitterIcon.svg";
 import instagram from "assets/svg/instagramIcon.svg";
 import web from "assets/svg/webIcon.svg";
@@ -17,9 +14,6 @@ import code from "assets/svg/codeIcon.svg";
 import music from "assets/svg/soundIcon.svg";
 import { ReactComponent as DavidSigSVG } from "assets/svg/davidSig2.svg";
 const Footer: React.FC<{}> = () => {
-  // const desktop = useContext(DesktopContext);
-  // const tablet = useContext(TabletContext);
-
   useEffect(() => {
     const tl = gsap.timeline({ scrollTrigger: { trigger: ".dav-sig-1" } });
 
@@ -124,11 +118,19 @@ const Footer: React.FC<{}> = () => {
           following my social media or getting in touch!
         </Text>
         <Email>
-          <a href="mailto:composer@davidhalcampbell.com">
+          <a
+            href="mailto:composer@davidhalcampbell.com"
+            rel="noreferrer noopener"
+            target="__blank"
+          >
             composer@davidhalcampbell.com
           </a>
           <br />
-          <a href="mailto:developer@davidhalcampbell.com">
+          <a
+            href="mailto:developer@davidhalcampbell.com"
+            rel="noreferrer noopener"
+            target="__blank"
+          >
             developer@davidhalcampbell.com
           </a>
         </Email>
@@ -182,7 +184,8 @@ const Wrapper = styled.footer`
 
 const BuildColumn = styled.div`
   width: 44.3vw;
-
+  position: relative;
+  z-index: 2;
   ${media.tablet} {
   }
   ${media.mobile} {
@@ -391,4 +394,6 @@ const DavidSig = styled(DavidSigSVG)`
   top: 3.1vw;
   z-index: 0;
   opacity: 0.03;
+
+  z-index: 0;
 `;

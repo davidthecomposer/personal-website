@@ -39,7 +39,7 @@ export const mediaPieces = [
     music:
       "The piece uses a lot of percussive sounds and techniques including rips, bartok pizz, ethnic percussion hits, and a ton of ostinato combined with flowing, energetic themes in the strings and brass. Finally, the lush counterpoint in the string section near the end adds context and a moment of repose when the danger has been averted.",
     story:
-      "A hero is desperately searching for someone important to him. After cresting a hill he spots an enemy who has abducted the one he cares about. He chases after, faces off with, and rescues the prisoner. As they flee to safety together time seems to slow as they gaze into eachother's eyes and realize the deep connection they have. ",
+      "A hero is desperately searching for someone important to him. After cresting a hill he spots an enemy who has abducted the one he cares about. He chases after, faces off with, and rescues the prisoner. As they flee to safety together time seems to slow as they gaze into each others eyes and realize the deep connection they have. ",
     audio: rescueMP3,
     id: 1,
   },
@@ -48,9 +48,9 @@ export const mediaPieces = [
     img: mischeivous,
     video: false,
     music:
-      "Obviously the solo violin here lends a lot of expressive energy to a charecterful precocious melody. Some fun details include the use of saxophones, muted brass, and vibes to adda bit of attitude and  fun to the timbres",
+      "The solo violin here lends a lot of expressive energy to a precocious and wide-ranging melody. Some fun details include the use of saxophones, muted brass, and vibes to adda bit of attitude and  silliness to the timbres",
     story:
-      "Children and crayons. Two completely wholesome things that when combined can wreek havoc. Mom thought it was safe to leave little Johnny alone to 'make his drawings'. While she was away he took it upon himself to redecorate in an awe-inspiring display of mischief and wanton disregard for principles of interior design. As he was finishing his piece de resistance she abrubtly returned. ",
+      "Children and crayons. Two completely wholesome things that when combined can wreak havoc. Mom thought it was safe to leave little Johnny alone to 'make his drawings'. While she was away he took it upon himself to redecorate in an awe-inspiring display of mischief combined with a wanton disregard for principles of interior design. As he was finishing his piece de resistance she abruptly returned. ",
     audio: mischeivousMP3,
     id: 2,
   },
@@ -59,9 +59,9 @@ export const mediaPieces = [
     img: turningPoint,
     video: false,
     music:
-      "The violin and cello interplay as seperate voices warring for control of the narrative. These represent the light and dark sides of the character. The accompaniment in the supposrting strings support and add weight to the emotions being expressed, while the piano punctuates the passage of time.",
+      "The violin and cello interplay as separate voices warring for control of the narrative. These represent the light and dark sides of the character. The accompaniment in the supporting strings add weight to the emotions being expressed, while the piano punctuates the passage of time.",
     story:
-      "A woman sits alone in a room overlooking the city late at night. She is on the precipice of a huge decision that will lead one way or another. She is at war with her good and bad sides. Will she finally give in to temptation or remember what once made her human? By the end of the scene we still don't know. Or do we?",
+      "A woman sits alone in a room overlooking the city late at night. She is clearly troubled and on the precipice of a huge decision with massive moral implications. The light and dark impulses make their arguments as she considers. Will she finally give in to temptation or remember what once made her human? By the end of the scene we still don't know. Or do we?",
     audio: turningPointMP3,
     id: 3,
   },
@@ -92,9 +92,9 @@ export const mediaPieces = [
     img: starlight,
     video: false,
     music:
-      "There are some pretty trop-ish harmonies in this piece. The little melody on the piccolo right near the end of the piece is used as a theme in the next piece and expanded to become the main theme. The use of strings, harp, harmonics, and some subtle synth sounds add a feel of expansion and timelessness.",
+      "I wanted to create a sense of an arrival as the ship comes into view while still having a feel of the expanse of space. The little melody on the piccolo right near the end of the piece is used as a theme in the next piece and expanded to become the main theme. The use of strings, harp, harmonics, and some subtle synth sounds add a feel of scope and scale",
     story:
-      "A set of travellers leave the atmosphere for the first time. They are headed toward a gigantic generation ship that will carry them out into the stars. As the shuttle slowly approaches this incredible feat of human ingenuity and wonder, it takes a tour around what will be their new home. Near the end of the piece they realize that this might be the last time they ever see the earth again.",
+      "A set of travellers leave the atmosphere for the first time. They are headed toward a gigantic generation ship that will carry them out into the stars. As the shuttle slowly approaches this incredible feat of human ingenuity and wonder, it takes a tour around what will be their new home. Near the end of the piece the earth comes back into view and they realize that this might be the last time they ever see humanity's first home again.",
     audio: starlightMP3,
     id: 6,
   },
@@ -103,9 +103,9 @@ export const mediaPieces = [
     img: starFlight,
     video: false,
     music:
-      "The choir was used to play off the immense sense of wonder and awe one might find when encountering somethign almost beyond understanding. I heavily processed the choir sounds during the last section of the piece to add to the sense of strangeness amidst the beauty of the main content.",
+      "The choir was used to play off the immense sense of wonder and awe one might find when encountering something almost beyond understanding. I heavily processed the choir sounds during the last section of the piece to add to the sense of strangeness amidst the beauty of the main content.",
     story:
-      "Our crew has been on ajourney in hibernation for hundreds of years. As they wake up they are gretted by a view of dancing stars and twinkling lights as the engine progresses them toward their desitination. As they approach the masssive event horizon they are overpowered by a mix of awe, dread, and wonder. Small piece of debris fly around them almost playfully as they slowly descend through to what lies beyond.",
+      "Our crew has been on a journey in hibernation for hundreds of years. As they wake up they are greeted by a view of dancing stars and twinkling lights as the engine progresses them toward their destination. As they approach the massive event horizon they are overpowered by a mix of awe, dread, and wonder. Small pieces of debris fly around them almost playfully as they slowly descend through to what lies beyond.",
     audio: starFlightMP3,
     id: 7,
   },
@@ -114,7 +114,7 @@ export const mediaPieces = [
     img: loveStory,
     video: false,
     music:
-      "The music is unaplogetically lyrical and simple. I tried to add as much color in the harmonies as I thought would be appropriate. The main little theme repeats over and over again through all instruments. I think that the soulful sound of the clarinet was a good choice as lead instrument here.",
+      "The music is unapologetically lyrical and simple. I tried to add as much color in the harmonies as I thought would be appropriate. The main little theme repeats over and over again through all instruments. I think that the soulful sound of the clarinet was a good choice as lead instrument here.",
     story:
       "A melancholy theme that touches on the kind of love that grows from long shared experience and sacrifice. A quiet montage of small kindnesses on a journey much nearer the end than the beginning.",
     audio: loveStoryMP3,
@@ -127,7 +127,7 @@ export const mediaPieces = [
     music:
       "I think some of the more effective things here were the subtle use of brass portamento, gongs, and the transition from smooth powerful homophony to chaotic indeterminism.",
     story:
-      "The skies are dark and forboding. In the far distance someting is approaching. It is miles away but is clearly massicve in both scale and power. As it approaches like the lead edge of a stormfront the observers can see that what seemed to be a cohesive cloud is actually a cacophony of violence and chaos. Then the front edge hits.",
+      "The skies are dark and forboding. In the far distance something is approaching. It is miles away but is clearly massive in both scale and power. As it approaches like the lead edge of a storm front the observers can see that what seemed to be a cohesive cloud is actually a cacophony of violence and chaos. Then the front edge hits.",
     audio: forceOfNatureMP3,
     id: 9,
   },

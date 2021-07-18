@@ -323,7 +323,7 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
   });
 
   return (
-    <Wrapper id="Concert Music">
+    <Wrapper id="Concert-Music">
       <HeaderWrapper>
         <Header ref={header}>Concert Music</Header>
         <HeaderLine ref={headerLine} />
@@ -337,9 +337,9 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
           <HeadLine>Want to Collaborate?</HeadLine>
           <Text>
             I am always on the lookout for passionate musicians, or music lovers
-            who are looking to collaborate on or commision art music. If you are
-            an author, musican or patron looking for new music send me a message
-            and let's create something amazing!
+            who are looking to collaborate on or commission art music. If you
+            are an author, musician or patron looking for new music send me a
+            message and let's create something amazing!
           </Text>
           <GetInTouch
             onClick={() => {
@@ -723,6 +723,7 @@ const MusicBook = styled.div`
 const PageTab = styled.button<{ yOffset: number; activeTab: boolean }>`
   width: 8vw;
   height: 3.1vw;
+  ${Body1};
   position: absolute;
   background: linear-gradient(
     ${(props) =>
@@ -779,6 +780,7 @@ const PageTabBack = styled.button<{ yOffset: number; activeTab: boolean }>`
   width: 8vw;
   height: 3.1vw;
   position: absolute;
+  ${Body1};
   background: linear-gradient(
     ${(props) =>
       props.activeTab

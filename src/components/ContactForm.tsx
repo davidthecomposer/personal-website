@@ -335,6 +335,8 @@ const Close = styled.button`
     font-size: 18px;
     width: 125px;
     height: 40px;
+    border-radius: 6px;
+    bottom: 0;
   }
 `;
 

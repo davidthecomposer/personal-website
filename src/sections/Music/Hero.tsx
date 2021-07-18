@@ -10,7 +10,7 @@ import Liz1 from "assets/images/Liz1.jpg";
 import mandi1 from "assets/images/mandi1.jpg";
 import media from "styles/media";
 import davidSkeptic from "assets/images/davidSkeptic.jpg";
-import jennyCampbell from "assets/images/jennyCampbell.jpg";
+import jennyCampbell from "assets/images/jennyTop.jpg";
 import oCTLogo from "assets/images/oCTLogo.jpg";
 import davidSmile1 from "assets/images/davidSmile1.jpg";
 import oCTSeason from "assets/images/oCTSeason.jpg";
@@ -363,7 +363,7 @@ const Wrapper = styled.section`
   position: relative;
   box-sizing: border-box;
   ${media.fullWidth} {
-    padding-top: 0;
+    padding-top: 100px;
   }
   ${media.mobile} {
     width: 100%;
@@ -444,9 +444,8 @@ const Counter = styled.div`
     left: 3.4vw;
   }
   ${media.fullWidth} {
-    top: 700px;
+    bottom: 100px;
     left: 147px;
-    bottom: auto;
     z-index: 10;
   }
 `;
@@ -554,6 +553,9 @@ const Card = styled.div`
       /* bottom: -59px; */
       font-size: 70px;
       right: 110px;
+    }
+    img {
+      top: -100px;
     }
 
     ${Metro36} {
