@@ -192,8 +192,9 @@ const FormModal = styled.form<{
   transform: scale(0);
 
   ${media.mobile} {
-    width: 83.3vw;
-    height: 80.5vw;
+    width: 100%;
+    box-sizing: border-box;
+    height: 100.5vw;
     transform: scale(1);
     left: ${(props) => (props.enter ? 0 : props.leftVal)};
     padding: 10vw 10vw 10vw 6.3vw;
@@ -320,15 +321,12 @@ const SendMessage = styled.button`
 `;
 
 const Close = styled.button`
-  ${media.tablet} {
-  }
   ${media.mobile} {
     ${PrimaryButtonStyle};
     position: absolute;
     width: 30.3vw;
     height: 9.7vw;
-    /* bottom: 12.8vw;
-    left: 6.3vw; */
+    bottom: 0;
     z-index: 5;
   }
   ${media.tabletPortrait} {

@@ -216,7 +216,6 @@ const Wrapper = styled.section`
   background-image: url(${davidHuge});
 
   ${media.mobile} {
-    width: 100%;
     height: 740vw;
     padding: 0 2.4vw 60vw;
     background-image: url(${davidHugeM});
