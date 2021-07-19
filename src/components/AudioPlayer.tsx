@@ -168,7 +168,9 @@ const AudioElement: React.FC<AudioElementProps> = ({
         onEnded={handleEnd}
         src={track.audio}
         ref={player}
-        autoPlay={false}
+        muted={false}
+        autoPlay
+        playsInline
       />
       <Row1
         className={`media-track_row${track.id}`}
@@ -277,7 +279,11 @@ const AudioPlayer: React.FC<Props> = ({
   return (
     <Playlist ref={playList}>
       <PlayBack>
-        <Play onClick={handleClick} play={playPushed}>
+        <Play
+          onTouchStart={handleClick}
+          onClick={handleClick}
+          play={playPushed}
+        >
           <PauseButton />
           <PlayButton />
         </Play>

@@ -122,7 +122,8 @@ const AudioPlayerMinimal: React.FC<Props> = ({
         onEnded={handleEnd}
         src={track}
         ref={player}
-        autoPlay={false}
+        muted={false}
+        playsInline
       />
       <Row1 ref={row} playing={playing} onClick={handleProgress}>
         <Text playing={playing}>{`${id + 1}. ${title}`}</Text>
