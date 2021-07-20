@@ -268,7 +268,7 @@ const Wrapper = styled.section`
   position: relative;
   box-sizing: border-box;
   width: 87.4vw;
-
+  overflow: hidden;
   ${media.mobile} {
     width: 100%;
     padding: 0 2.4vw 52.2vw 2.4vw;

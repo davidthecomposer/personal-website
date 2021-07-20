@@ -203,7 +203,9 @@ const Info = styled.button<{ mobileInfo: boolean }>`
   top: 12vw;
   opacity: ${(props) => (props.mobileInfo ? 1 : 0)};
   transition: opacity 0.3s 0.4s;
-
+  ${media.mobile} {
+    border-radius: 1.2vw;
+  }
   ${media.tabletPortrait} {
     font-size: 22px;
     width: 150px;
@@ -211,8 +213,6 @@ const Info = styled.button<{ mobileInfo: boolean }>`
     border-radius: 8px;
     left: 544px;
     top: 70px;
-  }
-  ${media.fullWidth} {
   }
 `;
 
@@ -408,7 +408,7 @@ const Story = styled.button<{ trackState: boolean }>`
     left: 4.8vw;
     width: 29vw;
     height: 9.7vw;
-    border-radius: 2.4vw;
+    border-radius: 1.2vw;
     top: 1vw;
     opacity: ${(props) => (props.trackState ? 0 : 1)};
     transform: scale(${(props) => (props.trackState ? 0 : 1)});

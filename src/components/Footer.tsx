@@ -153,10 +153,10 @@ export default Footer;
 const Wrapper = styled.footer`
   position: relative;
   height: 22.7vw;
-  width: calc(100% - 4.6vw);
+  width: 100%;
   display: flex;
   justify-content: space-between;
-
+  box-sizing: border-box;
   padding: 4.1vw 2.3vw;
   z-index: 1000;
   right: 0;
@@ -168,14 +168,12 @@ const Wrapper = styled.footer`
   );
   ${media.mobile} {
     height: auto;
-    width: 95.2vw;
     padding: 12.6vw 2.4vw 6vw;
     flex-direction: column;
     justify-content: flex-start;
   }
   ${media.tabletPortrait} {
     height: auto;
-    width: calc(100% - 72px);
     padding: 65px 36px 31px;
     flex-direction: column;
     justify-content: flex-start;

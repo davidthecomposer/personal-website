@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState, useContext } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useContext,
+  useCallback,
+} from "react";
 import styled from "styled-components";
 import { Body1 } from "styles/text";
 import colors from "styles/Colors";
@@ -38,9 +44,9 @@ type AudioElementProps = {
   activeTrack: number;
   setActiveTrack: React.Dispatch<React.SetStateAction<number>>;
   playPushed: boolean;
-  setPlayPushed: React.Dispatch<React.SetStateAction<boolean>>;
-  shouldAutoPlay: React.MutableRefObject<boolean>;
-  allTracks: number;
+  addRef: any;
+  trackRefs: any;
+  handleEnd: any;
 };
 
 const AudioElement: React.FC<AudioElementProps> = ({
@@ -48,9 +54,9 @@ const AudioElement: React.FC<AudioElementProps> = ({
   activeTrack,
   setActiveTrack,
   playPushed,
-  setPlayPushed,
-  shouldAutoPlay,
-  allTracks,
+  addRef,
+  trackRefs,
+  handleEnd,
 }) => {
   const player = useRef<HTMLAudioElement>(null);
   const [timeRemaining, setTimeRemaining] = useState("0:00");
@@ -58,17 +64,7 @@ const AudioElement: React.FC<AudioElementProps> = ({
   const row = useRef<HTMLDivElement | null>(null);
   const [canProgress, setCanProgress] = useState<boolean>(false);
   const [progressCheck, setProgressCheck] = useState<number>(0);
-  const handleEnd = () => {
-    if (player.current) {
-      player.current.currentTime = 0;
-      gsap.set(progress.current, { scaleX: 0, ease: "none" });
-      player.current.pause();
-      setActiveTrack(track.id === allTracks - 1 ? 0 : track.id + 1);
-    }
-    if (!shouldAutoPlay.current) {
-      setPlayPushed(false);
-    }
-  };
+  const loaded = useRef(false);
 
   const returnTimeString = (time: number) => {
     return `${Math.floor(time / 60)}:${
@@ -139,14 +135,13 @@ const AudioElement: React.FC<AudioElementProps> = ({
   useEffect(() => {
     if (player.current) {
       if (activeTrack === track.id && playPushed) {
-        player.current.play();
+        trackRefs.current[activeTrack].play();
         setCanProgress(true);
       } else {
-        player.current.pause();
         setCanProgress(false);
       }
     }
-  }, [activeTrack, track, playPushed]);
+  }, [activeTrack, track, playPushed, trackRefs]);
 
   const handleRowClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (activeTrack !== track.id) {
@@ -155,6 +150,13 @@ const AudioElement: React.FC<AudioElementProps> = ({
       handleProgress(e);
     }
   };
+
+  useEffect(() => {
+    if (player.current && !loaded.current) {
+      addRef(player.current);
+      loaded.current = true;
+    }
+  }, [addRef]);
 
   return (
     <Track
@@ -168,7 +170,8 @@ const AudioElement: React.FC<AudioElementProps> = ({
         onEnded={handleEnd}
         src={track.audio}
         ref={player}
-        autoPlay={false}
+        playsInline
+        controls
       />
       <Row1
         className={`media-track_row${track.id}`}
@@ -203,6 +206,28 @@ const AudioPlayer: React.FC<Props> = ({
   const mobile = useContext(MobileContext);
   const [autoPlay, setAutoPlay] = useState(false);
   const shouldAutoPlay = useRef(false);
+  const trackArray = useRef([]);
+  const playTrack = useRef(false);
+
+  const addRef = (audioElement: HTMLAudioElement) => {
+    let newTrackArr: any[] = trackArray.current;
+
+    newTrackArr.push(audioElement);
+  };
+
+  const handleEnd = useCallback(() => {
+    //@ts-ignore
+    trackArray.current[activeTrack].currentTime = 0;
+    //@ts-ignore
+    trackArray.current[activeTrack].pause();
+    setActiveTrack(
+      activeTrack === mediaPieces.length - 1 ? 0 : activeTrack + 1
+    );
+
+    if (!shouldAutoPlay.current) {
+      setPlayPushed(false);
+    }
+  }, [setActiveTrack, activeTrack, mediaPieces]);
 
   useEffect(() => {
     if (introAni) {
@@ -216,19 +241,31 @@ const AudioPlayer: React.FC<Props> = ({
     }
   }, [introAni]);
 
+  const handleTrackClick = useCallback(
+    (trackNum: number) => {
+      if (trackNum !== activeTrack) {
+        //@ts-ignore
+        trackArray.current[activeTrack].pause();
+        setActiveTrack(trackNum);
+      }
+    },
+    [activeTrack]
+  );
+
   const [trackOrder, setTrackOrder] = useState(
     mediaPieces.map((track, i) => {
       return (
-        <AudioElement
-          key={track.id}
-          activeTrack={activeTrack}
-          setActiveTrack={setActiveTrack}
-          track={mediaPieces[track.id]}
-          playPushed={playPushed}
-          setPlayPushed={setPlayPushed}
-          shouldAutoPlay={shouldAutoPlay}
-          allTracks={mediaPieces.length}
-        />
+        <AudioWrapper key={track.id} onClick={() => handleTrackClick(track.id)}>
+          <AudioElement
+            activeTrack={activeTrack}
+            setActiveTrack={setActiveTrack}
+            track={mediaPieces[track.id]}
+            playPushed={playPushed}
+            addRef={addRef}
+            trackRefs={trackArray}
+            handleEnd={handleEnd}
+          />
+        </AudioWrapper>
       );
     })
   );
@@ -236,16 +273,17 @@ const AudioPlayer: React.FC<Props> = ({
   useEffect(() => {
     const trackList = mediaPieces.map((track, i) => {
       return (
-        <AudioElement
-          key={track.id}
-          activeTrack={activeTrack}
-          setActiveTrack={setActiveTrack}
-          track={mediaPieces[track.id]}
-          playPushed={playPushed}
-          setPlayPushed={setPlayPushed}
-          shouldAutoPlay={shouldAutoPlay}
-          allTracks={mediaPieces.length}
-        />
+        <AudioWrapper key={track.id} onClick={() => handleTrackClick(track.id)}>
+          <AudioElement
+            activeTrack={activeTrack}
+            setActiveTrack={setActiveTrack}
+            track={mediaPieces[track.id]}
+            playPushed={playPushed}
+            addRef={addRef}
+            trackRefs={trackArray}
+            handleEnd={handleEnd}
+          />
+        </AudioWrapper>
       );
     });
 
@@ -253,13 +291,27 @@ const AudioPlayer: React.FC<Props> = ({
       ...trackList.slice(activeTrack, trackList.length),
       ...trackList.slice(0, activeTrack),
     ];
-    const activeInfo = trackListOrdered[0].props["activeTrack"];
-    setActiveScreen(activeInfo);
+    setActiveScreen(activeTrack);
     setTrackOrder(trackListOrdered);
-  }, [activeTrack, setActiveScreen, playPushed, mediaPieces]);
+  }, [
+    activeTrack,
+    setActiveScreen,
+    playPushed,
+    mediaPieces,
+    handleEnd,
+    handleTrackClick,
+  ]);
 
-  const handleClick = () => {
+  const handleClick = (e: any) => {
     setPlayPushed(!playPushed);
+    playTrack.current = !playTrack.current;
+    if (playTrack.current) {
+      //@ts-ignore
+      trackArray.current[activeTrack].play();
+    } else {
+      //@ts-ignore
+      trackArray.current[activeTrack].pause();
+    }
   };
 
   useEffect(() => {
@@ -277,7 +329,11 @@ const AudioPlayer: React.FC<Props> = ({
   return (
     <Playlist ref={playList}>
       <PlayBack>
-        <Play onClick={handleClick} play={playPushed}>
+        <Play
+          onTouchStart={(e) => handleClick(e)}
+          onClick={(e) => handleClick(e)}
+          play={playPushed}
+        >
           <PauseButton />
           <PlayButton />
         </Play>
@@ -444,6 +500,10 @@ const PlayButton = styled(PlayButtonSVG)`
     height: 41px;
     margin-left: 5px;
   }
+`;
+
+const AudioWrapper = styled.div`
+  position: relative;
 `;
 
 const PauseButton = styled(PauseButtonSVG)`

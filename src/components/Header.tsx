@@ -446,7 +446,7 @@ export default Header;
 const Wrapper = styled.nav<{ willDisplay: boolean; open: boolean }>`
   position: fixed;
   height: 6vw;
-  width: calc(100% - 4vw);
+  box-sizing: border-box;
   display: ${(props) => (props.willDisplay ? "flex" : "none")};
   justify-content: space-between;
   align-items: center;
@@ -456,7 +456,6 @@ const Wrapper = styled.nav<{ willDisplay: boolean; open: boolean }>`
   top: 0;
   ${media.mobile} {
     height: 19.3vw;
-    width: 96vw;
   }
 
   ${media.tabletPortrait} {
