@@ -72,7 +72,7 @@ const App = () => {
                     <Home />
                   </Suspense>
                 </Route> */}
-                <Route path="/">
+                <Route exact path="/">
                   <Suspense fallback={<Fallback />}>
                     <MusicPage />
                   </Suspense>
