@@ -356,7 +356,8 @@ const OutBoundLink = styled.a`
   cursor: pointer;
   transition: 0.5s;
   img {
-    width: 1.5vw;
+    width: 1.6vw;
+    height: 1.3vw;
     transition: 0.5s;
   }
   ${media.hover} {
@@ -375,7 +376,8 @@ const OutBoundLink = styled.a`
     font-size: 3.9vw;
     margin-bottom: 4.8vw;
     img {
-      width: 5.8vw;
+      width: 6.3vw;
+      height: 4.8vw;
     }
   }
   ${media.tabletPortrait} {
@@ -383,6 +385,7 @@ const OutBoundLink = styled.a`
     margin-bottom: 25px;
     img {
       width: 30px;
+      height: 23px;
     }
   }
 `;

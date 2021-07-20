@@ -493,7 +493,7 @@ const MainImage = styled.img`
 
   ${media.mobile} {
     width: 95.2vw;
-    height: auto;
+    height: 57vw;
   }
   ${media.tabletPortrait} {
     width: 492px;
