@@ -45,22 +45,6 @@ const ContactForm: React.FC<{
     setFormData({ [name]: newValue });
   };
 
-  // const inputs = inputNames.map((input, i) => {
-  //   return (
-  //     <FormRow key={i}>
-  //       <FormText htmlFor={`${input.toLowerCase()}`}>{input} :</FormText>
-  //       <TextInput
-  //         type={i === 1 ? "email" : "text"}
-  //         id={input.toLowerCase()}
-  //         name={input.toLowerCase()}
-  //         //@ts-ignore
-  //         value={formData[input]}
-  //         onChange={(e: any) => updateFormState(e)}
-  //       />
-  //     </FormRow>
-  //   );
-  // });
-
   useEffect(() => {
     if (form.current) {
       const tl = gsap.timeline();
@@ -88,7 +72,6 @@ const ContactForm: React.FC<{
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     if (form.current) {
-      // let formData = new FormData(form.current);
       let myForm = form.current;
       let formData = new FormData(myForm);
       fetch("/", {
@@ -218,7 +201,7 @@ const FormRow = styled.div`
   margin-bottom: 1vw;
 
   ${media.mobile} {
-    font-size: 16px;
+    font-size: clamp(16px, 3.6vw, 4vw);
     margin-bottom: 4vw;
   }
   ${media.tabletPortrait} {
@@ -278,7 +261,8 @@ const TextArea = styled.textarea`
   ${media.mobile} {
     width: 60.4vw;
     height: 30vw;
-    font-size: 16px;
+
+    font-size: clamp(16px, 3.6vw, 4vw);
   }
   ${media.tabletPortrait} {
     width: 250px;

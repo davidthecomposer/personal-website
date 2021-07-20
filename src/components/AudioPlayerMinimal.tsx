@@ -151,10 +151,7 @@ const Text = styled.div<{ playing: boolean }>`
   font-size: clamp(16px, 18px, 20px);
   pointer-events: none;
   ${media.mobile} {
-    font-size: 3.4vw;
-  }
-  ${media.tablet} {
-    font-size: 14px;
+    font-size: clamp(16px, 3.4vw, 18px);
   }
   ${media.tabletPortrait} {
     font-size: 17px;

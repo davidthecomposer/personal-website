@@ -44,9 +44,6 @@ type AudioElementProps = {
   activeTrack: number;
   setActiveTrack: React.Dispatch<React.SetStateAction<number>>;
   playPushed: boolean;
-  setPlayPushed: React.Dispatch<React.SetStateAction<boolean>>;
-  shouldAutoPlay: React.MutableRefObject<boolean>;
-  allTracks: number;
   addRef: any;
   trackRefs: any;
   handleEnd: any;
@@ -57,9 +54,6 @@ const AudioElement: React.FC<AudioElementProps> = ({
   activeTrack,
   setActiveTrack,
   playPushed,
-  setPlayPushed,
-  shouldAutoPlay,
-  allTracks,
   addRef,
   trackRefs,
   handleEnd,
@@ -141,12 +135,9 @@ const AudioElement: React.FC<AudioElementProps> = ({
   useEffect(() => {
     if (player.current) {
       if (activeTrack === track.id && playPushed) {
-        // player.current.autoplay = true;
-        // player.current.play();
         trackRefs.current[activeTrack].play();
         setCanProgress(true);
       } else {
-        // player.current.pause();
         setCanProgress(false);
       }
     }
@@ -222,13 +213,11 @@ const AudioPlayer: React.FC<Props> = ({
     let newTrackArr: any[] = trackArray.current;
 
     newTrackArr.push(audioElement);
-    console.log(trackArray.current);
   };
 
   const handleEnd = useCallback(() => {
     //@ts-ignore
     trackArray.current[activeTrack].currentTime = 0;
-    // gsap.set(progress.current, { scaleX: 0, ease: "none" });
     //@ts-ignore
     trackArray.current[activeTrack].pause();
     setActiveTrack(
@@ -252,22 +241,31 @@ const AudioPlayer: React.FC<Props> = ({
     }
   }, [introAni]);
 
+  const handleTrackClick = useCallback(
+    (trackNum: number) => {
+      if (trackNum !== activeTrack) {
+        //@ts-ignore
+        trackArray.current[activeTrack].pause();
+        setActiveTrack(trackNum);
+      }
+    },
+    [activeTrack]
+  );
+
   const [trackOrder, setTrackOrder] = useState(
     mediaPieces.map((track, i) => {
       return (
-        <AudioElement
-          key={track.id}
-          activeTrack={activeTrack}
-          setActiveTrack={setActiveTrack}
-          track={mediaPieces[track.id]}
-          playPushed={playPushed}
-          setPlayPushed={setPlayPushed}
-          shouldAutoPlay={shouldAutoPlay}
-          allTracks={mediaPieces.length}
-          addRef={addRef}
-          trackRefs={trackArray}
-          handleEnd={handleEnd}
-        />
+        <AudioWrapper key={track.id} onClick={() => handleTrackClick(track.id)}>
+          <AudioElement
+            activeTrack={activeTrack}
+            setActiveTrack={setActiveTrack}
+            track={mediaPieces[track.id]}
+            playPushed={playPushed}
+            addRef={addRef}
+            trackRefs={trackArray}
+            handleEnd={handleEnd}
+          />
+        </AudioWrapper>
       );
     })
   );
@@ -275,19 +273,17 @@ const AudioPlayer: React.FC<Props> = ({
   useEffect(() => {
     const trackList = mediaPieces.map((track, i) => {
       return (
-        <AudioElement
-          key={track.id}
-          activeTrack={activeTrack}
-          setActiveTrack={setActiveTrack}
-          track={mediaPieces[track.id]}
-          playPushed={playPushed}
-          setPlayPushed={setPlayPushed}
-          shouldAutoPlay={shouldAutoPlay}
-          allTracks={mediaPieces.length}
-          addRef={addRef}
-          trackRefs={trackArray}
-          handleEnd={handleEnd}
-        />
+        <AudioWrapper key={track.id} onClick={() => handleTrackClick(track.id)}>
+          <AudioElement
+            activeTrack={activeTrack}
+            setActiveTrack={setActiveTrack}
+            track={mediaPieces[track.id]}
+            playPushed={playPushed}
+            addRef={addRef}
+            trackRefs={trackArray}
+            handleEnd={handleEnd}
+          />
+        </AudioWrapper>
       );
     });
 
@@ -295,10 +291,16 @@ const AudioPlayer: React.FC<Props> = ({
       ...trackList.slice(activeTrack, trackList.length),
       ...trackList.slice(0, activeTrack),
     ];
-    const activeInfo = trackListOrdered[0].props["activeTrack"];
-    setActiveScreen(activeInfo);
+    setActiveScreen(activeTrack);
     setTrackOrder(trackListOrdered);
-  }, [activeTrack, setActiveScreen, playPushed, mediaPieces, handleEnd]);
+  }, [
+    activeTrack,
+    setActiveScreen,
+    playPushed,
+    mediaPieces,
+    handleEnd,
+    handleTrackClick,
+  ]);
 
   const handleClick = (e: any) => {
     setPlayPushed(!playPushed);
@@ -498,6 +500,10 @@ const PlayButton = styled(PlayButtonSVG)`
     height: 41px;
     margin-left: 5px;
   }
+`;
+
+const AudioWrapper = styled.div`
+  position: relative;
 `;
 
 const PauseButton = styled(PauseButtonSVG)`
