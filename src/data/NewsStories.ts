@@ -1,6 +1,7 @@
 import sampleNews from "assets/images/sampleNews.jpg";
 import twitter from "assets/svg/twitterIcon.svg";
 import instagram from "assets/svg/instagramIcon.svg";
+import linkedin from "assets/svg/linkedIcon.svg";
 import web from "assets/svg/webIcon.svg";
 import facebook from "assets/svg/facebookIcon.svg";
 import liz2 from "assets/images/liz2.jpg";
@@ -16,10 +17,12 @@ const newsItems = [
     paragraph1: "",
     share: "News Item 1 short synopsis",
     links1: [
-      { icon: twitter, link: "" },
-      { icon: facebook, link: "" },
-      { icon: instagram, link: "" },
-      { icon: web, link: "" },
+      {
+        icon: linkedin,
+        link: "https://www.linkedin.com/in/mandi-barrus-mezzo/",
+      },
+      { icon: facebook, link: "https://www.facebook.com/mandibarrusmezzo" },
+      { icon: instagram, link: "https://www.instagram.com/mandibarrusmezzo" },
     ],
     links2: [
       { icon: twitter, link: "" },
