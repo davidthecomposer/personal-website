@@ -77,7 +77,7 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
               {paragraph && <p>{paragraph}</p>}
               {paragraph1 && <p>{paragraph1}</p>}
             </Text>
-            <MainImage src={mainImage} />
+            <MainImage src={mainImage} alt={item.title} />
           </NewsRow>
           <ButtonRow>
             <MoreBtn onClick={() => handleMore(`.front-${i}`, `.more-${i}`)}>
@@ -131,7 +131,7 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
             <RowNoLayout>
               <Half>
                 <MoreText>{moreText1}</MoreText>
-                <MoreImage src={moreImage1} />
+                <MoreImage src={moreImage1} alt={`${moreTitle}-1`} />
                 {mobile && (
                   <MoreBtn
                     onClick={() => handleMore(`.front-${i}`, `.more-${i}`)}
@@ -166,7 +166,7 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
                     <NewsTitle>{moreTitle}</NewsTitle>
                   </TitleContainer>
                 )}
-                <MoreImage src={moreImage2} />
+                <MoreImage src={moreImage2} alt={`${moreTitle}-2`} />
                 <MoreText>{moreText2}</MoreText>
                 {mobile && (
                   <Back onClick={() => handleBack(`.front-${i}`, `.more-${i}`)}>
@@ -199,7 +199,7 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
           {layout === "full" && (
             <Row>
               <Full>
-                <MoreImage src={moreImage1} />
+                <MoreImage src={moreImage1} alt={`${moreTitle}`} />
                 <MoreText>{moreText1}</MoreText>
                 <Links
                   onClick={() =>

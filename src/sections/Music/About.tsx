@@ -125,6 +125,7 @@ const About: React.FC<{ mobile: boolean }> = ({ mobile }) => {
       </HeaderWrapper>
       <DavidImage
         src={mobile ? davidAboutM : davidAbout}
+        alt="David Campbell image"
         className="about-images"
         ref={davidImage}
       />

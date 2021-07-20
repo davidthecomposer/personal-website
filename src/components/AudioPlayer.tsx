@@ -331,6 +331,7 @@ const AudioPlayer: React.FC<Props> = ({
     <Playlist ref={playList}>
       <PlayBack>
         <Play
+          aria-label="play and pause button"
           onTouchStart={(e) => handleClick(e)}
           onClick={(e) => handleClick(e)}
           play={playPushed}

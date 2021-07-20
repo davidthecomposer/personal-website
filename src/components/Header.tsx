@@ -432,6 +432,7 @@ const Header: React.FC<{}> = () => {
         </Link>
       </NavLinks>
       <NavBtn
+        aria-label="open navigation"
         className="music__nav-btn"
         onClick={handleClick}
         open={navOpen && initial}

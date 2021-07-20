@@ -251,6 +251,7 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
                               key={`sample-${i}`}
                               target="__blank"
                               rel="noopener noreferrer"
+                              aria-label="pdf download of score"
                             >
                               <ScoreIcon />
                             </a>

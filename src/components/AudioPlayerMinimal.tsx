@@ -130,7 +130,11 @@ const AudioPlayerMinimal: React.FC<Props> = ({
         <Text playing={playing}>{`${id + 1}. ${title}`}</Text>
         {track && (
           <>
-            <Play onClick={(e) => handleClick(e)} play={playing}>
+            <Play
+              aria-label="play and pause button"
+              onClick={(e) => handleClick(e)}
+              play={playing}
+            >
               <PauseButton />
               <PlayButton />
             </Play>
