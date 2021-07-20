@@ -123,6 +123,7 @@ const AudioPlayerMinimal: React.FC<Props> = ({
         src={track}
         ref={player}
         muted={false}
+        preload={"meta"}
         playsInline
       />
       <Row1 ref={row} playing={playing} onClick={handleProgress}>

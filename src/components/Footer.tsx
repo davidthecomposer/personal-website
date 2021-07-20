@@ -152,7 +152,7 @@ export default Footer;
 
 const Wrapper = styled.footer`
   position: relative;
-  height: 22.7vw;
+  height: 30.9vw;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -306,7 +306,7 @@ const Socials = styled.div`
 
 const HeaderLine = styled.div`
   position: relative;
-  width: 26.3vw;
+
   height: 0.2vw;
 
   background: ${colors.skyBlue};
@@ -334,7 +334,7 @@ const SocialColumn = styled.div`
 
   ${HeaderLine}:nth-of-type(3) {
     margin-right: 0;
-    margin-left: 3.9vw;
+    margin-left: 2vw;
     color: white;
   }
   ${media.mobile} {

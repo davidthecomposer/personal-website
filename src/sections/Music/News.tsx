@@ -268,7 +268,6 @@ const Wrapper = styled.section`
   position: relative;
   box-sizing: border-box;
   width: 87.4vw;
-  overflow: hidden;
   ${media.mobile} {
     width: 100%;
     padding: 0 2.4vw 52.2vw 2.4vw;
@@ -698,6 +697,12 @@ const Links = styled.div<{ open: boolean }>`
     margin-right: 0.6vw;
     opacity: 0;
     z-index: -1;
+    width: 2vw;
+    height: 2vw;
+    img {
+      width: 100%;
+      height: 100%;
+    }
     ${media.hover} {
       :hover {
         transform: rotateZ(360deg);
