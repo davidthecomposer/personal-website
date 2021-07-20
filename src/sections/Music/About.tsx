@@ -294,7 +294,7 @@ const HeaderLine = styled.div`
 const Text = styled.div`
   ${Body1};
   position: absolute;
-  width: 37.1vw;
+  width: 36.5vw;
   height: 75.6vw;
   left: 56.9vw;
   top: 60vw;

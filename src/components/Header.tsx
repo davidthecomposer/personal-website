@@ -38,11 +38,12 @@ const Header: React.FC<{}> = () => {
 
     if (pathname) {
       if (pathname === "/") {
-        setDisplay(false);
+        setDisplay(true);
+        setRole("composer");
       } else if (pathname === "/music") {
         setRole("composer");
       } else {
-        setRole("developer");
+        setRole("composer");
       }
     }
   }, [history]);

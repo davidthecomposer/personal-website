@@ -170,6 +170,7 @@ const AudioElement: React.FC<AudioElementProps> = ({
         onEnded={handleEnd}
         src={track.audio}
         ref={player}
+        preload={"meta"}
         playsInline
         controls
       />

@@ -235,9 +235,15 @@ const Email = styled.div`
 
   a {
     color: ${colors.coolPurple};
+    transition: 0.5s;
+    ${media.hover} {
+      :hover {
+        color: ${colors.dullTeal};
+        transition: 0.5s;
+      }
+    }
   }
-  ${media.tablet} {
-  }
+
   ${media.mobile} {
     font-size: 3.9vw;
   }
@@ -280,8 +286,6 @@ const Socials = styled.div`
     }
   }
 
-  ${media.tablet} {
-  }
   ${media.mobile} {
     margin-bottom: 16vw;
     a {
@@ -353,13 +357,17 @@ const OutBoundLink = styled.a`
   transition: 0.5s;
   img {
     width: 1.5vw;
+    transition: 0.5s;
   }
   ${media.hover} {
     :hover {
-      transform: scale(1.1);
-      transform-origin: "100% 0%";
       color: ${colors.dullTeal};
       transition: 0.5s;
+      img {
+        transform: scale(1.2);
+        transform-origin: "100% 0%";
+        transition: 0.5s;
+      }
     }
   }
 
