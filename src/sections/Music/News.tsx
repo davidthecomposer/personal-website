@@ -52,7 +52,7 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
   const allNewsItems = NewsStories.map((item, i) => {
     const {
       title,
-      mainImage,
+      mainImages,
       paragraph,
       paragraph1,
       moreTitle,
@@ -77,7 +77,10 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
               {paragraph && <p>{paragraph}</p>}
               {paragraph1 && <p>{paragraph1}</p>}
             </Text>
-            <MainImage src={mainImage} alt={item.title} />
+            <MainImage
+              src={mobile ? mainImages[1] : mainImages[0]}
+              alt={item.title}
+            />
           </NewsRow>
           <ButtonRow>
             <MoreBtn onClick={() => handleMore(`.front-${i}`, `.more-${i}`)}>
@@ -131,7 +134,10 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
             <RowNoLayout>
               <Half>
                 <MoreText>{moreText1}</MoreText>
-                <MoreImage src={moreImage1} alt={`${moreTitle}-1`} />
+                <MoreImage
+                  src={mobile ? moreImage1[1] : moreImage1[0]}
+                  alt={`${moreTitle}-1`}
+                />
                 {mobile && (
                   <MoreBtn
                     onClick={() => handleMore(`.front-${i}`, `.more-${i}`)}
@@ -166,7 +172,10 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
                     <NewsTitle>{moreTitle}</NewsTitle>
                   </TitleContainer>
                 )}
-                <MoreImage src={moreImage2} alt={`${moreTitle}-2`} />
+                <MoreImage
+                  src={mobile ? moreImage2[1] : moreImage2[0]}
+                  alt={`${moreTitle}-2`}
+                />
                 <MoreText>{moreText2}</MoreText>
                 {mobile && (
                   <Back onClick={() => handleBack(`.front-${i}`, `.more-${i}`)}>
@@ -199,7 +208,10 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
           {layout === "full" && (
             <Row>
               <Full>
-                <MoreImage src={moreImage1} alt={`${moreTitle}`} />
+                <MoreImage
+                  src={mobile ? moreImage1[1] : moreImage1[0]}
+                  alt={`${moreTitle}`}
+                />
                 <MoreText>{moreText1}</MoreText>
                 <Links
                   onClick={() =>
@@ -492,11 +504,12 @@ const MainImage = styled.img`
   height: 23.5vw;
 
   ${media.mobile} {
-    width: 95.2vw;
-    height: 57vw;
+    width: 94.4vw;
+    height: 57.2vw;
   }
   ${media.tabletPortrait} {
     width: 492px;
+    height: 298px;
   }
 `;
 
@@ -1053,8 +1066,8 @@ const Half1 = styled.div`
       position: relative;
       margin-top: 0;
 
-      width: 33.3vw;
-      height: 47.3vw;
+      width: 137.9px;
+      height: 195.8px;
     }
     ${Links} {
       top: 38vw;

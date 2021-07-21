@@ -941,7 +941,7 @@ const Card4 = styled(Card)`
     }
     img:nth-child(2) {
       width: 95.2vw;
-      height: 36.5vw;
+      height: 36.2vw;
       left: 2.4vw;
       top: 28.5vw;
     }
@@ -968,7 +968,7 @@ const Card4 = styled(Card)`
     }
     img:nth-child(2) {
       width: 64.1vw;
-      height: 24.6vw;
+      height: 24.1vw;
       left: 1.6vw;
       top: 19.1vw;
     }
