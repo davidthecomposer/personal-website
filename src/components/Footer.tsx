@@ -4,7 +4,7 @@ import media from "styles/media";
 import colors from "styles/Colors";
 import gsap from "gsap";
 import { SubHeader, Body1, FooterSubHeader } from "styles/text";
-import twitter from "assets/svg/twitterIcon.svg";
+// import twitter from "assets/svg/twitterIcon.svg";
 import instagram from "assets/svg/instagramIcon.svg";
 import web from "assets/svg/webIcon.svg";
 import facebook from "assets/svg/facebookIcon.svg";
@@ -68,11 +68,23 @@ const Footer: React.FC<{}> = () => {
   }, []);
 
   const socials = [
-    { icon: twitter, name: "twitter icon", link: "" },
-    { icon: facebook, name: "facebook icon", link: "" },
-    { icon: instagram, name: "instagram icon", link: "" },
-    { icon: web, name: "web icon", link: "" },
-    { icon: linkedIn, name: "linkedIn icon", link: "" },
+    // { icon: twitter, name: "twitter icon", link: "" },
+    {
+      icon: facebook,
+      name: "facebook icon",
+      link: "https://www.facebook.com/david_the_composer/",
+    },
+    {
+      icon: instagram,
+      name: "instagram icon",
+      link: "https://www.instagram.com/david_the_composer/",
+    },
+    { icon: web, name: "web icon", link: "https://www.davidhalcampbell.com" },
+    {
+      icon: linkedIn,
+      name: "linkedIn icon",
+      link: "https://www.linkedin.com/in/dhcampbell/",
+    },
   ];
 
   const links = [
@@ -125,7 +137,6 @@ const Footer: React.FC<{}> = () => {
           >
             composer@davidhalcampbell.com
           </a>
-          <br />
           <a
             href="mailto:developer@davidhalcampbell.com"
             rel="noreferrer noopener"
@@ -189,7 +200,7 @@ const BuildColumn = styled.div`
   ${media.mobile} {
     width: 87.2vw;
     margin-left: 3vw;
-    margin-bottom: 16vw;
+    margin-bottom: 12vw;
   }
   ${media.tabletPortrait} {
     width: 90%;
@@ -232,7 +243,8 @@ const Email = styled.div`
   ${Body1};
   text-decoration: none;
   color: ${colors.coolPurple};
-
+  display: flex;
+  flex-direction: column;
   a {
     color: ${colors.coolPurple};
     transition: 0.5s;
@@ -246,6 +258,9 @@ const Email = styled.div`
 
   ${media.mobile} {
     font-size: 3.9vw;
+    a {
+      margin-top: 3vw;
+    }
   }
   ${media.tabletPortrait} {
     font-size: 20px;
