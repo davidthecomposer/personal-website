@@ -98,7 +98,11 @@ const Footer: React.FC<{}> = () => {
       name: "davidhalcampbell.com/developer",
       link: "https://www.davidhalcampbell.com/developer",
     },
-    { icon: youtube, name: "Youtube Channel", link: "" },
+    {
+      icon: youtube,
+      name: "Youtube Channel",
+      link: "https://www.youtube.com/channel/UCRBQPl7AraFVqO92zWR4iWw",
+    },
   ];
 
   const allLinks = links.map((link, i) => {
