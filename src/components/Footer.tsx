@@ -107,7 +107,7 @@ const Footer: React.FC<{}> = () => {
 
   const allLinks = links.map((link, i) => {
     return (
-      <OutBoundLink key={`link-${i}`}>
+      <OutBoundLink key={`link-${i}`} href={link.link}>
         <img src={link.icon} alt={`${link.name}-icon and link`} />
         <LinkText>{link.name}</LinkText>
       </OutBoundLink>
