@@ -14,7 +14,7 @@ import jennyCampbell from "assets/images/jennyTop.jpg";
 import oCTLogo from "assets/images/oCTLogo.jpg";
 import davidSmile1 from "assets/images/davidSmile1.jpg";
 import oCTSeason from "assets/images/oCTSeason.jpg";
-import filmTeaserM from "%PUBLIC_URL%/davidFilmTeaserM.jpg";
+import filmTeaserM from "assets/images/davidFilmTeaserM.jpg";
 import davidSeriousM from "assets/images/davidSeriousM.jpg";
 import Liz1M from "assets/images/Liz1M.jpg";
 import mandi1M from "assets/images/mandi1M.jpg";
