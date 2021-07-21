@@ -332,7 +332,7 @@ const AudioPlayer: React.FC<Props> = ({
       <PlayBack>
         <Play
           aria-label="play and pause button"
-          onTouchStart={(e) => handleClick(e)}
+          // onTouchStart={(e) => handleClick(e)}
           onClick={(e) => handleClick(e)}
           play={playPushed}
         >
