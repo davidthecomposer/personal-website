@@ -247,6 +247,8 @@ const AudioPlayer: React.FC<Props> = ({
       if (trackNum !== activeTrack) {
         //@ts-ignore
         trackArray.current[activeTrack].pause();
+        //@ts-ignore
+        trackArray.current[trackNum].play();
         setActiveTrack(trackNum);
       }
     },
