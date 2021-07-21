@@ -106,7 +106,7 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
           </TrackText>
         </TextWrapper>
         <ImageWrapper>
-          <img src={track.img} alt={track.title} />
+          <img src={mobile ? track.img[1] : track.img[0]} alt={track.title} />
         </ImageWrapper>
         <Title>{track.title}</Title>
       </ScreenWrapper>

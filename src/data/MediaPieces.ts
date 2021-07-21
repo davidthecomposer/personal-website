@@ -8,6 +8,16 @@ import starFlight from "assets/images/starFlight.jpg";
 import starlight from "assets/images/starlight.jpg";
 import turningPoint from "assets/images/turningPoint.jpg";
 import loveStory from "assets/images/loveStory.jpg";
+import flatlineM from "assets/images/flatlineM.jpg";
+import afterM from "assets/images/afterM.jpg";
+import forceOfNatureM from "assets/images/forceOfNatureM.jpg";
+import mischeivousM from "assets/images/mischeivousM.jpg";
+import redemptionM from "assets/images/redemptionM.jpg";
+import rescueM from "assets/images/rescueM.jpg";
+import starFlightM from "assets/images/starFlightM.jpg";
+import starlightM from "assets/images/starlightM.jpg";
+import turningPointM from "assets/images/turningPointM.jpg";
+import loveStoryM from "assets/images/loveStoryM.jpg";
 
 const flatlineMP3 = require("assets/audio/flatLine.mp3").default;
 const forceOfNatureMP3 = require("assets/audio/forceOfNature.mp3").default;
@@ -23,7 +33,8 @@ const turningPointMP3 = require("assets/audio/turningPoint.mp3").default;
 export const mediaPieces = [
   {
     title: "Flatline",
-    img: flatline,
+    img: [flatline, flatlineM],
+
     video: false,
     music:
       "The continuous rhythmic pulse in the background drives the music forward, but also mimics the nervous energy and action of the machinery in this imagined scene.",
@@ -34,7 +45,7 @@ export const mediaPieces = [
   },
   {
     title: "Rescue",
-    img: rescue,
+    img: [rescue, rescueM],
     video: false,
     music:
       "The piece uses a lot of percussive sounds and techniques including rips, bartok pizz, ethnic percussion hits, and a ton of ostinato combined with flowing, energetic themes in the strings and brass. Finally, the lush counterpoint in the string section near the end adds context and a moment of repose when the danger has been averted.",
@@ -45,7 +56,7 @@ export const mediaPieces = [
   },
   {
     title: "Mischievous Endeavors",
-    img: mischeivous,
+    img: [mischeivous, mischeivousM],
     video: false,
     music:
       "The solo violin here lends a lot of expressive energy to a precocious and wide-ranging melody. Some fun details include the use of saxophones, muted brass, and vibes to adda bit of attitude and  silliness to the timbres",
@@ -56,7 +67,7 @@ export const mediaPieces = [
   },
   {
     title: "Turning Point",
-    img: turningPoint,
+    img: [turningPoint, turningPointM],
     video: false,
     music:
       "The violin and cello interplay as separate voices warring for control of the narrative. These represent the light and dark sides of the character. The accompaniment in the supporting strings add weight to the emotions being expressed, while the piano punctuates the passage of time.",
@@ -67,7 +78,7 @@ export const mediaPieces = [
   },
   {
     title: "After",
-    img: after,
+    img: [after, afterM],
     video: false,
     music:
       "juxtaposing an almost baroque harmonic structure with rock and roll instruments seemed like a fun way to enliven both. This piece was originally written to be the intro to a video series of speculative dystopian fiction",
@@ -78,7 +89,7 @@ export const mediaPieces = [
   },
   {
     title: "Redemption",
-    img: redemption,
+    img: [redemption, redemptionM],
     video: false,
     music:
       "Some of the more interesting musical ideas here come at the beginning. I tried to create the feel of something tentative, and delicate. Something that feels like it could stop at any moment. Then as the main theme plays I wanted to produce an outpouring of unbridled emotion. Finally, an ending that evokes the beginning, but with more calm clarity.",
@@ -89,7 +100,7 @@ export const mediaPieces = [
   },
   {
     title: "StarLight, StarFlight",
-    img: starlight,
+    img: [starlight, starlightM],
     video: false,
     music:
       "I wanted to create a sense of an arrival as the ship comes into view while still having a feel of the expanse of space. The little melody on the piccolo right near the end of the piece is used as a theme in the next piece and expanded to become the main theme. The use of strings, harp, harmonics, and some subtle synth sounds add a feel of scope and scale",
@@ -100,7 +111,7 @@ export const mediaPieces = [
   },
   {
     title: "Starflight, Starbright",
-    img: starFlight,
+    img: [starFlight, starFlightM],
     video: false,
     music:
       "The choir was used to play off the immense sense of wonder and awe one might find when encountering something almost beyond understanding. I heavily processed the choir sounds during the last section of the piece to add to the sense of strangeness amidst the beauty of the main content.",
@@ -111,7 +122,7 @@ export const mediaPieces = [
   },
   {
     title: "Music for a Love Story",
-    img: loveStory,
+    img: [loveStory, loveStoryM],
     video: false,
     music:
       "The music is unapologetically lyrical and simple. I tried to add as much color in the harmonies as I thought would be appropriate. The main little theme repeats over and over again through all instruments. I think that the soulful sound of the clarinet was a good choice as lead instrument here.",
@@ -122,7 +133,8 @@ export const mediaPieces = [
   },
   {
     title: "Force Of Nature",
-    img: forceOfNature,
+    img: [forceOfNature, forceOfNatureM],
+
     video: false,
     music:
       "I think some of the more effective things here were the subtle use of brass portamento, gongs, and the transition from smooth powerful homophony to chaotic indeterminism.",

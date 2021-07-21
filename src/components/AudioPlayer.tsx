@@ -22,7 +22,7 @@ type Props = {
   mobileInfo: any;
   mediaPieces: {
     title: string;
-    img: string;
+    img: string[];
     video: boolean;
     music: string;
     story: string;
@@ -34,7 +34,7 @@ type Props = {
 type AudioElementProps = {
   track: {
     title: string;
-    img: string;
+    img: string[];
     video: boolean;
     music: string;
     story: string;
