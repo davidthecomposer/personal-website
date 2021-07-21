@@ -22,7 +22,7 @@ type Props = {
   mobileInfo: any;
   mediaPieces: {
     title: string;
-    img: string;
+    img: string[];
     video: boolean;
     music: string;
     story: string;
@@ -34,7 +34,7 @@ type Props = {
 type AudioElementProps = {
   track: {
     title: string;
-    img: string;
+    img: string[];
     video: boolean;
     music: string;
     story: string;
@@ -170,6 +170,7 @@ const AudioElement: React.FC<AudioElementProps> = ({
         onEnded={handleEnd}
         src={track.audio}
         ref={player}
+        preload="metadata"
         playsInline
         controls
       />
@@ -246,6 +247,8 @@ const AudioPlayer: React.FC<Props> = ({
       if (trackNum !== activeTrack) {
         //@ts-ignore
         trackArray.current[activeTrack].pause();
+        //@ts-ignore
+        trackArray.current[trackNum].play();
         setActiveTrack(trackNum);
       }
     },
@@ -330,7 +333,8 @@ const AudioPlayer: React.FC<Props> = ({
     <Playlist ref={playList}>
       <PlayBack>
         <Play
-          onTouchStart={(e) => handleClick(e)}
+          aria-label="play and pause button"
+          // onTouchStart={(e) => handleClick(e)}
           onClick={(e) => handleClick(e)}
           play={playPushed}
         >

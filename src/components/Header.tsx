@@ -38,11 +38,12 @@ const Header: React.FC<{}> = () => {
 
     if (pathname) {
       if (pathname === "/") {
-        setDisplay(false);
+        setDisplay(true);
+        setRole("composer");
       } else if (pathname === "/music") {
         setRole("composer");
       } else {
-        setRole("developer");
+        setRole("composer");
       }
     }
   }, [history]);
@@ -431,6 +432,7 @@ const Header: React.FC<{}> = () => {
         </Link>
       </NavLinks>
       <NavBtn
+        aria-label="open navigation"
         className="music__nav-btn"
         onClick={handleClick}
         open={navOpen && initial}

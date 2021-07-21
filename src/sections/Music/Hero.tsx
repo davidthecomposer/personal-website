@@ -550,17 +550,17 @@ const Card = styled.div`
     z-index: 1;
     ${Header} {
       width: fit-content;
-      /* bottom: -59px; */
+      bottom: 0;
       font-size: 70px;
-      right: 110px;
+      right: 118px;
     }
     img {
-      top: -100px;
+      top: -150px;
     }
 
     ${Metro36} {
       right: 215px;
-      bottom: 115px;
+      bottom: 155px;
       font-size: 32px;
       width: fit-content;
     }
@@ -606,13 +606,13 @@ const Card2 = styled(Card)`
   ${media.fullWidth} {
     ${Header} {
       width: 576px;
-      bottom: -40px;
+      bottom: 50px;
       left: 90px;
     }
 
     ${Metro36} {
       left: 10px;
-      top: 61px;
+      top: 0;
 
       width: fit-content;
     }
@@ -626,17 +626,17 @@ const Card2 = styled(Card)`
     img:nth-child(1) {
       z-index: 1;
       left: 467px;
-      top: -99px;
+      top: -160px;
     }
     img:nth-child(2) {
       z-index: 3;
       left: 742px;
-      top: 78px;
+      top: 0px;
     }
     img:nth-child(3) {
       z-index: 2;
       left: 1018px;
-      top: -50px;
+      top: -110px;
     }
   }
   ${media.mobile} {
@@ -753,13 +753,13 @@ const Card3 = styled(Card)`
     ${Header} {
       width: 566px;
       right: auto;
-      bottom: -40px;
+      bottom: 10px;
       right: 45px;
     }
 
     ${Metro36} {
       right: 140px;
-      top: 67px;
+      top: 17px;
     }
 
     img {
@@ -770,17 +770,17 @@ const Card3 = styled(Card)`
 
     img:nth-child(1) {
       left: 3px;
-      top: 98px;
+      top: 48px;
     }
     img:nth-child(2) {
       width: 394px;
       height: 394px;
       left: 285px;
-      top: 6px;
+      top: -44px;
     }
     img:nth-child(3) {
       left: 675px;
-      top: -85px;
+      top: -135px;
     }
   }
   ${media.mobile} {
@@ -896,12 +896,12 @@ const Card4 = styled(Card)`
   ${media.fullWidth} {
     ${Header} {
       left: 80px;
-      top: 200px;
+      top: 100px;
     }
 
     ${Metro36} {
       right: 155px;
-      bottom: 40px;
+      bottom: 140px;
     }
 
     img {
@@ -917,7 +917,7 @@ const Card4 = styled(Card)`
       height: 390px;
 
       right: 75px;
-      top: -11px;
+      top: -111px;
     }
     img:nth-child(2) {
       z-index: 2;
@@ -926,7 +926,7 @@ const Card4 = styled(Card)`
       top: auto;
       right: auto;
       left: 80px;
-      bottom: 160px;
+      bottom: 260px;
     }
   }
   ${media.mobile} {
@@ -941,7 +941,7 @@ const Card4 = styled(Card)`
     }
     img:nth-child(2) {
       width: 95.2vw;
-      height: 36.5vw;
+      height: 36.2vw;
       left: 2.4vw;
       top: 28.5vw;
     }
@@ -968,7 +968,7 @@ const Card4 = styled(Card)`
     }
     img:nth-child(2) {
       width: 64.1vw;
-      height: 24.6vw;
+      height: 24.1vw;
       left: 1.6vw;
       top: 19.1vw;
     }
