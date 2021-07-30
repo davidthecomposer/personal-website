@@ -21,6 +21,7 @@ import ScrollToPlugin from "gsap/ScrollToPlugin";
 import { CustomEase } from "gsap/CustomEase";
 
 const MusicPage = lazy(() => import("pages/MusicPage"));
+const DeveloperPage = lazy(() => import("pages/Developer"));
 
 export const DesktopContext = createContext(false);
 export const TabletContext = createContext(false);
@@ -75,6 +76,11 @@ const App = () => {
                 <Route exact path="/">
                   <Suspense fallback={<Fallback />}>
                     <MusicPage />
+                  </Suspense>
+                </Route>
+                <Route path="/developer">
+                  <Suspense fallback={<Fallback />}>
+                    <DeveloperPage />
                   </Suspense>
                 </Route>
               </Switch>
