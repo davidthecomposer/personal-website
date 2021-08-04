@@ -1,14 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components";
-import { MobileContext } from "App";
 import { Heading1 } from "styles/text";
 import colors from "styles/Colors";
 import media from "styles/media";
 // import { DesktopContext } from "App";
 
 const MusicPage: React.FC = () => {
-  const mobile = useContext(MobileContext);
-
   return <Wrapper>Coming Soon</Wrapper>;
 };
 
