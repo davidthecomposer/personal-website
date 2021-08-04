@@ -91,12 +91,12 @@ const Footer: React.FC<{}> = () => {
     {
       icon: music,
       name: "davidhalcampbell.com/music",
-      link: "https://www.davidhalcampbell.com/music",
+      link: "/",
     },
     {
       icon: code,
       name: "davidhalcampbell.com/developer",
-      link: "https://www.davidhalcampbell.com/developer",
+      link: "/developer",
     },
     {
       icon: youtube,

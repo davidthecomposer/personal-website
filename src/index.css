@@ -395,3 +395,11 @@ section {
   transform-style: preserve-3d;
   backface-visibility: hidden;
 }
+
+::-webkit-scrollbar {
+  width: 6px; /* Remove scrollbar space */
+  background: rgba(0, 0, 0, 0.01); /* Optional: just make scrollbar invisible */
+}
+::-webkit-scrollbar-thumb {
+  background: #6b166025;
+}

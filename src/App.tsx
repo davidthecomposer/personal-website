@@ -95,7 +95,12 @@ const App = () => {
 
 export default App;
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  ::-webkit-scrollbar {
+    width: 0; /* Remove scrollbar space */
+    background: transparent; /* Optional: just make scrollbar invisible */
+  }
+`;
 
 const Fallback: React.FC = () => {
   return <Container></Container>;

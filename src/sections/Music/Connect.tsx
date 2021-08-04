@@ -56,7 +56,7 @@ const Connect: React.FC<{ mobile: boolean }> = ({ mobile }) => {
           people. If you have a film, opera, classical, theatre or just about
           any other project that needs artistically crafted music let's talk
           about the possibilities of working together. Just send me a quick
-          message using the form above. I can't wait to hear about what you are
+          message using the form. I can't wait to hear about what you are
           working on.
         </Text>
       </Collaborate>

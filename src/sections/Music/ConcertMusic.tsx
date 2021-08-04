@@ -981,7 +981,18 @@ const BigColumn = styled.div`
   padding-right: 3%;
   display: flex;
   flex-direction: column;
-
+  ::-webkit-scrollbar {
+    width: 6px; /* Remove scrollbar space */
+    background: rgba(
+      0,
+      0,
+      0,
+      0.01
+    ); /* Optional: just make scrollbar invisible */
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #6d135f05;
+  }
   overflow-y: scroll;
   overflow-x: hidden;
   height: 32vw;
