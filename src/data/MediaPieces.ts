@@ -61,7 +61,7 @@ export const mediaPieces = [
     music:
       "The solo violin here lends a lot of expressive energy to a precocious and wide-ranging melody. Some fun details include the use of saxophones, muted brass, and vibes to adda bit of attitude and  silliness to the timbres",
     story:
-      "Children and crayons. Two completely wholesome things that when combined can wreak havoc. Mom thought it was safe to leave little Johnny alone to 'make his drawings'. While she was away he took it upon himself to redecorate in an awe-inspiring display of mischief combined with a wanton disregard for principles of interior design. As he was finishing his piece de resistance she abruptly returned. ",
+      "Children and crayons. Two completely wholesome things that when combined can wreak havoc. Mom thought it was safe to leave little Johnny alone to 'make his drawings'. While she was away he took it upon himself to redecorate in an awe-inspiring display of mischief combined with a wanton disregard for principles of interior design. As he was finishing his pièce de résistance she abruptly returned. ",
     audio: mischeivousMP3,
     id: 2,
   },
@@ -105,7 +105,7 @@ export const mediaPieces = [
     music:
       "I wanted to create a sense of an arrival as the ship comes into view while still having a feel of the expanse of space. The little melody on the piccolo right near the end of the piece is used as a theme in the next piece and expanded to become the main theme. The use of strings, harp, harmonics, and some subtle synth sounds add a feel of scope and scale",
     story:
-      "A set of travellers leave the atmosphere for the first time. They are headed toward a gigantic generation ship that will carry them out into the stars. As the shuttle slowly approaches this incredible feat of human ingenuity and wonder, it takes a tour around what will be their new home. Near the end of the piece the earth comes back into view and they realize that this might be the last time they ever see humanity's first home again.",
+      "A set of travelers leave the atmosphere for the first time. They are headed toward a gigantic generation ship that will carry them out into the stars. As the shuttle slowly approaches this incredible feat of human ingenuity and wonder, it takes a tour around what will be their new home. Near the end of the piece the earth comes back into view and they realize that this might be the last time they ever see humanity's first home again.",
     audio: starlightMP3,
     id: 6,
   },
@@ -139,7 +139,7 @@ export const mediaPieces = [
     music:
       "I think some of the more effective things here were the subtle use of brass portamento, gongs, and the transition from smooth powerful homophony to chaotic indeterminism.",
     story:
-      "The skies are dark and forboding. In the far distance something is approaching. It is miles away but is clearly massive in both scale and power. As it approaches like the lead edge of a storm front the observers can see that what seemed to be a cohesive cloud is actually a cacophony of violence and chaos. Then the front edge hits.",
+      "The skies are dark and foreboding. In the far distance something is approaching. It is miles away but is clearly massive in both scale and power. As it approaches like the lead edge of a storm front the observers can see that what seemed to be a cohesive cloud is actually a cacophony of violence and chaos. Then the front edge hits.",
     audio: forceOfNatureMP3,
     id: 9,
   },
