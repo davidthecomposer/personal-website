@@ -21,7 +21,7 @@ const newsItems = [
     paragraph:
       "I have accepted an offer to compose 6 art songs setting texts from a local author and to be performed and recorded through the auspices of Opera Contempo. 5 of the 6 have been completed.  The texts were part of a set of works published straight to social media by local author Liz Christensen, and will be performed by Mezzo Soprano Mandi Barrus. With the pandemic the timeline for performance changed a bit but we are finalizing performance dates soon. Stay tuned! ",
     paragraph1: "",
-    share: "News Item 1 short synopsis",
+    share: "David Campbell, Mandi Barrus, Liz Christensen Song Cycle",
     links1: [
       {
         icon: linkedin,
@@ -131,7 +131,7 @@ const newsItems = [
     paragraph:
       'This chamber opera was originally slated for the spring of this year, but once again the pandemic put everything on pause. The librettist has begun again in earnest to create a piece touching on the intersection of technology and person-hood, power structures and dynamics, and what it means to be alive. The working title is "X" and the protagonist is a sentient AI named model X. I am excited to be moving forward again with this project!',
     paragraph1: "",
-    share: "Meet Jenny",
+    share: 'New Chamber Opera in development: "X"',
 
     links1: [
       {

@@ -95,22 +95,22 @@ const News: React.FC<{ mobile: boolean }> = ({ mobile }) => {
             >
               <span>Share </span>
               <FacebookShareButton
-                url={"https://www.davidhalcampbell.com/music#news"}
+                url={"https://www.davidhalcampbell.com/#news"}
                 quote={share}
                 className="share_links"
               >
                 <img src={facebook} alt="facebook" />
               </FacebookShareButton>
               <TwitterShareButton
-                url={"https://www.davidhalcampbell.com/music#news"}
+                url={"https://www.davidhalcampbell.com/#news"}
                 title={share}
                 className="share_links"
               >
                 <img src={twitter} alt="twitter" />
               </TwitterShareButton>
               <LinkedinShareButton
-                url={"https://www.davidhalcampbell.com/music#news"}
-                source={"https://www.davidhalcampbell.com/music#news"}
+                url={"https://www.davidhalcampbell.com/#news"}
+                source={"https://www.davidhalcampbell.com/#news"}
                 summary={share}
                 className="share_links"
               >

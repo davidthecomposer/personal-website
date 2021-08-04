@@ -312,7 +312,7 @@ const Hero: React.FC<{ mobile: boolean }> = ({ mobile }) => {
           />
 
           <Header className="coc-header">Chamber Opera Commission</Header>
-          <Metro36 className="coc-metro">Summer 2022</Metro36>
+          <Metro36 className="coc-metro">2023 Season</Metro36>
           <CanvasGroup ref={wrapper1} className="coc-bg">
             <Canvas ref={yellowCanvas} blur={5} />
             <Canvas ref={tealCanvas1} blur={4} />
