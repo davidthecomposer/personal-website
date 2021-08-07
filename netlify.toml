@@ -2,3 +2,8 @@
 from = "/*"
 to = "/index.html"
 status = 200
+
+[[redirects]]
+from = "music.davidhalcampbell.com"
+to = "/"
+status = 200
