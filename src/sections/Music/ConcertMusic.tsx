@@ -30,12 +30,22 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
   const page = useRef(0);
   const [activePage, setActivePage] = useState(0);
   const [activePiece, setActivePiece] = useState(0);
+  const piecesByGenre = useRef<[][]>([[], [], [], [], [], []]);
+  const [pieceTemplates, setPieceTemplates] = useState([
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+  ]);
 
   const handlePageTurn = useCallback(
     (num: number, z: number) => {
       const turnBack = page.current > num || (num === 1 && page.current);
       setActivePage(num);
-      setActivePiece(0);
+      // setActivePiece(0);
+      handleActivePiece(0, num);
 
       let pages = [];
       for (
@@ -123,6 +133,91 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
     [mobile]
   );
 
+  const renderPieceInfo = useCallback(
+    (allPieces: any) => {
+      const pieceTemplates =
+        allPieces &&
+        allPieces.map((piece: any, i: number) => {
+          const {
+            title,
+            year,
+            description,
+            movements,
+            instrumentation,
+            scoreSample,
+            duration,
+            key,
+            cover,
+          } = piece;
+
+          const allMovements = movements.map((mvt: any, i: number) => {
+            return (
+              <AudioPlayerMinimal
+                key={`${key}-mvt-${i}`}
+                track={mvt.audio}
+                title={mvt.name}
+                initialTime={mvt.initialTime}
+                id={i}
+              />
+            );
+          });
+
+          const allInstrumentation = instrumentation.map((ins: any, i: any) => {
+            return <Instrument key={`${key}-inst-${i}`}>{ins}</Instrument>;
+          });
+
+          return (
+            <InfoWrapper key={title} visible={activePiece === i}>
+              <PieceTitle>{title}</PieceTitle>
+              {!cover && (
+                <>
+                  <Underline />
+                  <Year>{year}</Year>
+
+                  <BigColumn>
+                    <Description>{description}</Description>
+                    <InfoColumn>
+                      <ScoreSample>
+                        <SmallTitle>Score: </SmallTitle>
+                        {scoreSample.map((sample: string, i: number) => {
+                          if (sample !== "") {
+                            return (
+                              <a
+                                href={sample}
+                                key={`sample-${i}`}
+                                target="__blank"
+                                rel="noopener noreferrer"
+                                aria-label="pdf download of score"
+                              >
+                                <ScoreIcon />
+                              </a>
+                            );
+                          } else return null;
+                        })}
+                      </ScoreSample>
+
+                      <Column>
+                        <SmallTitle>Instrumentation: </SmallTitle>
+                        <Instrumentation>{allInstrumentation}</Instrumentation>
+                      </Column>
+                    </InfoColumn>
+                    <Movements>
+                      <SmallTitle>Movements: </SmallTitle>
+                      {allMovements}
+                    </Movements>
+                  </BigColumn>
+                </>
+              )}
+              {duration && <Duration>{duration}</Duration>}
+            </InfoWrapper>
+          );
+        });
+
+      return pieceTemplates;
+    },
+    [activePiece]
+  );
+
   useEffect(() => {
     const tl = gsap.timeline({ scrollTrigger: headerLine.current });
 
@@ -153,16 +248,40 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
   }, [handlePageTurn]);
 
   useEffect(() => {
+    // renderPieceInfo([concertPieces[activePage + 1].allPieces[activePiece]]);
+
     if (mobile) {
       gsap.to(".mobile__wrapper", { duration: 0.6, scrollTo: { x: "max" } });
     }
-  }, [mobile, activePiece]);
+  }, [mobile, activePiece, activePage, renderPieceInfo]);
 
   useEffect(() => {
     if (mobile) {
       gsap.to(".mobile__wrapper", { duration: 0.6, scrollTo: { x: "0" } });
     }
   }, [mobile, activePage]);
+
+  useEffect(() => {
+    if (musicBook.current) {
+      const [title, solo, vocal, orchestral, chamber, choral] =
+        piecesByGenre.current;
+      //@ts-ignore
+      setPieceTemplates([
+        //@ts-ignore
+        title[0],
+        //@ts-ignore
+        solo[0],
+        //@ts-ignore
+        vocal[0],
+        //@ts-ignore
+        orchestral[0],
+        //@ts-ignore
+        chamber[0],
+        //@ts-ignore
+        choral[0],
+      ]);
+    }
+  }, []);
 
   const allButtons = concertPieces.map((piece, index) => {
     const { tabName } = piece;
@@ -185,6 +304,33 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
     }
   });
 
+  const handleActivePiece = (num: number, indexNum: number) => {
+    setActivePiece(num);
+
+    const [title, solo, vocal, orchestral, chamber, choral] =
+      piecesByGenre.current;
+
+    let newPieces = [
+      //@ts-ignore
+      title[0],
+      //@ts-ignore
+      solo[0],
+      //@ts-ignore
+      vocal[0],
+      //@ts-ignore
+      orchestral[0],
+      //@ts-ignore
+      chamber[0],
+      //@ts-ignore
+      choral[0],
+    ];
+    //@ts-ignore
+    newPieces[indexNum] = piecesByGenre.current[indexNum][num];
+
+    //@ts-ignore
+    setPieceTemplates(newPieces);
+  };
+
   const allConcert = concertPieces.map((genre, index) => {
     const { nexTitle, playList, allPieces, tabName } = genre;
 
@@ -194,88 +340,16 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
         return (
           <Piece
             activePiece={activePiece === i && activePage === index}
-            onClick={() => setActivePiece(i)}
+            onClick={() => handleActivePiece(i, index + 1)}
             key={`${nexTitle}-piece-${i}`}
           >{`${i + 1}. ${piece}`}</Piece>
         );
       });
-    const pieceTemplates =
-      allPieces &&
-      allPieces.map((piece: any, i: number) => {
-        const {
-          title,
-          year,
-          description,
-          movements,
-          instrumentation,
-          scoreSample,
-          duration,
-          key,
-          cover,
-        } = piece;
 
-        const allMovements = movements.map((mvt: any, i: number) => {
-          return (
-            <AudioPlayerMinimal
-              key={`${key}-mvt-${i}`}
-              track={mvt.audio}
-              title={mvt.name}
-              initialTime={mvt.initialTime}
-              id={i}
-            />
-          );
-        });
-
-        const allInstrumentation = instrumentation.map((ins: any, i: any) => {
-          return <Instrument key={`${key}-inst-${i}`}>{ins}</Instrument>;
-        });
-
-        return (
-          <InfoWrapper key={title} visible={activePiece === i}>
-            <PieceTitle>{title}</PieceTitle>
-            {!cover && (
-              <>
-                <Underline />
-                <Year>{year}</Year>
-
-                <BigColumn>
-                  <Description>{description}</Description>
-                  <InfoColumn>
-                    <ScoreSample>
-                      <SmallTitle>Score: </SmallTitle>
-                      {scoreSample.map((sample: string, i: number) => {
-                        if (sample !== "") {
-                          return (
-                            <a
-                              href={sample}
-                              key={`sample-${i}`}
-                              target="__blank"
-                              rel="noopener noreferrer"
-                              aria-label="pdf download of score"
-                            >
-                              <ScoreIcon />
-                            </a>
-                          );
-                        } else return null;
-                      })}
-                    </ScoreSample>
-
-                    <Column>
-                      <SmallTitle>Instrumentation: </SmallTitle>
-                      <Instrumentation>{allInstrumentation}</Instrumentation>
-                    </Column>
-                  </InfoColumn>
-                  <Movements>
-                    <SmallTitle>Movements: </SmallTitle>
-                    {allMovements}
-                  </Movements>
-                </BigColumn>
-              </>
-            )}
-            {duration && <Duration>{duration}</Duration>}
-          </InfoWrapper>
-        );
-      });
+    // const pieceTemplates = renderPieceInfo([allPieces[0]]);
+    const allPieceTemplate = renderPieceInfo(allPieces);
+    //@ts-ignore
+    piecesByGenre.current[index] = allPieceTemplate;
 
     return (
       <FrontAndBackPage
@@ -285,7 +359,7 @@ const MediaMusic: React.FC<{ mobile: boolean }> = ({ mobile }) => {
       >
         <PiecesInfo className={`pieces__info-${index}`}>
           <PiecesInfoWrap className={`pieces__info-wrap-${index}`}>
-            {pieceTemplates}
+            {pieceTemplates[index]}
           </PiecesInfoWrap>
         </PiecesInfo>
 
@@ -877,9 +951,9 @@ const Genre = styled.h2`
 
 const InfoWrapper = styled.div<{ visible: boolean }>`
   position: absolute;
-  opacity: ${(props) => (props.visible ? 1 : 0)};
-  z-index: ${(props) => (props.visible ? 10 : 0)};
-  transition: opacity 0.4s z-index 0.1s 0.5s;
+  opacity: 1;
+  transition: 0.4s;
+
   width: 27.5vw;
   height: 40.7vw;
 
