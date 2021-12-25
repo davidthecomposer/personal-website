@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import gsap from "gsap";
 import media from "styles/media";
 import styled from "styled-components";
